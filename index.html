@@ -13,21 +13,31 @@
   </head>
 
   <body>
-    <h1>ログイン</h1>
+    <div class="container login-wrapper">
+      <div class="row justify-content-center w-100"> 
+        <div class="col-4">  
 
-    <form action="" method="post" class="">
-      <div class="">
-        <label for="employee_id" class="" >社員番号：</label>    
-        <input type="text" class="" name="employee_id" id="employee_id" placeholder="社員番号を入力">
+          <div class="mb-5">
+            <h1>ログイン</h1>
+          </div>
+
+          <form action="" method="post">
+
+            <div class="mb-4">
+              <label for="employee_id" class="form-label" >社員番号：</label>    
+              <input type="text" class="form-control" name="employee_id" id="employee_id" placeholder="社員番号を入力">
+            </div>
+
+            <div class="mb-4">
+              <label for="password" class="form-label" >パスワード：</label>
+              <input type="password" class="form-control" name="password" id="password" placeholder="パスワードを入力">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-login">ログイン認証</button>
+          </form>
+        </div>
       </div>
-
-      <div class="">
-          <label for="password" class="" >パスワード：</label>
-          <input type="password" class="" name="password" id="password" placeholder="パスワードを入力">
-      </div>
-
-      <button type="submit" class="">ログインする</button>
-
-    </form>
+    </div>
   </body>
 </html>
+
