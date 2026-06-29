@@ -1,11 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>ここにテストで文字を入力してみます</h1>
-</body>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログインフォーム</title>
+
+    <!-- bootstrapのcss読み込み -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 自分で作ったcssを読み込む -->
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <div class="container login-wrapper">
+      <div class="row justify-content-center w-100"> 
+        <div class="col-4">  
+
+          <div class="mb-5">
+            <h1>ログイン</h1>
+          </div>
+
+          <form action="" method="post">
+
+            <div class="mb-4">
+              <label for="employee_id" class="form-label" >社員番号：</label>    
+              <input type="text" class="form-control" name="employee_id" id="employee_id" placeholder="社員番号を入力">
+            </div>
+
+            <div class="mb-4">
+              <label for="password" class="form-label" >パスワード：</label>
+              <input type="password" class="form-control" name="password" id="password" placeholder="パスワードを入力">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-login">ログイン認証</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
+
