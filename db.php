@@ -1,4 +1,5 @@
-<?php//dbに接続するためのphp
+<?php // dbに接続するためのphp
+
 $host = 'localhost';
 $user = 'your_username';
 $pass = 'your_password';
