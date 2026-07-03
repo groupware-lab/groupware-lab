@@ -1,4 +1,4 @@
-<?php// DB接続（共通）
+<?php  // DB接続（共通）
 
 $host = 'localhost';
 $user = 'your_username';
