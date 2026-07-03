@@ -2,7 +2,12 @@
 
 body {
   background-color: #f5f5f5;
+  white-space: nowrap  /*画面幅が小さくなっても均等に表示*/
 }
+
+h1 {
+  text-align: center;
+} 
 
 .login-wrapper {
   min-height: 100vh;
@@ -17,3 +22,4 @@ body {
 {
   width: 100%;
 }
+

@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id']))
 $user_id = $_SESSION['user_id'];
 
 // SQL実行（ログイン中ユーザーの情報を取得）
-$sql = "SELECT id, email FROM users WHERE id = $user_id";
+$sql = "SELECT employee_code FROM users WHERE employee_code = $user_id";
 $result = mysqli_query($connection, $sql);
 
 // SQLエラー

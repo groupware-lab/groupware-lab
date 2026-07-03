@@ -3,23 +3,23 @@ session_start();
 require_once 'db.php';
 
 //フロントエンドから送られてきた値を受け入れるための箱
-$email = $_POST['email'] ?? '';
+$employee_id = $_POST['employee_id'] ?? '';
 $password = $_POST['password'] ?? '';
 
 // (空チェック)　不正なリクエストを防ぎ、次の処理に繋げない為
-if ($email === '' || $password === '')
+if ($employee_id === '' || $password === '')
     {
     return; // 何も返さず終了
     }
 
 // SQLインジェクション対策
-$email_escaped = mysqli_real_escape_string($connection, $email);
+$employee_escaped = mysqli_real_escape_string($connection, $employee_id);
 
 // パスワードをハッシュ化
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
 // すでに同じメールが存在するかチェック
-$sql_check = "SELECT id FROM users WHERE email = '$email_escaped'";
+$sql_check = "SELECT employee_code FROM users WHERE employee_code = '$employee_escaped'";
 $result_check = mysqli_query($connection, $sql_check);
 
 if (!$result_check)
@@ -37,7 +37,7 @@ if ($existing_user)
 // 新規登録
 $sql_insert = "
     INSERT INTO users (email, password_hash)
-    VALUES ('$email_escaped', '$password_hash')
+    VALUES ('$employee_escaped', '$password_hash')
 ";
 
 $result_insert = mysqli_query($connection, $sql_insert);
