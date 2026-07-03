@@ -1,9 +1,9 @@
 <?php // dbに接続するためのphp
 
 $host = 'localhost';
-$user = 'your_username';
-$pass = 'your_password';
-$dbname = 'your_database';
+$user = 'root';
+$pass = 'root';
+$dbname = 'groupware';
 
 $connection = mysqli_connect($host, $user, $pass, $dbname);
 

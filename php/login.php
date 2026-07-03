@@ -3,20 +3,20 @@ session_start();
 require_once 'db.php';
 
 //フロントエンドから送られてきた値を受け入れるための箱
-$email = $_POST['email'] ?? '';
+$employee_id = $_POST['employee_id'] ?? '';
 $password = $_POST['password'] ?? '';
 
 // (空チェック)　不正なリクエストを防ぎ、次の処理に繋げない為
-if ($email === '' || $password === '')
-    {
+if ($employee_id === '' || $password === '')
+   {
     return; // 何も返さず終了     //エラーメッセージ表示させる
-    }
+   }
 
 // SQLインジェクション対策
-$email_escaped = mysqli_real_escape_string($connection, $email);
+$employee_escaped = mysqli_real_escape_string($connection, $employee_id);
 
 // SQL実行
-$sql = "SELECT * FROM users WHERE email = '$email_escaped'";
+$sql = "SELECT * FROM users WHERE employee_code = '$employee_escaped'";
 $result = mysqli_query($connection, $sql);
 
 // SQLエラー
