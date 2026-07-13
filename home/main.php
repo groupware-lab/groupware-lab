@@ -17,69 +17,29 @@ if(!isset($_SESSION['user_id'])) {  //セッションを保持してなければ
 <body>
 
     <header class="header">
-        <div class="logo"><span>FACE OFFICE</span></div>
-        <div class="header-right">
-            <span class="company-name">株式会社I・TECソリューションズ</span>
-            <label><input type="checkbox"> ブラウザからユーザ情報を削除</label>
-            <button class="logout-btn">ログアウト</button>
-        </div>
+        <div class="logo">株式会社コンドーソリューションズわほー<span></span></div>
     </header>
 
     <nav class="main-nav">
-        <a href="#" class="active">グループウェア</a>
-        <a href="#">個人設定</a>
-        <a href="#">管理者設定</a>
-        <a href="#">ワークフロー</a>
+        <a href="#" class="active">デスクトップ</a>
+        <a href="#">出退勤管理</a>
+        <a href="#">社内掲示板</a>
+        <a href="#">社内稟議書</a>
+        <a href="#">有給申請</a>
+        <a href="#">備品購入申請</a>
     </nav>
 
     <div class="container">
-        
-        <aside class="sidebar">
-            <div class="menu-title">MENU</div>
-            <ul>
-                <li class="active">デスクトップ</li>
-                <li>メール</li>
-                <li>ローカルメール</li>
-                <li>掲示板</li>
-                <li>回覧板</li>
-                <li>スケジュール</li>
-                <li>スケジュール検索</li>
-                <li>全体スケジュール</li>
-                <li>施設予約</li>
-                <li>アドレス帳</li>
-                <li>行き先案内板</li>
-                <li>伝言メモ</li>
-                <li>ToDo/依頼</li>
-                <li>電子会議室</li>
-                <li>ネットフォルダ</li>
-                <li>人員構成図</li>
-                <li>個人検索</li>
-            </ul>
-        </aside>
 
         <main class="main-content">
             <div class="content-header">
                 <span>デスクトップ</span>
-                <span class="help">HELP</span>
             </div>
 
             <section class="card schedule-card">
                 <div class="card-header">
-                    <span class="card-title">スケジュール - 個人週間(横)</span>
-                    <div class="card-actions">
-                        <span>個人月間</span> | <span>設定</span>
-                    </div>
+                    <span class="card-title">社内掲示板</span>
                 </div>
-                <div class="calendar-grid">
-                    <div class="day-box">06月29日(月) <span class="rokuyou">赤口</span></div>
-                    <div class="day-box">06月30日(火) <span class="rokuyou">先勝</span></div>
-                    <div class="day-box">07月01日(水) <span class="rokuyou">友引</span></div>
-                    <div class="day-box">07月02日(木) <span class="rokuyou">先負</span></div>
-                    <div class="day-box">07月03日(金) <span class="rokuyou">仏滅</span></div>
-                    <div class="day-box sat">07月04日(土) <span class="rokuyou">大安</span></div>
-                    <div class="day-box sun">07月05日(日) <span class="rokuyou">赤口</span></div>
-                </div>
-                <div class="card-footer">最終更新：06/29 (月) 19:08:12</div>
             </section>
 
             <div class="dashboard-grid">
@@ -87,75 +47,29 @@ if(!isset($_SESSION['user_id'])) {  //セッションを保持してなければ
                 <div class="column">
                     <section class="card">
                         <div class="card-header blue-header">
-                            <span class="card-title">お知らせBOX</span>
-                            <div class="card-actions"><span>ウィンドウ表示</span> | <span>設定</span></div>
+                            <span class="card-title">出退勤管理</span>
                         </div>
-                        <div class="card-body">
-                            <ul class="info-list">
-                                <li>未回答の回覧が <span class="alert-text">1 件</span> あります。</li>
-                                <li>期限切れの回覧が <span class="alert-text">1 件</span> あります。</li>
-                                <li>未読のローカルメールが <span class="alert-text">3 件</span> あります。</li>
-                                <li>未読の監視している議題・返信が <span class="alert-text">1 件</span> あります。</li>
-                            </ul>
-                        </div>
-                        <div class="card-footer">最終更新：06/29 (月) 19:08:12</div>
                     </section>
 
                     <section class="card">
                         <div class="card-header">
-                            <span class="card-title">ToDo/依頼</span>
-                            <div class="card-actions"><span>設定</span></div>
+                            <span class="card-title">有給申請</span>
                         </div>
-                        <div class="card-body">
-                            <p><strong>[ToDo]</strong></p>
-                            <p class="todo-item">T社 提案書提示 <span class="alert-text">( 05/29 )</span></p>
-                        </div>
-                        <div class="card-footer">最終更新：06/29 (月) 19:08:13</div>
                     </section>
 
-                    <section class="card">
-                        <div class="card-header">
-                            <span class="card-title">掲示板</span>
-                            <div class="card-actions"><span>設定</span></div>
-                        </div>
-                        <div class="card-body-empty"></div>
-                        <div class="card-footer">最終更新：06/29 (月) 19:08:12</div>
-                    </section>
                 </div>
 
                 <div class="column">
                     <section class="card">
                         <div class="card-header">
-                            <span class="card-title">検索</span>
-                        </div>
-                        <div class="card-body search-box">
-                            <input type="text" placeholder="Google 検索...">
-                            <button>検索</button>
+                            <span class="card-title">社内稟議書</span>
                         </div>
                     </section>
 
                     <section class="card">
                         <div class="card-header">
-                            <span class="card-title">メール</span>
-                            <div class="card-actions"><span>設定</span></div>
+                            <span class="card-title">購入申請</span>
                         </div>
-                        <div class="card-body-empty"></div>
-                        <div class="card-footer">最終更新：06/29 (月) 19:08:12</div>
-                    </section>
-
-                    <section class="card">
-                        <div class="card-header">
-                            <span class="card-title">ローカルメール</span>
-                            <div class="card-actions"><span>設定</span></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="mail-list">
-                                <li>【FaceOfficeMail】申請決裁 <span class="date">( 05/29 )</span></li>
-                                <li>【FaceOfficeMail】承認依頼 <span class="date">( 05/29 )</span></li>
-                                <li>【FaceOfficeMail】承認依頼 <span class="date">( 05/29 )</span></li>
-                            </ul>
-                        </div>
-                        <div class="card-footer">最終更新：06/29 (月) 19:08:12</div>
                     </section>
                 </div>
 
