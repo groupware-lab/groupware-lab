@@ -7,6 +7,7 @@ if(!isset($_SESSION['user_id'])) {  //セッションを保持してなければ
 ?>
 <!DOCTYPE html>
 <html lang="ja">
+<<<<<<< HEAD
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,3 +79,13 @@ if(!isset($_SESSION['user_id'])) {  //セッションを保持してなければ
 
 </body>
 </html>
+=======
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        </head>
+        <body>
+            <h1>近藤ソリューション</h1>
+            
+        </body>
+>>>>>>> a9b4e89524cd9604299708a32bb74b2ce270eb21
