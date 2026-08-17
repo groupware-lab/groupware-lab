@@ -5,7 +5,6 @@ if(!isset($_SESSION['user_id'])) {  //セッションを保持してなければ
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -17,7 +16,7 @@ if(!isset($_SESSION['user_id'])) {  //セッションを保持してなければ
 <body>
 
     <header class="header">
-        <div class="logo">株式会社コンドーソリューションズわほー<span></span></div>
+        <div class="logo">株式会社コンドーソリューションズ<span></span></div>
     </header>
 
     <nav class="main-nav">
