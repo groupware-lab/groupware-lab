@@ -6,5 +6,5 @@ if ($mysqli->connect_errno) {
     exit;
 }
 
-$mysqli->set_charset("utf8mb4");
-?>
+$mysqli->set_charset("utf8mb4"); //文字コードは UTF-8（utf8mb4）を使う
+?> 
