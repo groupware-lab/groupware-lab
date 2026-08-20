@@ -31,7 +31,7 @@ $user = mysqli_fetch_assoc($result);
 if ($user && password_verify($password, $user['password_hash'])) 
    {
    $_SESSION['user_id'] = $user['id'];
-   return; // 成功として終了
+    exit; //
    }
 
 // ログイン失敗
