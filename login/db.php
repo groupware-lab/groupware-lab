@@ -1,8 +1,5 @@
 <?php // dbに接続するためのphp。仮で倉部のPCのMYSQLに接続
-$host = 'localhost';
-$user = 'root';
-$pass = 'root';
-$dbname = 'groupware';
+require_once __DIR__ . '/config.php'; // ここでconfig.phpの変数を読み込む DBの設定情報を直書きしない
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
 

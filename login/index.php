@@ -17,8 +17,8 @@
 
   <body>
     <header class="bg-success text-white py-4">
-      <div class="container-fiuld">
-        <h5 class="md-0">株式会社コンドウソリューション</h5>
+      <div class="container-fluid"> 
+        <h5 class="mb-0">株式会社コンドウソリューション</h5>
       </div>
     </header>
 
@@ -42,7 +42,7 @@
                   if($_GET['error'] === 'empty') {
                     echo '<p class ="text-danger">社員番号またはパスワードが未入力です。</p>';
                   } elseif($_GET['error'] === 'invalid') {
-                    echo '<p class ="text-danger">社員番号またはパスワードに誤りがあります。</p>';
+                    echo '<p class="text-danger">社員番号またはパスワードに誤りがあります。</p>';
                   }
                 }
                 ?>
@@ -51,16 +51,6 @@
               <div class="mb-5">
                 <label for="password" class="form-label" >パスワード：</label>
                 <input type="password" class="form-control" name="password" id="password" placeholder="パスワードを入力">
-                <!-- 未入力エラーを表示 -->
-                <?php
-                if(isset($_GET['error'])) {
-                  if($_GET['error'] === 'empty') {
-                    echo '<p class ="text-danger">社員番号またはパスワードが未入力です。</p>';
-                  } elseif($_GET['error'] === 'invalid') {
-                    echo '<p class ="text-danger">社員番号またはパスワードに誤りがあります。</p>';
-                  }
-                }
-                ?>
               </div>
               <button type="submit" class="btn btn-success btn-login">ログイン認証</button>
             </form>
