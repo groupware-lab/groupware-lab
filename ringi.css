@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+body{
+    display: flex;/*flexboxを使う*/
+    flex-direction: column;/*flexboxの方向を縦にする*/
+    height: 100vh;/*画面の高さを100%にする*/
+    margin: 0;/*余白をなくす*/
+    padding: 25px;/*画面の端から25px空ける*/
+    background-color: #ecececc2;/*背景色を設定*/
+    box-sizing: border-box;/*paddingとborderを含めたサイズを指定する*/
+
+}
+
+table{
+    border-collapse: collapse;/*セルの境界線を重ねる*/
+    width: 100%;/*テーブルの幅を100%にする*/
+    display: flex; flex-direction: column;/*flexboxを使う*/
+    margin-bottom: 20px;/*テーブルの下に20px空ける*/
+}
+
+tbody{
+    display: flex;/*flexboxを使う*/
+    flex-direction: column;/*flexboxの方向を縦にする*/
+    flex: 1;/*テーブルの高さを100%にする*/
+}
+
+tr{
+    display: flex;/*flexboxを使う*/
+    flex: 1;/*テーブルの高さを100%にする*/
+}
+
+.center-bold{
+    text-align: center; /*真ん中に寄せてる*/
+    font-weight: bold; /*太字にしてる*/
+    margin-top: 10px; /*画面の上から少し開けてる*/
+    letter-spacing: 15px; /*文字の間を15ピクセル空ける*/
+    font-size: 30px; /*文字の大きさを30ピクセルにする*/
+}
+
+.sub-text{
+    text-align: left;/*左寄せにしてる*/
+    margin-bottom: 0px;/*下の余白をなくしてる*/
+    font-size: 20px; /*文字の大きさを20ピクセルにする*/
+}
+
+.project{
+    text-align: left;/*左寄せにしてる*/
+    margin-bottom: 0px;/*下の余白をなくしてる*/
+    font-size: 20px;/*文字の大きさを20ピクセルにする*/
+}
+
+.busyo{
+    text-align: left;/*左寄せにしてる*/
+    margin-bottom: 0px;/*下の余白をなくしてる*/
+    font-size: 20px;/*文字の大きさを20ピクセルにする*/
+}
+
+.container{
+    flex: 1;/*画面の高さを100%にする*/
+    background-color: #ffffff;/*背景色を設定*/
+    padding: 20px 30px;/*上下に20px、左右に30pxの余白を設定*/
+    box-sizing: border-box;/*paddingとborderを含めたサイズを指定する*/
+    display: flex;/*flexboxを使う*/
+    flex-direction: column;/*flexboxの方向を縦にする*/
+}
+
+.w-10  { width: 10%; /*幅を10%にする*/ }
+.w-15  { width: 15%; /*幅を15%にする*/ }
+.w-20  { width: 20%; /*幅を20%にする*/ }
+.w-23  { width: 23.33%; /*幅を23.33%にする*/ }
+.w-35  { width: 35%; /*幅を35%にする*/ }
+.w-40  { width: 40%; /*幅を40%にする*/ }
+.w-70  { width: 70%; /*幅を70%にする*/ }
+.w-85  { width: 85%; /*幅を85%にする*/ }
+.w-100 { width: 100%; /*幅を100%にする*/ }
