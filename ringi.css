@@ -1,75 +1,119 @@
-@charset "UTF-8";
-
-body{
-    display: flex;/*flexboxを使う*/
-    flex-direction: column;/*flexboxの方向を縦にする*/
-    height: 100vh;/*画面の高さを100%にする*/
-    margin: 0;/*余白をなくす*/
-    padding: 25px;/*画面の端から25px空ける*/
-    background-color: #ecececc2;/*背景色を設定*/
-    box-sizing: border-box;/*paddingとborderを含めたサイズを指定する*/
-
+/* @charset "UTF-8";
+/* ページ全体の基本設定（画面の縦幅ぴったりに固定） */
+body {/* ここでflexを使って縦方向に並べる */
+    font-family: sans-serif;/* ここでflexを使って縦方向に並べる */
+    margin: 0;/* ここでflexを使って縦方向に並べる */
+    padding: 15px;/* ここでflexを使って縦方向に並べる */
+    background-color: #f5f5f5; /* ここでflexを使って縦方向に並べる */
+    box-sizing: border-box;/* ここでflexを使って縦方向に並べる */
+    height: 100vh; /* ここでflexを使って縦方向に並べる */
+    display: flex;/* ここでflexを使って縦方向に並べる */
+    flex-direction: column;/* ここでflexを使って縦方向に並べる */
 }
 
-table{
-    border-collapse: collapse;/*セルの境界線を重ねる*/
-    width: 100%;/*テーブルの幅を100%にする*/
-    display: flex; flex-direction: column;/*flexboxを使う*/
-    margin-bottom: 20px;/*テーブルの下に20px空ける*/
+/* 稟議書の白い紙の部分（縦幅を画面の下までいっぱいに広げる） */
+.form-container {/* ここでflexを使って縦方向に並べる */
+    width: 100%;/* ここでflexを使って縦方向に並べる */
+    flex: 1;/* ここでflexを使って縦方向に並べる */
+    background-color: #fff;/* ここでflexを使って縦方向に並べる */
+    padding: 20px 30px;/* ここでflexを使って縦方向に並べる */
+    box-sizing: border-box;/* ここでflexを使って縦方向に並べる */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);/* ここでflexを使って縦方向に並べる */
+    display: flex;/* ここでflexを使って縦方向に並べる */
+    flex-direction: column;/* ここでflexを使って縦方向に並べる */
 }
 
-tbody{
-    display: flex;/*flexboxを使う*/
-    flex-direction: column;/*flexboxの方向を縦にする*/
-    flex: 1;/*テーブルの高さを100%にする*/
+/* タイトル「稟議書」 */
+.title {/* ここでflexを使って縦方向に並べる */
+    text-align: center;/* ここでflexを使って縦方向に並べる */
+    font-weight: bold;/* ここでflexを使って縦方向に並べる */
+    font-size: 24px;/* ここでflexを使って縦方向に並べる */
+    letter-spacing: 15px;/* ここでflexを使って縦方向に並べる */
+    margin-bottom: 15px;/* ここでflexを使って縦方向に並べる */
+}/* ここでflexを使って縦方向に並べる */
+
+/* テーブル本来の仕組みを残しつつ、縦幅をいっぱいに広げる設定 */
+table {/* ここでflexを使って縦方向に並べる */
+    width: 100%;/* 画面の横幅いっぱいに広げる */
+    flex: 1;                 /* 画面の縦幅の余りをすべて埋める */
+    border-collapse: collapse;/* セルの間の隙間をなくす */
+    table-layout: fixed;     /* 横幅の％指定をきっちり守らせる設定 */
 }
 
-tr{
-    display: flex;/*flexboxを使う*/
-    flex: 1;/*テーブルの高さを100%にする*/
+/* 格子の線とセル（マス）の設定 */
+th, td {/* ここでflexを使って縦方向に並べる */
+    border: 1px solid #333;/* セルの周りの線を黒にする */
+    padding: 8px;/* セルの中の余白を少し広げる */
+    vertical-align: middle;  /* 中の文字を上下中央にする */
+    box-sizing: border-box;/* セルの余白を含めて横幅を計算する */
 }
 
-.center-bold{
-    text-align: center; /*真ん中に寄せてる*/
-    font-weight: bold; /*太字にしてる*/
-    margin-top: 10px; /*画面の上から少し開けてる*/
-    letter-spacing: 15px; /*文字の間を15ピクセル空ける*/
-    font-size: 30px; /*文字の大きさを30ピクセルにする*/
+/* 横幅の比率を指定するクラス */
+.w-10  { width: 10%; }/* 横幅の比率を指定するクラス */
+.w-15  { width: 15%; }/* 横幅の比率を指定するクラス */
+.w-20  { width: 20%; }/* 横幅の比率を指定するクラス */
+.w-23  { width: 23.33%; }/* 横幅の比率を指定するクラス */
+.w-35  { width: 35%; }/* 横幅の比率を指定するクラス */
+.w-40  { width: 40%; }/* 横幅の比率を指定するクラス */
+.w-70  { width: 70%; }/* 横幅の比率を指定するクラス */
+.w-85  { width: 85%; }/* 横幅の比率を指定するクラス */
+.w-100 { width: 100%; }/* 横幅の比率を指定するクラス */
+
+/* グレーの見出し部分 */
+th {/* ここでflexを使って縦方向に並べる */
+    background-color: #f9f9f9;/* グレーの見出し部分 */
+    font-weight: normal;/* グレーの見出し部分 */
 }
 
-.sub-text{
-    text-align: left;/*左寄せにしてる*/
-    margin-bottom: 0px;/*下の余白をなくしてる*/
-    font-size: 20px; /*文字の大きさを20ピクセルにする*/
+/* ★【修正】入力欄とプルダウンをセルいっぱいに広げる */
+input[type="text"], select, textarea {/* ここでflexを使って縦方向に並べる */
+    width: 100%;/* セルいっぱいに広げる */
+    height: 100%;/* セルいっぱいに広げる */
+    box-sizing: border-box;/* セルいっぱいに広げる */
+    border: none;/* セルいっぱいに広げる */
+    outline: none;/* セルいっぱいに広げる */
+    font-size: 16px;/* セルいっぱいに広げる */
+    background-color: transparent; /* 背景を透明にしてセルの色に合わせる */
 }
 
-.project{
-    text-align: left;/*左寄せにしてる*/
-    margin-bottom: 0px;/*下の余白をなくしてる*/
-    font-size: 20px;/*文字の大きさを20ピクセルにする*/
+/* テキストエリア専用のスタイル（余計な隙間とサイズ変更ツマミを消す） */
+textarea {/* 余計な隙間とサイズ変更ツマミを消す */
+    resize: none;/* 余計な隙間とサイズ変更ツマミを消す */
+    display: block;/* 余計な隙間とサイズ変更ツマミを消す */
 }
 
-.busyo{
-    text-align: left;/*左寄せにしてる*/
-    margin-bottom: 0px;/*下の余白をなくしてる*/
-    font-size: 20px;/*文字の大きさを20ピクセルにする*/
+/* 稟議内容の行（ここが画面の残りの高さをすべて吸収して広がります） */
+.content-row {/* ここでflexを使って縦方向に並べる */
+    height: 100%; /* ここでflexを使って縦方向に並べる */
 }
 
-.container{
-    flex: 1;/*画面の高さを100%にする*/
-    background-color: #ffffff;/*背景色を設定*/
-    padding: 20px 30px;/*上下に20px、左右に30pxの余白を設定*/
-    box-sizing: border-box;/*paddingとborderを含めたサイズを指定する*/
-    display: flex;/*flexboxを使う*/
-    flex-direction: column;/*flexboxの方向を縦にする*/
+/* ラジオボタンと文字の並び */
+.checkbox-group {/* ここでflexを使って横並びにする */
+    display: flex;/* ここでflexを使って横並びにする */
+    align-items: center;/* ここでflexを使って横並びにする */
+    gap: 15px;/* ここでflexを使って横並びにする */
+    width: 100%;/* ここでflexを使って横並びにする */
 }
 
-.w-10  { width: 10%; /*幅を10%にする*/ }
-.w-15  { width: 15%; /*幅を15%にする*/ }
-.w-20  { width: 20%; /*幅を20%にする*/ }
-.w-23  { width: 23.33%; /*幅を23.33%にする*/ }
-.w-35  { width: 35%; /*幅を35%にする*/ }
-.w-40  { width: 40%; /*幅を40%にする*/ }
-.w-70  { width: 70%; /*幅を70%にする*/ }
-.w-85  { width: 85%; /*幅を85%にする*/ }
-.w-100 { width: 100%; /*幅を100%にする*/ }
+/* 「あり（____）」の中の入力枠 */
+.inline-input {/* ここでflexを使って横並びにする */
+    width: 100px !important; /* ここでflexを使って横並びにする */
+    border-bottom: 1px solid #ccc !important; /* ここでflexを使って横並びにする */
+    height: auto !important;/* ここでflexを使って横並びにする */
+}/* ここでflexを使って横並びにする */
+
+/* 一番下の承認者選択セクション */
+.approver-section {/* ここでflexを使って横並びにする */
+    margin-top: 15px;/* ここでflexを使って横並びにする */
+    font-weight: bold;/* ここでflexを使って横並びにする */
+    display: flex;/* ここでflexを使って横並びにする */
+    align-items: center;/* ここでflexを使って横並びにする */
+    gap: 15px;/* ここでflexを使って横並びにする */
+}/* ここでflexを使って横並びにする */
+
+/* 承認者入力欄の線 */
+.approver-input {/* ここでflexを使って横並びにする */
+    border-bottom: 1px solid #333 !important; /* ここでflexを使って横並びにする */
+    width: 250px !important;/* ここでflexを使って横並びにする */
+    height: auto !important;/* ここでflexを使って横並びにする */
+} /* ここでflexを使って横並びにする */
