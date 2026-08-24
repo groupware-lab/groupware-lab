@@ -14,6 +14,9 @@ $sql = "UPDATE leave_requests
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("i", $id);
 $stmt->execute();
+// sql準備
+// 値を入れる
+// sql実行
 
 echo json_encode(["message" => "承認しました"]);
 ?>

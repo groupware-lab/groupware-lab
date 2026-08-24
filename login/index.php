@@ -52,7 +52,9 @@
                 <label for="password" class="form-label" >パスワード：</label>
                 <input type="password" class="form-control" name="password" id="password" placeholder="パスワードを入力">
               </div>
+
               <button type="submit" class="btn btn-success btn-login">ログイン認証</button>
+              
             </form>
           </div>
         </div>    
