@@ -116,4 +116,4 @@ textarea {/* 余計な隙間とサイズ変更ツマミを消す */
     border-bottom: 1px solid #333 !important; /* ここでflexを使って横並びにする */
     width: 250px !important;/* ここでflexを使って横並びにする */
     height: auto !important;/* ここでflexを使って横並びにする */
-} /* ここでflexを使って横並びにする */
+} /* ここでflexを使って横並びにｐｐする */
