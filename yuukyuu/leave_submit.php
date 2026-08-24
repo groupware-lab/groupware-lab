@@ -2,7 +2,7 @@
 require_once 'login_check.php';
 require_once 'db.php';
 
-$data = json_decode(file_get_contents("php://input"), true);
+$data = json_decode(file_get_contents("php://input"), true);  //php://input=json配列をphpが受け取るときに使う
 $id = $data['id'] ?? null;
 
 $sql = "UPDATE leave_requests
