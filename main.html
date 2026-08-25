@@ -6,26 +6,33 @@
     <title>My Web Page</title>
     <!-- assets内のBootstrap CSSを読み込み -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+    <style>
+        /* 画像の字体（メイリオ・游ゴシック）を全体に適用 */
+        body {
+            font-family: "Meiryo", "メイリオ", "Yu Gothic UI", "游ゴシック UI", sans-serif;
+        }
+    </style>
 </head>
 <body style="background-color: mediumaquamarine;" class="p-4">
 
     <div class="card border-0 shadow-sm rounded-3 p-4 bg-white">
     　
-    <header class="mb-4">
         <!-- タイトル -->
-        <div class="fw-bold fs-5 mb-3">株式会社コンドウソリューションズ</div>
+        <div class="fw-bold fs-5 mb-3">株式会社コンドウソリューション</div>
 
         <!-- ナビゲーションメニュー（枠線・内側の余白はBootstrapクラス） -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-success rounded-3 shadow-sm px-3">
-            <ul class="nav">
-                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">デスクトップ</a></li>
-                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">出退勤管理</a></li>
-                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">社内掲示板</a></li>
-                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">社内稟議書</a></li>
-                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">有給申請</a></li>
-                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">備品購入申請</a></li>
-            </ul>
-        </nav>
+    <header class="mb-3">
+            <nav class="border border-dark rounded-3 p-2 bg-light">
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="#" class="btn btn-outline-dark btn-sm rounded-2">デスクトップ</a>
+                    <a href="#" class="btn btn-outline-dark btn-sm rounded-2">出退勤管理</a>
+                    <a href="#" class="btn btn-outline-dark btn-sm rounded-2">社内掲示板</a>
+                    <a href="#" class="btn btn-outline-dark btn-sm rounded-2">社内稟議書</a>
+                    <a href="#" class="btn btn-outline-dark btn-sm rounded-2">有給申請</a>
+                    <a href="#" class="btn btn-outline-dark btn-sm rounded-2">備品購入申請</a>
+                </div>
+            </nav>
     </header>
 
     <main class="card border-0 shadow-sm rounded-3 p-4 bg-white">
