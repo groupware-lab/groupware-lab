@@ -2,9 +2,6 @@
 session_start();  //セッションIDを生成
 require_once 'db.php';
 
-//session確認用
-//echo session_id();
-
 //フロントエンドから送られてきた値を受け入れるための箱
 $employee_id = $_POST['employee_id'] ?? '';
 $password = $_POST['password'] ?? '';

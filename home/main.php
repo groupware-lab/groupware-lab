@@ -5,20 +5,28 @@ if(!isset($_SESSION['user_id'])) {
     exit;
 } 
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
-<<<<<<< HEAD
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Web Page</title>
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 </head>
-<body class="p-3">
 
+<body class="p-3">
     <header class="mb-4">
-        <!-- タイトル -->
-        <div class="fw-bold fs-5 mb-3">株式会社コンドウソリューションズ</div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center">
+                <span class="fw-bold fs-5">株式会社コンドウソリューションズ</span>
+            </div>
+
+            <a href="logout_confirm.php" class="text-dark text-decoration-none d-flex align-items-center" title="ログアウト">
+                <img src="../assets/img/logout_icon.png" alt="ログアウト" width="20" height="20" class="me-1">
+            <span class="small">ログアウト</span>
+        </a>
+        </div>
         
         <nav class="border border-dark p-2">
             <ul class="nav">
@@ -30,27 +38,6 @@ if(!isset($_SESSION['user_id'])) {
                 <li class="nav-item"><a class="nav-link text-dark p-0 pe-3" href="#">備品購入申請</a></li>
             </ul>
         </nav>
-=======
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>My Web Page</title>
-    </head>
-
-    <header>
-        <div class="logo">株式会社コンドーソリューションズわほー<span></span></div>
-        <nav>
-        <ul>
-            <li><a href="logout_confirm.php">ログアウト</a></li>
-            <li><a href="#">デスクトップ</a></li>
-            <li><a href="#">社内掲示板</a></li>
-            <li><a href="#">社内稟議書</a></li>
-            <li><a href="#">出退勤管理</a></li>
-            <li><a href="#">有給申請</a></li>
-            <li><a href="#">備品購入申請</a></li>
-        </ul>
-    </nav>
->>>>>>> 7880ba2041fdf0980a70f5635a3af2dab036306d
     </header>
 
     <main>
