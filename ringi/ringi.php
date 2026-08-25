@@ -1,3 +1,23 @@
+<?php
+require_once 'db.php';
+session_start();
+
+/* --- DBからデータ取得 --- */
+
+// 部署一覧
+$departments = $mysqli->query("SELECT id, 部署名 FROM 検証用.departments")->fetch_all(MYSQLI_ASSOC);
+
+// 職位一覧
+$positions = $mysqli->query("SELECT id, 職位名 FROM 検証用.positions")->fetch_all(MYSQLI_ASSOC);
+
+// 申請者一覧（ユーザー）
+$applicants = $mysqli->query("SELECT id, username FROM 検証用.users")->fetch_all(MYSQLI_ASSOC);
+
+// 承認者一覧（role='approver' のユーザー）
+$approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role='approver'")->fetch_all(MYSQLI_ASSOC);
+
+?>
+
 <!DOCTYPE html>
  
 <html lang="ja">
@@ -13,6 +33,9 @@
 
 <body>
 
+<form action="ringi_create.php" method="POST">  //POSTで送るための form タグ
+
+
 <div class="form-container">
 
 
@@ -26,6 +49,8 @@
             <tr>
                 <th class="w-15">申請日</th>
                 <td colspan="5" class="w-85" id="today-date" style="font-weight: bold;"></td>
+
+                <input type="hidden" name="apply_date" id="apply_date"> //申請日をPOSTするための hidden
             </tr>
             <!-- プロジェクト名 -->
             <tr>
@@ -38,8 +63,12 @@
             <tr>
                 <th class="w-15">部署名</th>
                 <td class="w-23">
-                    <select name="department" id="department">
-                        
+                    <select name="departments" id="department">
+                    <?php
+                    foreach ($departments as $department){
+                        echo '<option value="' . $department['id'] . '">' . $department['name'] . '</option>';
+                    }
+                    ?> //selectにforeach埋め込み    
 
                         
                     </select>
@@ -47,6 +76,11 @@
                 <th class="w-10">職位</th>
                 <td class="w-23">
                     <select name="position" id="position">
+                     <?php
+                    foreach ($positions as $position){
+                        echo '<option value="' . $position['id'] . '">' . $position['name'] . '</option>';
+                    }
+                    ?> //selectにforeach埋め込み
                         
 
 
@@ -55,9 +89,11 @@
                 <th class="w-10">申請者</th>
                 <td class="w-23">
                     <select name="applicant" id="applicant">
-                       
-
-
+                    <?php
+                    foreach ($applicants as $applicant){
+                        echo '<option value="' . $applicant['id'] . '">' . $applicant['username'] . '</option>';
+                    }
+                    ?> //selectにforeach埋め込み
                     </select>
                 </td>
             </tr>
@@ -108,9 +144,16 @@
     <div class="approver-section">
         <span>承認者の選択:</span>
         <select name="approver" id="approver" class="approver-input">
-            <!-- ここにDBから承認者データが入ります -->
+        <?php
+        foreach ($approvers as $approver){
+            echo '<option value="' . $approver['id'] . '">' . $approver['username'] . '</option>';
+        }
+        ?> //selectにforeach埋め込み   <!-- ここにDBから承認者データが入ります -->
         </select>
     </div>
+
+     <button type="submit" class="submit-btn">保存して確認画面へ</button> // 送信ボタン
+
 </div>
 
 
@@ -120,6 +163,10 @@
     const month = today.getMonth() + 1;/* 月を取得（0から始まるため+1） */
     const date = today.getDate();/* 日を取得 */
     document.getElementById('today-date').textContent = year + '年' + month + '月' + date + '日';
+
+    document.getElementById('apply_date').value =
+        year + '-' + String(month).padStart(2, '0') + '-' + String(date).padStart(2, '0'); //hiddenに今日の日付をセット
+    
 </script>
 </body>
-</html>い
+</html>

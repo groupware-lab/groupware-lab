@@ -1,12 +1,7 @@
 <?php 
 session_start();
-<<<<<<< HEAD
 if(!isset($_SESSION['user_id'])) {  
     header('Location: ..//login/index.php');
-=======
-if(!isset($_SESSION['user_id'])) {  //セッションを保持してなければ通さない（URL直打ちログイン対策）
-    header('Location: ../login/index.php');
->>>>>>> 7880ba2041fdf0980a70f5635a3af2dab036306d
     exit;
 } 
 ?>
