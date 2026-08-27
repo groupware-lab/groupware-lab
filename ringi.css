@@ -1,51 +1,51 @@
-/* @charset "UTF-8";
+@charset "UTF-8";
 /* ページ全体の基本設定（画面の縦幅ぴったりに固定） */
-body {/* ここでflexを使って縦方向に並べる */
-    font-family: sans-serif;/* ここでflexを使って縦方向に並べる */
-    margin: 0;/* ここでflexを使って縦方向に並べる */
-    padding: 15px;/* ここでflexを使って縦方向に並べる */
-    background-color: #f5f5f5; /* ここでflexを使って縦方向に並べる */
-    box-sizing: border-box;/* ここでflexを使って縦方向に並べる */
-    height: 100vh; /* ここでflexを使って縦方向に並べる */
-    display: flex;/* ここでflexを使って縦方向に並べる */
-    flex-direction: column;/* ここでflexを使って縦方向に並べる */
+body {                                     
+    font-family: sans-serif;                
+    margin: 0;
+    padding: 15px;
+    background-color: #f5f5f5; 
+    box-sizing: border-box;
+    height: 100vh; 
+    display: flex;              /* ここでflexを使って縦方向に並べる */
+    flex-direction: column;
 }
 
 /* 稟議書の白い紙の部分（縦幅を画面の下までいっぱいに広げる） */
-.form-container {/* ここでflexを使って縦方向に並べる */
-    width: 100%;/* ここでflexを使って縦方向に並べる */
-    flex: 1;/* ここでflexを使って縦方向に並べる */
-    background-color: #fff;/* ここでflexを使って縦方向に並べる */
-    padding: 20px 30px;/* ここでflexを使って縦方向に並べる */
-    box-sizing: border-box;/* ここでflexを使って縦方向に並べる */
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);/* ここでflexを使って縦方向に並べる */
-    display: flex;/* ここでflexを使って縦方向に並べる */
-    flex-direction: column;/* ここでflexを使って縦方向に並べる */
+.form-container {
+    width: 100%;
+    flex: 1;                    /* ここでflexを使って縦方向に並べる */
+    background-color: #fff;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: flex;              /* ここでflexを使って縦方向に並べる */
+    flex-direction: column;/
 }
 
 /* タイトル「稟議書」 */
-.title {/* ここでflexを使って縦方向に並べる */
-    text-align: center;/* ここでflexを使って縦方向に並べる */
-    font-weight: bold;/* ここでflexを使って縦方向に並べる */
-    font-size: 24px;/* ここでflexを使って縦方向に並べる */
-    letter-spacing: 15px;/* ここでflexを使って縦方向に並べる */
-    margin-bottom: 15px;/* ここでflexを使って縦方向に並べる */
-}/* ここでflexを使って縦方向に並べる */
+.title {
+    text-align: center; 
+    font-weight: bold;
+    font-size: 24px;
+    letter-spacing: 15px;
+    margin-bottom: 15px;
+}
 
 /* テーブル本来の仕組みを残しつつ、縦幅をいっぱいに広げる設定 */
-table {/* ここでflexを使って縦方向に並べる */
-    width: 100%;/* 画面の横幅いっぱいに広げる */
-    flex: 1;                 /* 画面の縦幅の余りをすべて埋める */
-    border-collapse: collapse;/* セルの間の隙間をなくす */
-    table-layout: fixed;     /* 横幅の％指定をきっちり守らせる設定 */
+table {
+    width: 100%;                /* 画面の横幅いっぱいに広げる */
+    flex: 1;                    /* 画面の縦幅の余りをすべて埋める */
+    border-collapse: collapse;  /* セルの間の隙間をなくす */
+    table-layout: fixed;        /* 横幅の％指定をきっちり守らせる設定 */
 }
 
 /* 格子の線とセル（マス）の設定 */
-th, td {/* ここでflexを使って縦方向に並べる */
-    border: 1px solid #333;/* セルの周りの線を黒にする */
-    padding: 8px;/* セルの中の余白を少し広げる */
-    vertical-align: middle;  /* 中の文字を上下中央にする */
-    box-sizing: border-box;/* セルの余白を含めて横幅を計算する */
+th, td {
+    border: 1px solid #333;   /* セルの周りの線を黒にする */
+    padding: 8px;               /* セルの中の余白を少し広げる */
+    vertical-align: middle;     /* 中の文字を上下中央にする */
+    box-sizing: border-box;      /* セルの余白を含めて横幅を計算する */
 }
 
 /* 横幅の比率を指定するクラス */
