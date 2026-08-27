@@ -19,19 +19,17 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
 ?>
 
 <!DOCTYPE html>
- 
 <html lang="ja">
-
-<head> 
-    <meta charset="UTF-8"> 
-    <title>稟議書 申請画面</title>
-    
-
-
-    <link rel="stylesheet" href="ringi.css">
-</head>
-
+    <head> 
+        <meta charset="UTF-8"> 
+        <title>稟議書 申請画面</title>
+        <link rel="stylesheet" href="ringi.css">
+    </head>
 <body>
+<<<<<<< HEAD:ringi.html
+    <div class="form-container">
+        <div class="title">稟議書</div>
+=======
 
 <form action="ringi_create.php" method="POST">  //POSTで送るための form タグ
 
@@ -41,11 +39,9 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
 
     <div class="title">稟議書</div>
 
+>>>>>>> 1facf0e75f9189958be3c9d5567fe4a6592a2e04:ringi/ringi.php
     <table>
         <tbody>
-            
-
-
             <tr>
                 <th class="w-15">申請日</th>
                 <td colspan="5" class="w-85" id="today-date" style="font-weight: bold;"></td>
@@ -57,12 +53,20 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
                 <th class="w-15">プロジェクト名</th>
                 <td colspan="5" class="w-85"><input type="text" placeholder="プロジェクト名を入力"></td> 
             </tr>
-            
-
-
             <tr>
                 <th class="w-15">部署名</th>
                 <td class="w-23">
+<<<<<<< HEAD:ringi.html
+                    <select name="department" id="department"></select>
+                </td>
+                <th class="w-10">職位</th>
+                <td class="w-23">
+                    <select name="position" id="position"></select>
+                </td>
+                <th class="w-10">申請者</th>
+                <td class="w-23">
+                    <select name="applicant" id="applicant"></select>
+=======
                     <select name="departments" id="department">
                     <?php
                     foreach ($departments as $department){
@@ -95,11 +99,9 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
                     }
                     ?> //selectにforeach埋め込み
                     </select>
+>>>>>>> 1facf0e75f9189958be3c9d5567fe4a6592a2e04:ringi/ringi.php
                 </td>
             </tr>
-            
-
-
             <tr>
                 <th class="w-15">費用見積</th>
                 <td colspan="2" class="w-35"><input type="text" placeholder="￥"></td>
@@ -108,8 +110,6 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
                     <input type="date" name="target_date" id="target_date">
                 </td>
             </tr>
-
-
             <tr>
                 <th class="w-15">人数</th>
                 <td colspan="2" class="w-35"><input type="text" placeholder="人"></td>
@@ -122,15 +122,9 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
                     </div>
                 </td>
             </tr>
-            
-
-
             <tr>
                 <th colspan="6" class="w-100">稟議内容（主旨・理由・目的および期待する効果等）</th>
             </tr>
-            
-
-
             <tr class="content-row">
                 <td colspan="6" class="w-100">
                     <textarea placeholder="ここに詳細を記入してください"></textarea>
@@ -138,9 +132,6 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
             </tr>
         </tbody>
     </table>
-
-
-
     <div class="approver-section">
         <span>承認者の選択:</span>
         <select name="approver" id="approver" class="approver-input">
@@ -155,6 +146,8 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
      <button type="submit" class="submit-btn">保存して確認画面へ</button> // 送信ボタン
 
 </div>
+<<<<<<< HEAD:ringi.html
+=======
 
 
 <script>
@@ -168,5 +161,6 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
         year + '-' + String(month).padStart(2, '0') + '-' + String(date).padStart(2, '0'); //hiddenに今日の日付をセット
     
 </script>
+>>>>>>> 1facf0e75f9189958be3c9d5567fe4a6592a2e04:ringi/ringi.php
 </body>
 </html>
