@@ -12,10 +12,13 @@ if(!isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Web Page</title>
+    <!-- assets内のBootstrap CSSを読み込み -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 </head>
 
-<body class="p-3">
+<body style="background-color: mediumaquamarine;" class="p-4">
+
+    
     <header class="mb-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex align-items-center">
@@ -27,51 +30,57 @@ if(!isset($_SESSION['user_id'])) {
             <span class="small">ログアウト</span>
         </a>
         </div>
-        
-        <nav class="border border-dark p-2">
+        <!-- タイトル
+        <div class="fw-bold fs-5 mb-3">株式会社コンドウソリューションズ</div> -->
+
+        <!-- ナビゲーションメニュー（枠線・内側の余白はBootstrapクラス） -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-success rounded-3 shadow-sm px-3">
             <ul class="nav">
-                <li class="nav-item"><a class="nav-link text-dark p-0 pe-3" href="#">デスクトップ</a></li>
-                <li class="nav-item"><a class="nav-link text-dark p-0 pe-3" href="#">出退勤管理</a></li>
-                <li class="nav-item"><a class="nav-link text-dark p-0 pe-3" href="#">社内掲示板</a></li>
-                <li class="nav-item"><a class="nav-link text-dark p-0 pe-3" href="#">社内稟議書</a></li>
-                <li class="nav-item"><a class="nav-link text-dark p-0 pe-3" href="#">有給申請</a></li>
-                <li class="nav-item"><a class="nav-link text-dark p-0 pe-3" href="#">備品購入申請</a></li>
+                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">デスクトップ</a></li>
+                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">出退勤管理</a></li>
+                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">社内掲示板</a></li>
+                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">社内稟議書</a></li>
+                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">有給申請</a></li>
+                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">備品購入申請</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <section class="card border-dark rounded-0 mb-3">
-            <div class="card-header bg-white border-dark rounded-0 fw-bold">出退勤管理</div>
+    <main class="card border-0 shadow-sm rounded-3 p-4 bg-white">
+        <!-- 最上部のカード -->
+        <section class="card border bg-light rounded-3 mb-4">
+            <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0 fw-bold text-dark fs-5">社内掲示板</div>
             <div class="card-body py-5"></div>
         </section>
 
+        <!-- 2列レイアウト -->
         <div class="container-fluid p-0">
-            <div class="row g-3">
+            <div class="row g-4">
+                <!-- 左列 -->
                 <div class="col-md-6">
-                    <section class="card border-dark rounded-0 mb-3">
-                        <div class="card-header bg-white border-dark rounded-0 fw-bold">社内稟議書</div>
+                    <section class="card border bg-light rounded-3 mb-4">
+                        <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0 fw-bold text-dark fs-5">社内稟議書</div>
                         <div class="card-body py-5"></div>
                     </section>
-                    <section class="card border-dark rounded-0 mb-3">
-                        <div class="card-header bg-white border-dark rounded-0 fw-bold">有給申請</div>
+                    <section class="card border bg-light rounded-3 mb-0">
+                        <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0 fw-bold text-dark fs-5">有給申請</div>
                         <div class="card-body py-5"></div>
                     </section>
                 </div>
 
+                <!-- 右列 -->
                 <div class="col-md-6">
-                    <section class="card border-dark rounded-0 mb-3">
-                        <div class="card-header bg-white border-dark rounded-0 fw-bold">出退勤管理</div>
+                    <section class="card border bg-light rounded-3 mb-4">
+                        <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0 fw-bold text-dark fs-5">出退勤管理</div>
                         <div class="card-body py-5"></div>
                     </section>
-                    <section class="card border-dark rounded-0 mb-3">
-                        <div class="card-header bg-white border-dark rounded-0 fw-bold">備品購入申請</div>
+                    <section class="card border bg-light rounded-3 mb-0">
+                        <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0 fw-bold text-dark fs-5">備品購入申請</div>
                         <div class="card-body py-5"></div>
                     </section>
                 </div>
             </div>
         </div>
     </main>
-
 </body>
 </html>
