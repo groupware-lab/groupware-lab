@@ -14,12 +14,12 @@ body {
 /* 稟議書の白い紙の部分（縦幅を画面の下までいっぱいに広げる） */
 .form-container {
     width: 100%;
-    flex: 1;                    /* ここでflexを使って縦方向に並べる */
+    flex: 1;                   
     background-color: #fff;
     padding: 20px 30px;
     box-sizing: border-box;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    display: flex;              /* ここでflexを使って縦方向に並べる */
+    display: flex;             
     flex-direction: column;
 }
 
@@ -57,10 +57,6 @@ th, td {
     width: 15%; 
 }/* 横幅の比率を指定するクラス */
 
-.w-20  { 
-    width: 20%; 
-}/* 横幅の比率を指定するクラス */
-
 .w-23  { 
     width: 23.33%; 
 }/* 横幅の比率を指定するクラス */
@@ -68,35 +64,28 @@ th, td {
 .w-35  { 
     width: 35%; 
 }/* 横幅の比率を指定するクラス */
-.w-40  { 
-    width: 40%; 
-}/* 横幅の比率を指定するクラス */
-
-.w-70  { 
-    width: 70%;
- }/* 横幅の比率を指定するクラス */
 
 .w-85  { 
     width: 85%;
 }
  /* 横幅の比率を指定するクラス */
+
 .w-100 { 
     width: 100%;
 }/* 横幅の比率を指定するクラス */
 
 /* グレーの見出し部分 */
-th {/* ここでflexを使って縦方向に並べる */
-    background-color: #d7ecd9;/* グレーの見出し部分 */
+th {
+    background-color: #50c192;/* グレーの見出し部分 */
     font-weight: normal;/* グレーの見出し部分 */
 }
 
-input[type="text"], select, textarea {/* ここでflexを使って縦方向に並べる */
-    width: 100%;/* セルいっぱいに広げる */
-    height: 100%;/* セルいっぱいに広げる */
-    box-sizing: border-box;/* セルいっぱいに広げる */
-    border: none;/* セルいっぱいに広げる */
-    outline: none;/* セルいっぱいに広げる */
-    font-size: 16px;/* セルいっぱいに広げる */
+input[type="text"], select, textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font-size: 16px;
     background-color: transparent; /* 背景を透明にしてセルの色に合わせる */
 }
 
@@ -104,6 +93,7 @@ input[type="text"], select, textarea {/* ここでflexを使って縦方向に�
 textarea {/* 余計な隙間とサイズ変更ツマミを消す */
     resize: none;/* 余計な隙間とサイズ変更ツマミを消す */
     display: block;/* 余計な隙間とサイズ変更ツマミを消す */
+    min-height: 200px;   /* 最低でもこの高さは確保する */
 }
 
 /* 稟議内容の行（ここが画面の残りの高さをすべて吸収して広がります） */
@@ -112,45 +102,32 @@ textarea {/* 余計な隙間とサイズ変更ツマミを消す */
 }
 
 /* ラジオボタンと文字の並び */
-.checkbox-group {/* ここでflexを使って横並びにする */
-    display: flex;/* ここでflexを使って横並びにする */
-    align-items: center;/* ここでflexを使って横並びにする */
-    gap: 15px;/* ここでflexを使って横並びにする */
-    width: 100%;/* ここでflexを使って横並びにする */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
 }
 
-/* 「あり（____）」の中の入力枠 */
-.inline-input {/* ここでflexを使って横並びにする */
-    width: 100px !important; /* ここでflexを使って横並びにする */
-    border-bottom: 1px solid #ccc !important; /* ここでflexを使って横並びにする */
-    height: auto !important;/* ここでflexを使って横並びにする */
-}/* ここでflexを使って横並びにする */
-
 /* 一番下の承認者選択セクション */
-.approver-section {/* ここでflexを使って横並びにする */
-    margin-top: 15px;/* ここでflexを使って横並びにする */
-    font-weight: bold;/* ここでflexを使って横並びにする */
-    display: flex;/* ここでflexを使って横並びにする */
-    align-items: center;/* ここでflexを使って横並びにする */
-    gap: 15px;/* ここでflexを使って横並びにする */
-}/* ここでflexを使って横並びにする */
+.approver-section {
+    margin-top: 15px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
 /* 承認者入力欄の線 */
-.approver-input {/* ここでflexを使って横並びにする */
-    border-bottom: 1px solid #333 !important; /* ここでflexを使って横並びにする */
-    height: auto !important;/* ここでflexを使って横並びにする */
+.approver-input {
+    border-bottom: 1px solid #333 !important; 
+    height: auto !important;
 } /* ここでflexを使って横並びにｐｐする */
 
 
 /*//////////////////*/
 /*ここから追記したやつ/*/
 /*/////////////////*/
-
-textarea {
-    resize: none;
-    display: block;
-    min-height: 200px;   /* 最低でもこの高さは確保する */
-}
 
 .approver-position {
     width: 100px !important;
@@ -180,4 +157,27 @@ textarea {
     gap: 10px;
     margin-bottom: 0;           /* 縦の余白は不要なので削除 */
     flex-shrink: 0;             /* 横に増えても潰れないように */
+}
+
+.submit-row {
+    text-align: center;
+    margin-top: 24px;
+}
+
+.submit-btn {
+    display: inline-block;
+    width: auto;
+    min-width: 160px;
+    padding: 10px 32px;
+    background-color: #50c192;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #d7ecd9;
 }
