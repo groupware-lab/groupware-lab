@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.bg-main-green {
+  background-color: #1b8a5a !important;
+}
+
+.logout-icon {
+    filter: brightness(0) invert(1);
+}
+
+.logout-link:hover {
+    color: #d0d0d0 !important;
+    opacity: 0.85;
+}

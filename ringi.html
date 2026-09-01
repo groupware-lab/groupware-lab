@@ -35,7 +35,7 @@
             </tr>
             <tr>
                 <th class="w-15">費用見積</th>
-                <td colspan="2" class="w-35"><input type="text" placeholder="￥"></td>
+                <td colspan="2" class="w-35"><input type="number" placeholder="￥">：円</td>
                 <th class="w-15">実施希望日</th>
                 <td colspan="2" class="w-35">
                     <input type="date" name="target_date" id="target_date">
@@ -64,19 +64,59 @@
         </tbody>
     </table>
 
-    <div class="approver-section">
-        <span>承認者の選択:</span>
-        <select name="approver" id="approver" class="approver-input">
-            <!-- ここにDBから承認者データが入ります -->
-        </select>
+    <div class="approver-section" id="approver-section">
+        <div class="approver-box">
+            <div class="approver-block" id="approver-list">
+
+                <div class="approver-row">
+                    <span class="approver-label">申請者：</span>
+                    <select name="positions[]" class="approver-input approver-position">
+                        <!-- 職位（係長・課長・部長など） -->
+                    </select>
+                    <select name="approvers[]" class="approver-input approver-select">
+                        <!-- 氏名（DBから承認者候補） -->
+                    </select>
+                    <button type="button" class="add-approver-btn">＋</button>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<script>
+
+    <script>
     const today = new Date(); /* 今日の日付を取得 */
-    const year = today.getFullYear();/* 年を取得 */
-    const month = today.getMonth() + 1;/* 月を取得（0から始まるため+1） */
-    const date = today.getDate();/* 日を取得 */
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const date = today.getDate();
     document.getElementById('today-date').textContent = year + '年' + month + '月' + date + '日';
+
+    document.getElementById('approver-list').addEventListener('click', function(e) {
+        if (!e.target.classList.contains('add-approver-btn')) return;
+
+        const rows = document.querySelectorAll('.approver-row');
+        const approverNumber = rows.length; // 1行目(申請者)を除いた承認者の番号
+
+        const newRow = rows[0].cloneNode(true);
+        newRow.querySelector('.approver-label').textContent = '承認者' + approverNumber + ':';
+
+        // select要素のname属性を承認者用の配列に変更
+        const selects = newRow.querySelectorAll('select');
+        selects[0].name = 'approver_positions[]';
+        selects[1].name = 'approver_names[]';
+        selects.forEach(sel => sel.selectedIndex = 0);
+
+        const btn = newRow.querySelector('button');
+        btn.textContent = '－';
+        btn.classList.remove('add-approver-btn');
+        btn.classList.add('remove-approver-btn');
+
+        document.getElementById('approver-list').appendChild(newRow);
+    });
+
+    document.getElementById('approver-list').addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-approver-btn')) {
+            e.target.closest('.approver-row').remove();
+        }
+    });
 </script>
 </body>
 </html>

@@ -7,80 +7,69 @@ if(!isset($_SESSION['user_id'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web Page</title>
-    <!-- assets内のBootstrap CSSを読み込み -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-</head>
+    <html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>株式会社コンドウソリューション</title>
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="main.css">
+    </head>
 
-<body style="background-color: mediumaquamarine;" class="p-4">
-
-    
-    <header class="mb-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <div class="d-flex align-items-center">
-                <span class="fw-bold fs-5">株式会社コンドウソリューションズ</span>
-            </div>
-
-            <a href="logout_confirm.php" class="text-dark text-decoration-none d-flex align-items-center" title="ログアウト">
-                <img src="../assets/img/logout_icon.png" alt="ログアウト" width="20" height="20" class="me-1">
-            <span class="small">ログアウト</span>
-        </a>
-        </div>
-        <!-- タイトル
-        <div class="fw-bold fs-5 mb-3">株式会社コンドウソリューションズ</div> -->
-
-        <!-- ナビゲーションメニュー（枠線・内側の余白はBootstrapクラス） -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-success rounded-3 shadow-sm px-3">
-            <ul class="nav">
-                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">デスクトップ</a></li>
-                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">出退勤管理</a></li>
-                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">社内掲示板</a></li>
-                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">社内稟議書</a></li>
-                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">有給申請</a></li>
-                <li class="nav-item"><a class="nav-link text-white fw-medium" href="#">備品購入申請</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="card border-0 shadow-sm rounded-3 p-4 bg-white">
-        <!-- 最上部のカード -->
-        <section class="card border bg-light rounded-3 mb-4">
-            <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0 fw-bold text-dark fs-5">社内掲示板</div>
-            <div class="card-body py-5"></div>
-        </section>
-
-        <!-- 2列レイアウト -->
-        <div class="container-fluid p-0">
-            <div class="row g-4">
-                <!-- 左列 -->
-                <div class="col-md-6">
-                    <section class="card border bg-light rounded-3 mb-4">
-                        <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0 fw-bold text-dark fs-5">社内稟議書</div>
-                        <div class="card-body py-5"></div>
-                    </section>
-                    <section class="card border bg-light rounded-3 mb-0">
-                        <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0 fw-bold text-dark fs-5">有給申請</div>
-                        <div class="card-body py-5"></div>
-                    </section>
+    <body class="bg-light d-flex flex-column min-vh-100">
+        <header class="bg-main-green text-white py-3 px-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex align-items-center">
+                    <span class="fw-bold fs-5">株式会社コンドウソリューションズ</span>
                 </div>
 
-                <!-- 右列 -->
-                <div class="col-md-6">
-                    <section class="card border bg-light rounded-3 mb-4">
-                        <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0 fw-bold text-dark fs-5">出退勤管理</div>
-                        <div class="card-body py-5"></div>
-                    </section>
-                    <section class="card border bg-light rounded-3 mb-0">
-                        <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0 fw-bold text-dark fs-5">備品購入申請</div>
-                        <div class="card-body py-5"></div>
-                    </section>
-                </div>
+                <a href="logout_confirm.php" class="text-white text-decoration-none d-flex align-items-center logout-link" title="ログアウト">
+                    <img src="../assets/img/logout_icon.png" alt="ログアウト" width="30" height="35" class="me-1 logout-icon">
+                    <span class="small">ログアウト</span>
+                </a>
+            </div>
+        </header>
+
+        <div class="bg-white border-bottom py-2 px-4 mb-4">
+            <div class="container-fluid p-0 d-flex flex-wrap gap-2">
+                <button type="button" class="btn btn-outline-secondary btn-sm">デスクトップ</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm">出退勤管理</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm">社内掲示板</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm">ワークフロー</button>
             </div>
         </div>
-    </main>
-</body>
+
+        <main class="container-fluid px-4 flex-grow-1">
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="card border border-1 shadow-sm p-3">
+                        <h2 class="h6 fw-bold mb-0">社内掲示板</h2>
+                        <div style="min-height: 100px;"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card border border-1 shadow-sm p-3">
+                        <h2 class="h6 fw-bold mb-0">出退勤管理</h2>
+                        <div style="min-height: 100px;"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card border border-1 shadow-sm p-3">
+                        <h2 class="h6 fw-bold mb-0">ワークフロー</h2>
+                        <div style="min-height: 100px;"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-main-green text-white text-center py-3 mt-4">
+            <div class="container-fluid">
+                <small>&copy; KONDO SOLUTIONS Co, Ltd. All Rights Reserved.</small>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
 </html>

@@ -16,6 +16,7 @@ if(!isset($_SESSION['user_id'])) {
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="../assets/css/common.css" rel="stylesheet">
 </head>
+
 <body class="logout-body">
   <div class="logout-box">
     <h2>ログアウトしますか?</h2>
