@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head> 
-    <meta charset="UTF-8"> 
+<head>
+    <meta charset="UTF-8">
     <title>稟議書 申請画面</title>
     <link rel="stylesheet" href="ringi.css">
 </head>
 <body>
+<form action="" method="POST">
 <div class="form-container">
     <div class="title">稟議書</div>
-    
+
     <table>
         <tbody>
             <tr>
@@ -17,7 +18,7 @@
             </tr>
             <tr>
                 <th class="w-15">プロジェクト名</th>
-                <td colspan="5" class="w-85"><input type="text" placeholder="プロジェクト名を入力"></td> 
+                <td colspan="5" class="w-85"><input type="text" placeholder="プロジェクト名を入力"></td>
             </tr>
             <tr>
                 <th class="w-15">部署名</th>
@@ -35,22 +36,7 @@
             </tr>
             <tr>
                 <th class="w-15">費用見積</th>
-                <td colspan="2" class="w-35"><input type="number" placeholder="￥">：円</td>
-                <th class="w-15">実施希望日</th>
-                <td colspan="2" class="w-35">
-                    <input type="date" name="target_date" id="target_date">
-                </td>
-            </tr>
-            <tr>
-                <th class="w-15">人数</th>
-                <td colspan="2" class="w-35"><input type="text" placeholder="人"></td>
-                <th class="w-15">委託先</th>
-                <td colspan="2" class="w-35">
-                    <div class="checkbox-group">
-                        <label><input type="radio" name="itaku"> あり（</label>
-                        <input type="text" class="inline-input"> ）
-                        <label><input type="radio" name="itaku"> なし</label>
-                    </div>
+                <td colspan="5" class="w-85"><input type="number" placeholder="￥">：円</td>
                 </td>
             </tr>
             <tr>
@@ -63,18 +49,15 @@
             </tr>
         </tbody>
     </table>
-
+ 
     <div class="approver-section" id="approver-section">
         <div class="approver-box">
             <div class="approver-block" id="approver-list">
-
+ 
                 <div class="approver-row">
-                    <span class="approver-label">申請者：</span>
-                    <select name="positions[]" class="approver-input approver-position">
-                        <!-- 職位（係長・課長・部長など） -->
-                    </select>
-                    <select name="approvers[]" class="approver-input approver-select">
-                        <!-- 氏名（DBから承認者候補） -->
+                    <span class="approver-label">承認者1：</span>
+                    <select name="approver_ids[]" class="approver-input approver-select">
+                        <!-- 部署・職位・氏名をまとめて表示（DBから承認候補。例: <option value="8">開発部 部長 鈴木一郎</option>） -->
                     </select>
                     <button type="button" class="add-approver-btn">＋</button>
                 </div>
@@ -82,39 +65,49 @@
         </div>
     </div>
 
+    <div class="submit-row">
+        <button type="submit" class="submit-btn">申請する</button>
+    </div>
+</div>
+</form>
+ 
     <script>
     const today = new Date(); /* 今日の日付を取得 */
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
     const date = today.getDate();
     document.getElementById('today-date').textContent = year + '年' + month + '月' + date + '日';
-
-    document.getElementById('approver-list').addEventListener('click', function(e) {
-        if (!e.target.classList.contains('add-approver-btn')) return;
-
-        const rows = document.querySelectorAll('.approver-row');
-        const approverNumber = rows.length; // 1行目(申請者)を除いた承認者の番号
-
-        const newRow = rows[0].cloneNode(true);
-        newRow.querySelector('.approver-label').textContent = '承認者' + approverNumber + ':';
-
-        // select要素のname属性を承認者用の配列に変更
-        const selects = newRow.querySelectorAll('select');
-        selects[0].name = 'approver_positions[]';
-        selects[1].name = 'approver_names[]';
-        selects.forEach(sel => sel.selectedIndex = 0);
-
-        const btn = newRow.querySelector('button');
-        btn.textContent = '－';
-        btn.classList.remove('add-approver-btn');
-        btn.classList.add('remove-approver-btn');
-
-        document.getElementById('approver-list').appendChild(newRow);
-    });
-
-    document.getElementById('approver-list').addEventListener('click', function(e) {
+ 
+    const approverList = document.getElementById('approver-list');
+ 
+    // 承認者の行を上から「承認者1、承認者2…」の順にラベルを振り直す
+    function renumberApprovers() {
+        document.querySelectorAll('.approver-row').forEach((row, index) => {
+            row.querySelector('.approver-label').textContent = '承認者' + (index + 1) + '：';
+        });
+    }
+ 
+    approverList.addEventListener('click', function(e) {
+        if (e.target.classList.contains('add-approver-btn')) {
+            const firstRow = document.querySelector('.approver-row');
+            const newRow = firstRow.cloneNode(true);
+ 
+            // クローン元の選択状態を引き継がないようリセット
+            newRow.querySelector('select').selectedIndex = 0;
+ 
+            const btn = newRow.querySelector('button');
+            btn.textContent = '－';
+            btn.classList.remove('add-approver-btn');
+            btn.classList.add('remove-approver-btn');
+ 
+            approverList.appendChild(newRow);
+            renumberApprovers();
+            return;
+        }
+ 
         if (e.target.classList.contains('remove-approver-btn')) {
             e.target.closest('.approver-row').remove();
+            renumberApprovers();
         }
     });
 </script>

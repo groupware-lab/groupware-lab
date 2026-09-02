@@ -26,20 +26,8 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
         <link rel="stylesheet" href="ringi.css">
     </head>
 <body>
-<<<<<<< HEAD:ringi.html
     <div class="form-container">
         <div class="title">稟議書</div>
-=======
-
-<form action="ringi_create.php" method="POST">  //POSTで送るための form タグ
-
-
-<div class="form-container">
-
-
-    <div class="title">稟議書</div>
-
->>>>>>> 1facf0e75f9189958be3c9d5567fe4a6592a2e04:ringi/ringi.php
     <table>
         <tbody>
             <tr>
@@ -56,7 +44,6 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
             <tr>
                 <th class="w-15">部署名</th>
                 <td class="w-23">
-<<<<<<< HEAD:ringi.html
                     <select name="department" id="department"></select>
                 </td>
                 <th class="w-10">職位</th>
@@ -66,40 +53,6 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
                 <th class="w-10">申請者</th>
                 <td class="w-23">
                     <select name="applicant" id="applicant"></select>
-=======
-                    <select name="departments" id="department">
-                    <?php
-                    foreach ($departments as $department){
-                        echo '<option value="' . $department['id'] . '">' . $department['name'] . '</option>';
-                    }
-                    ?> //selectにforeach埋め込み    
-
-                        
-                    </select>
-                </td>
-                <th class="w-10">職位</th>
-                <td class="w-23">
-                    <select name="position" id="position">
-                     <?php
-                    foreach ($positions as $position){
-                        echo '<option value="' . $position['id'] . '">' . $position['name'] . '</option>';
-                    }
-                    ?> //selectにforeach埋め込み
-                        
-
-
-                    </select>
-                </td>
-                <th class="w-10">申請者</th>
-                <td class="w-23">
-                    <select name="applicant" id="applicant">
-                    <?php
-                    foreach ($applicants as $applicant){
-                        echo '<option value="' . $applicant['id'] . '">' . $applicant['username'] . '</option>';
-                    }
-                    ?> //selectにforeach埋め込み
-                    </select>
->>>>>>> 1facf0e75f9189958be3c9d5567fe4a6592a2e04:ringi/ringi.php
                 </td>
             </tr>
             <tr>
@@ -146,21 +99,5 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
      <button type="submit" class="submit-btn">保存して確認画面へ</button> // 送信ボタン
 
 </div>
-<<<<<<< HEAD:ringi.html
-=======
-
-
-<script>
-    const today = new Date(); /* 今日の日付を取得 */
-    const year = today.getFullYear();/* 年を取得 */
-    const month = today.getMonth() + 1;/* 月を取得（0から始まるため+1） */
-    const date = today.getDate();/* 日を取得 */
-    document.getElementById('today-date').textContent = year + '年' + month + '月' + date + '日';
-
-    document.getElementById('apply_date').value =
-        year + '-' + String(month).padStart(2, '0') + '-' + String(date).padStart(2, '0'); //hiddenに今日の日付をセット
-    
-</script>
->>>>>>> 1facf0e75f9189958be3c9d5567fe4a6592a2e04:ringi/ringi.php
 </body>
 </html>
