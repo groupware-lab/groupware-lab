@@ -1,26 +1,173 @@
 @charset "UTF-8";
 
-body {
-  background-color: #f5f5f5;
-  white-space: nowrap;  /*画面幅が小さくなっても均等に表示*/
-  font-family: 'Zen Kaku Gothic New', sans-serif;
+/*全体のデザイン*/
+/*変数を定義して他でも使いまわせるように設計*/
+:root {
+  --navy: #16233f;
+  --blue: #2f6fed;
+  --blue-dark: #1d3f8f;
+  --blue-tint: #eef3fd;
+  --border: #dbe4f3;
+  --header-h: 80px;
 }
 
-h1 {
-  text-align: center;
-  font-weight: 800;
-} 
+* {
+  box-sizing: border-box;
+}
 
-.login-wrapper {
-  min-height: 100vh;
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", "Segoe UI", sans-serif;
+  color: var(--navy);   /*rootで定義した色を使用*/
+}
+
+/* ヘッダー */
+.login-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-h); /*rootで定義した色を使用*/
+  background: linear-gradient(90deg, var(--navy), var(--blue-dark));
   display: flex;
   align-items: center;
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(15, 26, 51, 0.15);
 }
 
-.col-6 {
-  margin: 50px;
+.login-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 24px;
 }
-.btn-login
-{
+
+.login-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: #ffffff;
+  color: var(--blue-dark);  /*rootで定義した色を使用*/
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.login-header-title {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+}
+
+/* 背景 */
+.login-page {
+  min-height: 100%;
+  padding-top: var(--header-h); /*rootで定義した色を使用*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 32px;
+  position: relative;
+  background-image:
+    linear-gradient(180deg, rgba(12, 24, 48, 0.72), rgba(12, 24, 48, 0.82)),
+    url("../assets/img/login.jpg");
+  background-size: cover;
+  background-position: center 65%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.login-card {
   width: 100%;
+  max-width: 400px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 40px 36px;
+  box-shadow: 0 24px 60px rgba(5, 12, 28, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.login-brand {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.login-brand-en {
+  margin: 0 0 20px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: #8290a8;
+}
+
+.login-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.form-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4a5670;
+  margin-bottom: 6px;
+}
+
+.login-input {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  background: #ffffff;
+}
+
+.login-input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.15);
+}
+
+.login-error {
+  color: #d64545;
+  font-size: 14px;
+  margin: -4px 0 12px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 11px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.login-btn:hover {
+  filter: brightness(1.08);
+}
+
+.login-btn:active {
+  transform: translateY(1px);
+}
+
+.login-footer {
+  margin-top: 20px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }

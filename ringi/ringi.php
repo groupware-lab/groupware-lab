@@ -43,6 +43,7 @@ $approvers = $mysqli->query("SELECT id, username FROM 検証用.users WHERE role
             </tr>
             <tr>
                 <th class="w-15">部署名</th>
+                
                 <td class="w-23">
                     <select name="department" id="department"></select>
                 </td>
