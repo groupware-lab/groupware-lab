@@ -8,15 +8,18 @@
     <!-- bootstrapのcssを読み込む用 -->
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- headerの共通部品のcssを読み込む用 -->
+    <link href="../assets/css/common.css" rel="stylesheet">
+
     <!-- 自分で作ったcssを読み込む用 -->
     <link rel="stylesheet" href="style.css">
   </head>
 
   <body>
-    <header class="login-header">
-      <div class="login-header-inner">
-        <span class="login-logo-badge">KS</span>
-        <span class="login-header-title">株式会社コンドウソリューション</span>
+    <header class="app-header">
+      <div class="app-header-inner">
+        <span class="app-logo-badge">KS</span>
+        <span class="app-header-title">株式会社コンドウソリューション</span>
       </div>
     </header>
 

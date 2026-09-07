@@ -1,3 +1,67 @@
+/*全体のデザイン*/
+/*変数を定義して他でも使いまわせるように設計*/
+:root {
+  --navy: #16233f;
+  --blue: #2f6fed;
+  --blue-dark: #1d3f8f;
+  --blue-tint: #eef3fd;
+  --border: #dbe4f3;
+  --header-h: 80px;
+}
+
+/*///////////////////////////*/
+/* header(共通部品として使える)*/
+/*///////////////////////////*/
+
+.app-header {
+  height: var(--header-h); /*rootで定義した色を使用*/
+  background: linear-gradient(90deg, var(--navy), var(--blue-dark));
+  display: flex;
+  justify-content: space-between;  /*両端横並び*/
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(15, 26, 51, 0.15);
+}
+
+.app-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;  /*会社ロゴと会社テキストに空白を設定*/
+  padding: 0 24px;
+}
+
+.app-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: #ffffff;
+  color: var(--blue-dark);  /*rootで定義した色を使用*/
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.app-header-title {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 25px;
+  letter-spacing: 0.02em;
+}
+
+/*/////////////////////////*/
+/*nav（共通部品）*/
+/*/////////////////////////*/
+
+.app-nav-menu {
+  padding: 0 24px;
+}
+
+/*/////////////////////////*/
+/*ログアウトボタン（共通部品）*/
+/*/////////////////////////*/
+
 .logout-body {
   background-color: #f8f9fa;
   display: flex;
