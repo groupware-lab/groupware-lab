@@ -41,7 +41,7 @@ if(!isset($_SESSION['user_id'])) {
         <!-- デスクトップ以外はリンクでページ遷移するため -->
         <div class="bg-white border-bottom py-2 px-4 mb-4">
             <div class="container-fluid p-0 d-flex flex-wrap gap-2">
-                <ul>
+                <ul class="">
                     <li><a href="#" class="btn btn-outline-secondary btn-sm">デスクトップ</a></li>
                     <li><a href="#" class="btn btn-outline-secondary btn-sm">出退勤管理</a></li>
                     <li><a href="#" class="btn btn-outline-secondary btn-sm">社内掲示板</a></li>
