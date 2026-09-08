@@ -16,11 +16,9 @@ if(!isset($_SESSION['user_id'])) {
         <!-- bootstrapのcssを読み込む用 -->
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- headerの共通部品のcssを読み込む用 -->
+        <!-- headerとログアウトボタンの共通部品のcssを読み込む用 -->
         <link href="../assets/css/common.css" rel="stylesheet">
 
-        <!-- 追加で作成したcssを読み込む用 -->
-        <link rel="stylesheet" href="main.css">
     </head>
 
     <body class="bg-light d-flex flex-column min-vh-100">
@@ -74,11 +72,5 @@ if(!isset($_SESSION['user_id'])) {
                 </div>
             </div>
         </main>
-
-        <footer class="bg-main-green text-white text-center py-3 mt-4">
-            <div class="container-fluid">
-                <small>&copy; KONDO SOLUTIONS Co, Ltd. All Rights Reserved.</small>
-            </div>
-        </footer>
     </body>
 </html>

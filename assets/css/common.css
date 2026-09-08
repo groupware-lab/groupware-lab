@@ -1,5 +1,6 @@
 /*全体のデザイン*/
 /*変数を定義して他でも使いまわせるように設計*/
+
 :root {
   --navy: #16233f;
   --blue: #2f6fed;
@@ -84,4 +85,13 @@
   font-size: 1.3rem;
   font-weight: bold;
   margin-bottom: 8px;
+}
+
+.logout-icon {
+    filter: brightness(0) invert(1);
+}
+
+.logout-link:hover {
+    color: #d0d0d0 !important;
+    opacity: 0.85;
 }
