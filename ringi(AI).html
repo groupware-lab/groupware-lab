@@ -1,0 +1,148 @@
+<?php
+session_start();
+require_once '../db.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../login/index.php');
+    exit;
+}
+
+// ログイン中ユーザーの情報を取得
+$stmt = $connection->prepare("SELECT id, name, department, position FROM users WHERE id = ?");
+$stmt->execute([$_SESSION['user_id']]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// 承認候補者(課長以上)を取得
+$sql = "SELECT id, name, department, position 
+        FROM users 
+        WHERE position IN ('課長', '部長', '副社長', '社長')
+        ORDER BY department, FIELD(position, '社長', '副社長', '部長', '課長')";
+$stmt = $connection->prepare($sql);
+$stmt->execute();
+$approvers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>稟議書 申請画面</title>
+    <link rel="stylesheet" href="ringi.css">
+</head>
+<body>
+<form action="ringi_submit.php" method="POST">
+<div class="form-container">
+    <div class="title">稟議書</div>
+
+    <table>
+        <tbody>
+            <tr>
+                <th class="w-15">申請日</th>
+                <td colspan="5" class="w-85" id="today-date" style="font-weight: bold;"></td>
+            </tr>
+            <tr>
+                <th class="w-15">プロジェクト名</th>
+                <td colspan="5" class="w-85"><input type="text" name="title" placeholder="プロジェクト名を入力"></td>
+            </tr>
+            <tr>
+                <th class="w-15">部署名</th>
+                <td class="w-23">
+                    <select name="department" id="department" disabled>
+                        <option selected><?php echo htmlspecialchars($user['department']); ?></option>
+                    </select>
+                </td>
+                <th class="w-10">職位</th>
+                <td class="w-23">
+                    <select name="position" id="position" disabled>
+                        <option selected><?php echo htmlspecialchars($user['position']); ?></option>
+                    </select>
+                </td>
+                <th class="w-10">申請者</th>
+                <td class="w-23">
+                    <select name="applicant" id="applicant" disabled>
+                        <option selected><?php echo htmlspecialchars($user['name']); ?></option>
+                    </select>
+                    <!-- disabledのselectは値が送信されないため、hiddenで実際の送信値を確保 -->
+                    <input type="hidden" name="applicant_id" value="<?php echo $user['id']; ?>">
+                </td>
+            </tr>
+            <tr>
+                <th class="w-15">費用見積</th>
+                <td colspan="5" class="w-85"><input type="number" name="amount" min="0" placeholder="￥">：円</td>
+            </tr>
+            <tr>
+                <th colspan="6" class="w-100">稟議内容（主旨・理由・目的および期待する効果等）</th>
+            </tr>
+            <tr class="content-row">
+                <td colspan="6" class="w-100">
+                    <textarea name="content" placeholder="ここに詳細を記入してください"></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="approver-section" id="approver-section">
+        <div class="approver-box">
+            <div class="approver-block" id="approver-list">
+
+                <div class="approver-row">
+                    <span class="approver-label">承認者1：</span>
+                    <select name="approver_ids[]" class="approver-input approver-select">
+                        <option value="">選択してください</option>
+                        <?php foreach ($approvers as $a): ?>
+                            <option value="<?php echo $a['id']; ?>">
+                                <?php echo htmlspecialchars($a['department'] . '　' . $a['position'] . '　' . $a['name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button type="button" class="add-approver-btn">＋</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-row">
+        <button type="submit" class="submit-btn">申請する</button>
+    </div>
+</div>
+</form>
+
+    <script>
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const date = today.getDate();
+    document.getElementById('today-date').textContent = year + '年' + month + '月' + date + '日';
+
+    const approverList = document.getElementById('approver-list');
+
+    function renumberApprovers() {
+        document.querySelectorAll('.approver-row').forEach((row, index) => {
+            row.querySelector('.approver-label').textContent = '承認者' + (index + 1) + '：';
+        });
+    }
+
+    approverList.addEventListener('click', function(e) {
+        if (e.target.classList.contains('add-approver-btn')) {
+            const firstRow = document.querySelector('.approver-row');
+            const newRow = firstRow.cloneNode(true);
+
+            newRow.querySelector('select').selectedIndex = 0;
+
+            const btn = newRow.querySelector('button');
+            btn.textContent = '－';
+            btn.classList.remove('add-approver-btn');
+            btn.classList.add('remove-approver-btn');
+
+            approverList.appendChild(newRow);
+            renumberApprovers();
+            return;
+        }
+
+        if (e.target.classList.contains('remove-approver-btn')) {
+            e.target.closest('.approver-row').remove();
+            renumberApprovers();
+        }
+    });
+</script>
+</body>
+</html>
