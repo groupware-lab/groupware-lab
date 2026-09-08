@@ -1,33 +1,47 @@
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>株式会社コンドウソリューション: ワークフロー</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .bg-main-green {
-      background-color: #1b8a5a !important;
-    }
+    <html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>株式会社コンドウソリューション</title>
 
-  </style>
-</head>
-<body class="bg-light d-flex flex-column min-vh-100">
+        <!-- bootstrapのcssを読み込む用 -->
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 
-  <header class="bg-main-green text-white py-3 px-4">
-    <div class="container-fluid p-0">
-      <h1 class="h5 m-0 fw-bold">株式会社コンドウソリューション</h1>
-    </div>
-  </header>
+        <!-- headerとログアウトボタンの共通部品のcssを読み込む用 -->
+        <link href="../assets/css/common.css" rel="stylesheet">
 
-  <div class="bg-white border-bottom py-2 px-4 mb-4">
-    <div class="container-fluid p-0 d-flex flex-wrap gap-2">
-      <button type="button" class="btn btn-outline-secondary btn-sm">デスクトップ</button>
-      <button type="button" class="btn btn-outline-secondary btn-sm">出退勤管理</button>
-      <button type="button" class="btn btn-outline-secondary btn-sm">社内掲示板</button>
-      <button type="button" class="btn btn-outline-secondary btn-sm">ワークフロー</button>
-    </div>
-  </div>
+    </head>
+
+    <body class="bg-light d-flex flex-column min-vh-100">
+        <header class="app-header">
+            <div class="app-header-inner">
+                <span class="app-logo-badge">KS</span>
+                <span class="app-header-title">株式会社コンドウソリューション</span>
+            </div>
+
+            <nav class="app-nav-menu">
+                <a href="logout_confirm.php" class="text-white text-decoration-none d-flex align-items-center logout-link" title="ログアウト">
+                    <img src="../assets/img/logout_icon.png" alt="ログアウト" width="30" height="35" class="me-1 logout-icon">
+                    <span class="small">ログアウト</span>
+                </a>
+            </nav>
+        </header>
+
+        <!-- ここから後で再度コードを確認する（倉部） -->
+        <!-- ここはbuttonでない。liで明示してあげてaタグでリンク遷移するからたぶん要修正 -->
+        <!-- デスクトップ以外はリンクでページ遷移するため -->
+        <div class="bg-white border-bottom py-2 px-4 mb-4">
+            <div class="container-fluid p-0 d-flex flex-wrap gap-2">
+                <ul>
+                    <li><a href="#" class="btn btn-outline-secondary btn-sm">デスクトップ</a></li>
+                    <li><a href="#" class="btn btn-outline-secondary btn-sm">出退勤管理</a></li>
+                    <li><a href="#" class="btn btn-outline-secondary btn-sm">社内掲示板</a></li>
+                    <li><a href="#" class="btn btn-outline-secondary btn-sm">ワークフロー</a></li>
+                </ul>
+            </div>
+        </div>
+
 
   <main class="container-fluid px-4 flex-grow-1">
     <div class="row g-3">
