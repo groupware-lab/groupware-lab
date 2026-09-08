@@ -1,26 +1,120 @@
 @charset "UTF-8";
 
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
 body {
-  background-color: #f5f5f5;
-  white-space: nowrap;  /*画面幅が小さくなっても均等に表示*/
-  font-family: 'Zen Kaku Gothic New', sans-serif;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", "Segoe UI", sans-serif;
+  color: var(--navy);   /*rootで定義した色を使用*/
 }
 
-h1 {
-  text-align: center;
-  font-weight: 800;
-} 
-
-.login-wrapper {
-  min-height: 100vh;
+/* 背景 */
+.login-page {
+  min-height: 100%;
+  padding-top: var(--header-h); /*rootで定義した色を使用*/
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 32px;
+  position: relative;
+  background-image:
+    linear-gradient(180deg, rgba(12, 24, 48, 0.72), rgba(12, 24, 48, 0.82)),
+    url("../assets/img/login.jpg");
+  background-size: cover;
+  background-position: center 65%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
-.col-6 {
-  margin: 50px;
-}
-.btn-login
-{
+.login-card {
   width: 100%;
+  max-width: 450px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 60px 36px;
+  box-shadow: 0 24px 60px rgba(5, 12, 28, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.login-brand {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+/*会社テキスト(英語)*/
+.login-brand-en {
+  margin: 0 0 20px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: #8290a8;
+}
+
+.login-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.form-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4a5670;
+  margin-bottom: 6px;
+}
+
+.login-input {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  background: #ffffff;
+}
+
+.login-input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.15);
+}
+
+.login-error {
+  color: #d64545;
+  font-size: 14px;
+  margin: -4px 0 12px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 11px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.login-btn:hover {
+  filter: brightness(1.08);
+}
+
+.login-btn:active {
+  transform: translateY(1px);
+}
+
+.login-footer {
+  margin-top: 20px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }

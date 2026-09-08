@@ -1,9 +1,9 @@
-<?php 
-session_start();
+<?php
+/*session_start();
 if(!isset($_SESSION['user_id'])) {  
     header('Location: ..//login/index.php');
     exit;
-} 
+}*/ 
 ?>
 
 <!DOCTYPE html>
@@ -12,24 +12,33 @@ if(!isset($_SESSION['user_id'])) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>株式会社コンドウソリューション</title>
+
+        <!-- bootstrapのcssを読み込む用 -->
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="main.css">
+
+        <!-- headerとログアウトボタンの共通部品のcssを読み込む用 -->
+        <link href="../assets/css/common.css" rel="stylesheet">
+
     </head>
 
     <body class="bg-light d-flex flex-column min-vh-100">
-        <header class="bg-main-green text-white py-3 px-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="d-flex align-items-center">
-                    <span class="fw-bold fs-5">株式会社コンドウソリューションズ</span>
-                </div>
+        <header class="app-header">
+            <div class="app-header-inner">
+                <span class="app-logo-badge">KS</span>
+                <span class="app-header-title">株式会社コンドウソリューション</span>
+            </div>
 
+            <nav class="app-nav-menu">
                 <a href="logout_confirm.php" class="text-white text-decoration-none d-flex align-items-center logout-link" title="ログアウト">
                     <img src="../assets/img/logout_icon.png" alt="ログアウト" width="30" height="35" class="me-1 logout-icon">
                     <span class="small">ログアウト</span>
                 </a>
-            </div>
+            </nav>
         </header>
 
+        <!-- ここから後で再度コードを確認する（倉部） -->
+        <!-- ここはbuttonでない。liで明示してあげてaタグでリンク遷移するからたぶん要修正 -->
+        <!-- デスクトップ以外はリンクでページ遷移するため -->
         <div class="bg-white border-bottom py-2 px-4 mb-4">
             <div class="container-fluid p-0 d-flex flex-wrap gap-2">
                 <button type="button" class="btn btn-outline-secondary btn-sm">デスクトップ</button>
@@ -63,13 +72,5 @@ if(!isset($_SESSION['user_id'])) {
                 </div>
             </div>
         </main>
-
-        <footer class="bg-main-green text-white text-center py-3 mt-4">
-            <div class="container-fluid">
-                <small>&copy; KONDO SOLUTIONS Co, Ltd. All Rights Reserved.</small>
-            </div>
-        </footer>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
