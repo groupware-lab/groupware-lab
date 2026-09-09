@@ -40,8 +40,8 @@ if(!isset($_SESSION['user_id'])) {
         <!-- ここはbuttonでない。liで明示してあげてaタグでリンク遷移するからたぶん要修正 -->
         <!-- デスクトップ以外はリンクでページ遷移するため -->
         <div class="bg-white border-bottom py-2 px-4 mb-4">
-            <div class="container-fluid p-0 d-flex flex-wrap gap-2">
-                <ul>
+            <div class="container-fluid p-0">
+                <ul class="d-flex flex-wrap gap-2 list-unstyled mb-0 ps-0">
                     <li><a href="#" class="btn btn-outline-secondary btn-sm">デスクトップ</a></li>
                     <li><a href="#" class="btn btn-outline-secondary btn-sm">出退勤管理</a></li>
                     <li><a href="#" class="btn btn-outline-secondary btn-sm">社内掲示板</a></li>
