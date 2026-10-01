@@ -51,9 +51,7 @@
             }
           }
           ?>
-
           <button type="submit" class="btn login-btn mt-2">ログイン</button>
-
         </form>
       </div>
     </div>
