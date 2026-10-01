@@ -1,9 +1,5 @@
-<?php 
-session_start();
-if(!isset($_SESSION['user_id'])) {
-  header('Location: login.php');
-  exit;
-}
+<?php
+require_once __DIR__ . '/../common/auth_check.php';
 ?>
 
 <!DOCTYPE html>

@@ -1,17 +1,6 @@
 <?php
-session_start();
-/*未ログインの場合（セッション不保持）の場合はログイン画面へ遷移*/ 
-if(!isset($_SESSION['user_id'])) {  
-    header('Location: ../login/index.php');
-    exit;
-}
-
-/*ログインした社員名を検索して画面に表示*/
-require_once '../login/db.php';
-$stmt = $connection->prepare('SELECT name FROM users WHERE id = :id');
-$stmt->execute(([':id'=> $_SESSION['user_id']]));
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-$employee_name = $user['name'] ??'不明';
+require_once __DIR__ . '/../common/auth_check.php';      
+require_once __DIR__ . '/../common/get_user_info.php';
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +47,7 @@ $employee_name = $user['name'] ??'不明';
                     <li><a href="#" class="btn btn-outline-secondary btn-sm">デスクトップ</a></li>
                     <li><a href="#" class="btn btn-outline-secondary btn-sm">出退勤管理</a></li>
                     <li><a href="#" class="btn btn-outline-secondary btn-sm">社内掲示板</a></li>
-                    <li><a href="#" class="btn btn-outline-secondary btn-sm">ワークフロー</a></li>
+                    <li><a href="../workflow/workflow_main.php" class="btn btn-outline-secondary btn-sm">ワークフロー</a></li>
                 </ul>
             </div>
         </div>
