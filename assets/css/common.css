@@ -95,3 +95,17 @@
     color: #d0d0d0 !important;
     opacity: 0.85;
 }
+
+/*/////////////////////////*/
+/*ユーザーアイコン（共通部品）*/
+/*/////////////////////////*/
+
+.app-user-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #ffffff;
+}

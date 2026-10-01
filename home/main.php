@@ -1,9 +1,17 @@
 <?php
-/*session_start();
+session_start();
+/*未ログインの場合（セッション不保持）の場合はログイン画面へ遷移*/ 
 if(!isset($_SESSION['user_id'])) {  
     header('Location: ..//login/index.php');
     exit;
-}*/ 
+}
+
+/*ログインした社員名を検索して画面に表示*/
+require_once '../login/db.php';
+$stmt = $connection->prepare('SELECT name FROM users WHERE id = :id');
+$stmt->execute(([':id'=> $_SESSION['user_id']]));
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$employee_name = $user['name'] ??'不明';
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +36,15 @@ if(!isset($_SESSION['user_id'])) {
                 <span class="app-header-title">株式会社コンドウソリューション</span>
             </div>
 
-            <nav class="app-nav-menu">
+            <nav class="app-nav-menu d-flex align-items-center gap-4">
+                <span class="small text-white">
+                    こんにちは！<?php echo htmlspecialchars($employee_name, ENT_QUOTES, 'UTF-8')?>  さん
+                </span>
+
+                <span class="app-user-badge">
+                    <img src="../assets/img/user_icon.png" alt="社員アイコン" width="30" height="30">
+                </span>
+
                 <a href="logout_confirm.php" class="text-white text-decoration-none d-flex align-items-center logout-link" title="ログアウト">
                     <img src="../assets/img/logout_icon.png" alt="ログアウト" width="30" height="35" class="me-1 logout-icon">
                     <span class="small">ログアウト</span>
@@ -36,17 +52,9 @@ if(!isset($_SESSION['user_id'])) {
             </nav>
         </header>
 
-        <!-- ここから後で再度コードを確認する（倉部） -->
-        <!-- ここはbuttonでない。liで明示してあげてaタグでリンク遷移するからたぶん要修正 -->
-        <!-- デスクトップ以外はリンクでページ遷移するため -->
         <div class="bg-white border-bottom py-2 px-4 mb-4">
-<<<<<<< HEAD
             <div class="container-fluid p-0">
                 <ul class="d-flex flex-wrap gap-2 list-unstyled mb-0 ps-0">
-=======
-            <div class="container-fluid p-0 d-flex flex-wrap gap-2">
-                <ul class="">
->>>>>>> 941541aa1f2eafbdf6277a9fd003cc012968ecb0
                     <li><a href="#" class="btn btn-outline-secondary btn-sm">デスクトップ</a></li>
                     <li><a href="#" class="btn btn-outline-secondary btn-sm">出退勤管理</a></li>
                     <li><a href="#" class="btn btn-outline-secondary btn-sm">社内掲示板</a></li>
