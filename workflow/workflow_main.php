@@ -33,7 +33,7 @@ require_once __DIR__ . '/../common/get_user_info.php';
                     <img src="../assets/img/user_icon.png" alt="社員アイコン" width="30" height="30">
                 </span>
 
-                <a href="logout_confirm.php" class="text-white text-decoration-none d-flex align-items-center logout-link" title="ログアウト">
+                <a href="../home/logout_confirm.php" class="text-white text-decoration-none d-flex align-items-center logout-link" title="ログアウト">
                     <img src="../assets/img/logout_icon.png" alt="ログアウト" width="30" height="35" class="me-1 logout-icon">
                     <span class="small">ログアウト</span>
                 </a>

@@ -26,9 +26,15 @@ try {
 
 //パスワード照合
 if($user && password_verify($password, $user['password_hash'])) {
+   session_regenerate_id(true);
    $_SESSION['user_id'] = $user['id'];
+   recordLoginAttempt($connection, $user['id'], 'success');
    header('Location: ../home/main.php');       //home画面に遷移させる
    exit();
 }
+
+//ログイン失敗時のログ取得
+$failedUserId =$user ? $user['id'] : null;
+recordLoginAttempt($connection, $failedUserId, 'failure');
 header('Location: index.php?error=invalid');  //エラーメッセージ(社員番号またはパスワードの不一致)を表示する
 exit;

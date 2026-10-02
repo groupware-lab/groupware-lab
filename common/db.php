@@ -13,4 +13,14 @@ try {
     error_log("DB接続失敗：" . $e->getMessage());
     die("システムエラーが発生しました。しばらくしてから再度接続してください。"); /*ここがユーザーが見える画面*/
 }
+
+// ログイン試行時にDBにログを残す
+function recordLoginAttempt($connection, $userId, $result) {
+    try {
+        $stmt = $connection->prepare("INSERT INTO login_history (user_id, result) VALUES (?, ?)");
+        $stmt->execute([$userId, $result]);
+    } catch (PDOException $e) {
+        error_log("ログイン履歴の記録に失敗しました。" . $e->getmessage());
+    }
+}
 ?>
