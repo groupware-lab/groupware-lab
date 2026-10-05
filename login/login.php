@@ -1,6 +1,6 @@
 <?php //ログイン機能のためのphp
-session_start();  //セッションIDを生成
-require_once '../common/db.php';
+session_start();
+require_once __DIR__ . '/../common/db.php';
 
 //フロントエンドから送られてきた値を受け入れるための箱
 $employee_id = $_POST['employee_id'] ?? '';

@@ -30,6 +30,7 @@ body {
     font-size: 24px;
     letter-spacing: 15px;
     margin-bottom: 15px;
+    color: var(--navy);
 }
 
 /* テーブル本来の仕組みを残しつつ、縦幅をいっぱいに広げる設定 */
@@ -38,14 +39,16 @@ table {
     flex: 1;                    /* 画面の縦幅の余りをすべて埋める */
     border-collapse: collapse;  /* セルの間の隙間をなくす */
     table-layout: fixed;        /* 横幅の％指定をきっちり守らせる設定 */
+
 }
 
 /* 格子の線とセル（マス）の設定 */
 th, td {
-    border: 1px solid #333;   /* セルの周りの線を黒にする */
+    border: 1px solid var(--border);   /* セルの周りの線を黒にする */
     padding: 8px;               /* セルの中の余白を少し広げる */
     vertical-align: middle;     /* 中の文字を上下中央にする */
     box-sizing: border-box;      /* セルの余白を含めて横幅を計算する */
+    border-color: black;
 }
 
 /* 横幅の比率を指定するクラス */
@@ -76,8 +79,9 @@ th, td {
 
 /* グレーの見出し部分 */
 th {
-    background-color: #50c192;/* グレーの見出し部分 */
-    font-weight: normal;/* グレーの見出し部分 */
+    background-color: var(--blue);
+    color: #fff;
+    font-weight: 600;
 }
 
 input[type="text"], select, textarea {
@@ -101,14 +105,6 @@ textarea {/* 余計な隙間とサイズ変更ツマミを消す */
     height: 100%; /* ここでflexを使って縦方向に並べる */
 }
 
-/* ラジオボタンと文字の並び */
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-}
-
 /* 一番下の承認者選択セクション */
 .approver-section {
     margin-top: 15px;
@@ -118,22 +114,19 @@ textarea {/* 余計な隙間とサイズ変更ツマミを消す */
     gap: 15px;
 }
 
-/* 承認者入力欄の線 */
-.approver-input {
-    border-bottom: 1px solid #333 !important; 
-    height: auto !important;
-} /* ここでflexを使って横並びにｐｐする */
-
-
-/*//////////////////*/
-/*ここから追記したやつ/*/
-/*/////////////////*/
-
-.approver-position {
-    width: 100px !important;
+.approver-label {
+    white-space: nowrap;  /*文字折り返さない*/
+    flex-shrink: 0;       /*flexコンテナに押されても縮まないように*/
 }
-.approver-select {
-    width: 130px !important;
+
+/* 承認者入力欄の線 */
+select.approver-input {
+    border-bottom: 1px solid var(--blue-dark);
+    height: auto;
+}
+
+select.approver-select {
+    width: 220px;
 }
 
 .approver-box {
@@ -169,7 +162,7 @@ textarea {/* 余計な隙間とサイズ変更ツマミを消す */
     width: auto;
     min-width: 160px;
     padding: 10px 32px;
-    background-color: #50c192;
+    background-color: var(--blue);
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -179,5 +172,6 @@ textarea {/* 余計な隙間とサイズ変更ツマミを消す */
 }
 
 .submit-btn:hover {
-    background-color: #d7ecd9;
+    background-color: var(--blue-dark);
+    /* common.cssのヘッダーグラデーション終端と同じ色を流用 */
 }

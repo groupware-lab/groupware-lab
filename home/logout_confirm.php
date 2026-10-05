@@ -13,7 +13,7 @@ require_once __DIR__ . '/../common/auth_check.php';
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- headerの共通部品のcssを読み込む用 -->
-    <link href="../assets/css/common.css" rel="stylesheet">
+    <link href="../common/common.css" rel="stylesheet">
   </head>
 
   <body class="logout-body">

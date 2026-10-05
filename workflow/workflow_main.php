@@ -14,7 +14,7 @@ require_once __DIR__ . '/../common/get_user_info.php';
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- headerとログアウトボタンの共通部品のcssを読み込む用 -->
-    <link href="../assets/css/common.css" rel="stylesheet">
+    <link href="../common/common.css" rel="stylesheet">
   </head>
 
   <body class="bg-light d-flex flex-column min-vh-100">
@@ -64,7 +64,7 @@ require_once __DIR__ . '/../common/get_user_info.php';
           <div class="card border border-1 shadow-sm p-3 text-center">
             <h2 class="h6 fw-bold mb-3">新規ワークフロー申請</h2>
             <h3 class="h6 fw-bold mb-2">稟議書</h3>
-            <a href="" class="btn bg-light w-100 d-flex align-items-center justify-content-center gap-2 mb-3">
+            <a href="../ringi/ringi.php" class="btn bg-light w-100 d-flex align-items-center justify-content-center gap-2 mb-3">
               <img src="../assets/img/sinsei.png" alt="申請" style="max-height: 20px; width: auto;">
               <span>申請</span>
             </a>
