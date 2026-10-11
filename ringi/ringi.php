@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../common/auth_check.php';
+require_once __DIR__ . '/../common/get_user_info.php';
 require_once __DIR__ . '/../common/db.php';
 
 $stmt = $connection->prepare(
@@ -23,16 +24,22 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>稟議書 申請画面</title>
 
     <!-- 背景色のデザインの共通部分を読み込み -->
     <link href="../common/common.css" rel="stylesheet">
     
+    <!-- bootstrapのcssを読み込む用 -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- 稟議用のCSSの読み込み -->
     <link rel="stylesheet" href="ringi.css">
 </head>
 
-<body>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <?php require_once __DIR__ . '/../common/header.php'; ?>
+
     <form action="ringi_app.php" method="POST">
         <div class="form-container">
             <div class="title">稟議書</div>
@@ -68,7 +75,7 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <tr>
                         <th class="w-15">費用見積</th>
                         <td colspan="5" class="w-85">
-                            <input type="number" placeholder="￥">円
+                            <input type="number">　円
                         </td>
                     </tr>
 

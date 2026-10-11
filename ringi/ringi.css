@@ -1,9 +1,8 @@
 @charset "UTF-8";
 
-body {                                     
-    font-family: sans-serif;                
+body {                                                    
     margin: 0;
-    padding: 15px;
+    padding: 0;
     background-color: #f5f5f5; 
     box-sizing: border-box;
     min-height: 100vh;      /* height: 100vh → min-height:*/ 
@@ -17,6 +16,7 @@ body {
     flex: 1;                   
     background-color: #fff;
     padding: 20px 30px;
+    margin: 15px;
     box-sizing: border-box;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     display: flex;             
