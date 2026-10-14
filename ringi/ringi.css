@@ -12,11 +12,10 @@ body {
 
 /* 稟議書の白い紙の部分（縦幅を画面の下までいっぱいに広げる） */
 .form-container {
-    width: 100%;
-    flex: 1;                   
+    max-width: 1400px;                 
     background-color: #fff;
     padding: 20px 30px;
-    margin: 15px;
+    margin: 12px auto;
     box-sizing: border-box;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     display: flex;             
@@ -35,47 +34,20 @@ body {
 
 /* テーブル本来の仕組みを残しつつ、縦幅をいっぱいに広げる設定 */
 table {
-    width: 100%;                /* 画面の横幅いっぱいに広げる */
-    flex: 1;                    /* 画面の縦幅の余りをすべて埋める */
-    border-collapse: collapse;  /* セルの間の隙間をなくす */
-    table-layout: fixed;        /* 横幅の％指定をきっちり守らせる設定 */
+    width: 100%;                        /* 画面の横幅いっぱいに広げる */
+    border-collapse: collapse;          /* セルの間の隙間をなくす */
+    table-layout: fixed;                /* 横幅の％指定をきっちり守らせる設定 */
 
 }
 
 /* 格子の線とセル（マス）の設定 */
 th, td {
-    border: 1px solid var(--border);   /* セルの周りの線を黒にする */
-    padding: 8px;               /* セルの中の余白を少し広げる */
-    vertical-align: middle;     /* 中の文字を上下中央にする */
-    box-sizing: border-box;      /* セルの余白を含めて横幅を計算する */
+    border: 1px solid var(--border);    /* セルの周りの線を黒にする */
+    padding: 8px;                       /* セルの中の余白を少し広げる */
+    vertical-align: middle;             /* 中の文字を上下中央にする */
+    box-sizing: border-box;             /* セルの余白を含めて横幅を計算する */
     border-color: black;
 }
-
-/* 横幅の比率を指定するクラス */
-.w-10  { 
-    width: 10%; 
-}/* 横幅の比率を指定するクラス */
-
-.w-15  { 
-    width: 15%; 
-}/* 横幅の比率を指定するクラス */
-
-.w-23  { 
-    width: 23.33%; 
-}/* 横幅の比率を指定するクラス */
-
-.w-35  { 
-    width: 35%; 
-}/* 横幅の比率を指定するクラス */
-
-.w-85  { 
-    width: 85%;
-}
- /* 横幅の比率を指定するクラス */
-
-.w-100 { 
-    width: 100%;
-}/* 横幅の比率を指定するクラス */
 
 /* グレーの見出し部分 */
 th {
@@ -94,15 +66,15 @@ input[type="text"], select, textarea {
 }
 
 /* テキストエリア専用のスタイル（余計な隙間とサイズ変更ツマミを消す） */
-textarea {/* 余計な隙間とサイズ変更ツマミを消す */
-    resize: none;/* 余計な隙間とサイズ変更ツマミを消す */
-    display: block;/* 余計な隙間とサイズ変更ツマミを消す */
-    min-height: 200px;   /* 最低でもこの高さは確保する */
+textarea {              
+    resize: none;        /* 余計な隙間とサイズ変更ツマミを消す */
+    display: block;     
+    min-height: 140px;   /* 最低でもこの高さは確保する */
 }
 
 /* 稟議内容の行（ここが画面の残りの高さをすべて吸収して広がります） */
-.content-row {/* ここでflexを使って縦方向に並べる */
-    height: 100%; /* ここでflexを使って縦方向に並べる */
+.content-row {          
+    height: 100%;       
 }
 
 /* 一番下の承認者選択セクション */
@@ -139,9 +111,8 @@ select.approver-select {
 
 .approver-block {
     display: flex;
-    flex-direction: row;        /* 縦並び→横並びに変更 */
-    align-items: center;
-    gap: 20px;                  /* 行(承認者ブロック)同士の間隔 */
+    flex-wrap: wrap;            /*各承認者枠を画面横にふえすぎたら折り返して表示*/
+    gap: 12px 28px;              /* 各承認者枠の行間隔*/
 }
 
 .approver-row {
@@ -153,6 +124,8 @@ select.approver-select {
 }
 
 .submit-row {
+    position: sticky;           /*スクロール中でも画面下にボタンが残る*/
+    bottom: 0;
     text-align: center;
     margin-top: 24px;
 }
@@ -173,5 +146,4 @@ select.approver-select {
 
 .submit-btn:hover {
     background-color: var(--blue-dark);
-    /* common.cssのヘッダーグラデーション終端と同じ色を流用 */
 }

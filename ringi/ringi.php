@@ -4,12 +4,6 @@ require_once __DIR__ . '/../common/get_user_info.php';
 require_once __DIR__ . '/../common/db.php';
 
 $stmt = $connection->prepare(
-    "SELECT id, department, position, name FROM users WHERE id = ?"
-);
-$stmt->execute([$_SESSION['user_id']]);
-$loginUser = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$stmt = $connection->prepare(
     "SELECT id, department, position, name FROM users
     ORDER BY 
         CASE WHEN department = :my_dept THEN 0 ELSE 1 END,
@@ -20,6 +14,7 @@ $stmt = $connection->prepare(
 $stmt->execute(['my_dept' => $loginUser['department']]);
 $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -46,45 +41,45 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <table>
                 <tbody>
                     <tr>
-                        <th class="w-15">申請日</th>
-                        <td colspan="5" class="w-85" id="today-date" style="font-weight: bold;"></td>
+                        <th>申請日</th>
+                        <td colspan="5" id="today-date" style="font-weight: bold;"></td>
                     </tr>
 
                     <tr>
-                        <th class="w-15">プロジェクト名</th>
-                        <td colspan="5" class="w-85">
-                            <input type="text" placeholder="プロジェクト名を入力">
+                        <th>プロジェクト名</th>
+                        <td colspan="5">
+                            <input type="text" name="title" placeholder="プロジェクト名を入力">
                         </td>
                     </tr>
 
                     <tr>
-                        <th class="w-15">部署名</th>
-                        <td class="w-23">
+                        <th>部署名</th>
+                        <td>
                             <?= htmlspecialchars($loginUser['department'] ?? 'ー', ENT_QUOTES, 'UTF-8') ?>
                         </td>
-                        <th class="w-10">職位</th>
-                        <td class="w-23">
+                        <th>職位</th>
+                        <td>
                             <?= htmlspecialchars($loginUser['position'], ENT_QUOTES, 'UTF-8') ?>
                         </td>
-                        <th class="w-10">申請者</th>
-                        <td class="w-23">
+                        <th>申請者</th>
+                        <td>
                             <?=  htmlspecialchars($loginUser['name'], ENT_QUOTES, 'UTF-8') ?>
                         </td>
                     </tr>
 
                     <tr>
-                        <th class="w-15">費用見積</th>
-                        <td colspan="5" class="w-85">
-                            <input type="number">　円
+                        <th>費用見積</th>
+                        <td colspan="5">
+                            <input type="number" name="amount">　円
                         </td>
                     </tr>
 
                     <tr>
-                        <th colspan="6" class="w-100">稟議内容（主旨・理由・目的および期待する効果等）</th>
+                        <th colspan="6" class="text-center">稟議内容（主旨・理由・目的および期待する効果等）</th>
                     </tr>
                     <tr class="content-row">
-                        <td colspan="6" class="w-100">
-                            <textarea placeholder="ここに詳細を記入してください"></textarea>
+                        <td colspan="6">
+                            <textarea name="content" placeholder="ここに詳細を記入してください"></textarea>
                         </td>
                     </tr>
                 </tbody>

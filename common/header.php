@@ -1,5 +1,4 @@
 <!-- header,navは共通部品のためこちらに分離した -->
-
 <header class="app-header">
     <div class="app-header-inner">
         <span class="app-logo-badge">KS</span>
@@ -22,7 +21,7 @@
     </nav>
 </header>
 
-<div class="bg-white border-bottom py-2 px-4" mb-2>
+<div class="bg-white border-bottom py-2 px-4 mb-4">
     <div class="container-fluid p-0">
         <ul class="d-flex flex-wrap gap-2 list-unstyled mb-0 ps-0">
             <li><a href="../home/main.php" class="btn btn-outline-secondary btn-sm">デスクトップ</a></li>
