@@ -1,6 +1,36 @@
 <?php
-require_once __DIR__ . '/../common/auth_check.php';      
-require_once __DIR__ . '/../common/get_user_info.php';  
+require_once __DIR__ . '/../common/auth_check.php';  
+require_once __DIR__ . '/../common/db.php';   
+require_once __DIR__ . '/../common/get_user_info.php'; 
+
+//ログインしてる人のセッションを取得（申請者のみの稟議内容を取得）
+$applicant_id = $_SESSION['user_id'];
+
+//稟議id,プロジェクト名,費用,申請状況,申請日を取得
+$sql = "SELECT ringi.id, ringi.project_name, ringi.estimated_cost, ringi.status, ringi.created_at,
+        users.name AS current_approver
+        FROM ringi
+        LEFT JOIN ringi_approvers
+          ON ringi_approvers.ringi_id = ringi.id
+          AND ringi_approvers.step_order = ringi.current_step
+        LEFT JOIN users
+          ON users.id = ringi_approvers.approver_id
+        WHERE ringi.applicant_id = :applicant_id
+        ORDER BY ringi.created_at DESC
+        LIMIT 5";
+
+$stmt = $connection->prepare($sql);
+
+$stmt->bindValue(':applicant_id', $_SESSION['user_id'], PDO::PARAM_INT);
+$stmt->execute();
+$histories = $stmt->fetchALL(PDO::FETCH_ASSOC);
+
+//申請履歴のステータスメッセージを表示
+$status_labels = [
+  'pending'  => ['label' => '承認待ち', 'class' => 'bg-warning text-dark'],
+  'approved' => ['label' => '承認済み', 'class' => 'bg-success'],
+  'rejected' => ['label' => '却下', 'class' => 'bg-danger'],
+  ];
 ?>
 
 <!DOCTYPE html>
@@ -18,45 +48,62 @@ require_once __DIR__ . '/../common/get_user_info.php';
   </head>
 
   <body class="bg-light d-flex flex-column min-vh-100">
-      <header class="app-header">
-          <div class="app-header-inner">
-              <span class="app-logo-badge">KS</span>
-              <span class="app-header-title">株式会社コンドウソリューション</span>
-          </div>
-
-          <nav class="app-nav-menu d-flex align-items-center gap-4">
-                <span class="small text-white">
-                    こんにちは！<?php echo htmlspecialchars($employee_name, ENT_QUOTES, 'UTF-8')?>  さん
-                </span>
-
-                <span class="app-user-badge">
-                    <img src="../assets/img/user_icon.png" alt="社員アイコン" width="30" height="30">
-                </span>
-
-                <a href="../home/logout_confirm.php" class="text-white text-decoration-none d-flex align-items-center logout-link" title="ログアウト">
-                    <img src="../assets/img/logout_icon.png" alt="ログアウト" width="30" height="35" class="me-1 logout-icon">
-                    <span class="small">ログアウト</span>
-                </a>
-            </nav>
-      </header>
-
-      <div class="bg-white border-bottom py-2 px-4 mb-4">
-          <div class="container-fluid p-0">
-              <ul class="d-flex flex-wrap gap-2 list-unstyled mb-0 ps-0">
-                <li><a href="../home/main.php" class="btn btn-outline-secondary btn-sm">デスクトップ</a></li>
-                <li><a href="#" class="btn btn-outline-secondary btn-sm">出退勤管理</a></li>
-                <li><a href="#" class="btn btn-outline-secondary btn-sm">社内掲示板</a></li>
-                <li><a href="#" class="btn btn-outline-secondary btn-sm">ワークフロー</a></li>
-              </ul>
-          </div>
-      </div>
-
+    <?php require_once __DIR__ . '/../common/header.php'; ?>
+    
       <main class="container-fluid px-4 flex-grow-1">
         <div class="row g-3">
           <div class="col-12">
             <div class="card border border-1 shadow-sm p-3">
-              <h2 class="h6 fw-bold mb-0">申請履歴</h2>
-            <div style="min-height: 100px;"></div>
+              <h2 class="h6 fw-bold mb-3">申請履歴</h2>
+
+              <?php if(empty($histories)): ?>
+                <p class='text-muted small mb-0'>申請履歴はまだありません。</p>
+              <?php else: ?>
+                <div class='table-responsive'>
+                  <table class="table table-sm table-hover align-middle mb-2">
+                    <thead class="table-light">
+                      <tr>
+                        <th>申請日</th> 
+                        <th>種別</th>
+                        <th>プロジェクト名</th>
+                        <th class="text-end pe-4">費用見積</th>
+                        <th>ステータス</th>
+                        <th>現在の承認者</th>
+                      </tr>
+                    </thead>
+
+                  <tbody>
+                    <?php foreach ($histories as $h): ?>
+                      <?php
+                        $s  = $status_labels[$h['status']]
+                          ??['label' => $h['status'], 'class' => 'bg-light text-dark' ];
+                      ?>
+                      <tr>
+                        <td><?= date('Y/m/d', strtotime($h['created_at']))?></td>
+                        <td>稟議書</td>
+                        <td>
+                          <a href="#">
+                          <?= htmlspecialchars($h['project_name'], ENT_QUOTES, 'UTF-8') ?>
+                          </a>
+                        </td>
+
+                        <td class="text-end pe-4"><?= number_format((int)$h['estimated_cost']) ?>円</td>
+                        <td>
+                          <span class="badge  <?= $s['class'] ?>">
+                            <?=  htmlspecialchars($s['label'], ENT_QUOTES, 'UTF-8') ?>
+                          </span>
+                        </td>
+                        <td>
+                          <?=  $h['status'] === 'pending'
+                          ? htmlspecialchars($h['current_approver'] ?? '-', ENT_QUOTES, 'UTF-8'): '-' ?>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                  </table>
+                </div>
+                <a href="#" class="small">すべての申請履歴を見る⇒</a>
+              <?php endif; ?>
           </div>
         </div>
 

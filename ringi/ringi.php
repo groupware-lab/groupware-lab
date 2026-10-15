@@ -1,12 +1,7 @@
 <?php
 require_once __DIR__ . '/../common/auth_check.php';
+require_once __DIR__ . '/../common/get_user_info.php';
 require_once __DIR__ . '/../common/db.php';
-
-$stmt = $connection->prepare(
-    "SELECT id, department, position, name FROM users WHERE id = ?"
-);
-$stmt->execute([$_SESSION['user_id']]);
-$loginUser = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $stmt = $connection->prepare(
     "SELECT id, department, position, name FROM users
@@ -19,65 +14,72 @@ $stmt = $connection->prepare(
 $stmt->execute(['my_dept' => $loginUser['department']]);
 $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>稟議書 申請画面</title>
 
     <!-- 背景色のデザインの共通部分を読み込み -->
     <link href="../common/common.css" rel="stylesheet">
     
+    <!-- bootstrapのcssを読み込む用 -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- 稟議用のCSSの読み込み -->
     <link rel="stylesheet" href="ringi.css">
 </head>
 
-<body>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <?php require_once __DIR__ . '/../common/header.php'; ?>
+
     <form action="ringi_app.php" method="POST">
         <div class="form-container">
             <div class="title">稟議書</div>
             <table>
                 <tbody>
                     <tr>
-                        <th class="w-15">申請日</th>
-                        <td colspan="5" class="w-85" id="today-date" style="font-weight: bold;"></td>
+                        <th>申請日</th>
+                        <td colspan="5" id="today-date" style="font-weight: bold;"></td>
                     </tr>
 
                     <tr>
-                        <th class="w-15">プロジェクト名</th>
-                        <td colspan="5" class="w-85">
-                            <input type="text" placeholder="プロジェクト名を入力">
+                        <th>プロジェクト名</th>
+                        <td colspan="5">
+                            <input type="text" name="title" placeholder="プロジェクト名を入力">
                         </td>
                     </tr>
 
                     <tr>
-                        <th class="w-15">部署名</th>
-                        <td class="w-23">
+                        <th>部署名</th>
+                        <td>
                             <?= htmlspecialchars($loginUser['department'] ?? 'ー', ENT_QUOTES, 'UTF-8') ?>
                         </td>
-                        <th class="w-10">職位</th>
-                        <td class="w-23">
+                        <th>職位</th>
+                        <td>
                             <?= htmlspecialchars($loginUser['position'], ENT_QUOTES, 'UTF-8') ?>
                         </td>
-                        <th class="w-10">申請者</th>
-                        <td class="w-23">
+                        <th>申請者</th>
+                        <td>
                             <?=  htmlspecialchars($loginUser['name'], ENT_QUOTES, 'UTF-8') ?>
                         </td>
                     </tr>
 
                     <tr>
-                        <th class="w-15">費用見積</th>
-                        <td colspan="5" class="w-85">
-                            <input type="number" placeholder="￥">円
+                        <th>費用見積</th>
+                        <td colspan="5">
+                            <input type="number" name="amount">　円
                         </td>
                     </tr>
 
                     <tr>
-                        <th colspan="6" class="w-100">稟議内容（主旨・理由・目的および期待する効果等）</th>
+                        <th colspan="6" class="text-center">稟議内容（主旨・理由・目的および期待する効果等）</th>
                     </tr>
                     <tr class="content-row">
-                        <td colspan="6" class="w-100">
-                            <textarea placeholder="ここに詳細を記入してください"></textarea>
+                        <td colspan="6">
+                            <textarea name="content" placeholder="ここに詳細を記入してください"></textarea>
                         </td>
                     </tr>
                 </tbody>
