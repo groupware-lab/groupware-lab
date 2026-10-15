@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株式会社コンドウソリューション</title>
+
+    <!-- bootstrapのcssを読み込む用 -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- headerとログアウトボタンの共通部品のcssを読み込む用 -->
+    <link href="../common/common.css" rel="stylesheet">
+
+    <style>
+        /* 時計表示用のフォントとスタイル調整 */
+        .clock-time {
+            font-family: 'Courier New', Courier, monospace;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+    <header class="app-header">
+        <div class="app-header-inner">
+            <span class="app-logo-badge">KS</span>
+            <span class="app-header-title">株式会社コンドウソリューション</span>
+        </div>
+
+        <nav class="app-nav-menu d-flex align-items-center gap-4">
+            <span class="small text-white">
+                こんにちは！<?php echo htmlspecialchars(\$employee_name, ENT_QUOTES, 'UTF-8')?>  さん
+            </span>
+
+            <span class="app-user-badge">
+                <img src="../assets/img/user_icon.png" alt="社員アイコン" width="30" height="30">
+            </span>
+
+            <a href="logout_confirm.php" class="text-white text-decoration-none d-flex align-items-center logout-link" title="ログアウト">
+                <img src="../assets/img/logout_icon.png" alt="ログアウト" width="30" height="35" class="me-1 logout-icon">
+                <span class="small">ログアウト</span>
+            </a>
+        </nav>
+    </header>
+
+    <div class="bg-white border-bottom py-2 px-4 mb-4">
+        <div class="container-fluid p-0">
+            <ul class="d-flex flex-wrap gap-2 list-unstyled mb-0 ps-0">
+                <li><a href="#" class="btn btn-outline-secondary btn-sm">デスクトップ</a></li>
+                <li><a href="#" class="btn btn-outline-secondary btn-sm">出退勤管理</a></li>
+                <li><a href="#" class="btn btn-outline-secondary btn-sm">社内掲示板</a></li>
+                <li><a href="../workflow/workflow_main.php" class="btn btn-outline-secondary btn-sm">ワークフロー</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <main class="container-fluid px-4 flex-grow-1">
+        <div class="row g-3">
+            <!-- 社内掲示板 -->
+            <div class="col-12">
+                <div class="card border border-1 shadow-sm p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="h6 fw-bold mb-0">社内掲示板</h2>
+                        <a href="#" class="btn btn-sm btn-link text-decoration-none p-0">一覧を見る &raquo;</a>
+                    </div>
+
+                    <div class="list-group list-group-flush border-top border-bottom">
+                        <a href="#" class="list-group-item list-group-item-action px-2 py-2 d-flex align-items-center gap-3">
+                            <span class="text-muted small">2026/10/15</span>
+                            <span class="badge bg-danger">重要</span>
+                            <span class="text-truncate flex-grow-1">【重要】社内システム一時停止のお知らせ（10月20日 18:00〜）</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action px-2 py-2 d-flex align-items-center gap-3">
+                            <span class="text-muted small">2026/10/12</span>
+                            <span class="badge bg-primary">お知らせ</span>
+                            <span class="text-truncate flex-grow-1">秋の社内懇親会 開催のご案内</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action px-2 py-2 d-flex align-items-center gap-3">
+                            <span class="text-muted small">2026/10/08</span>
+                            <span class="badge bg-secondary">総務</span>
+                            <span class="text-truncate flex-grow-1">出退勤打刻ルールの変更（スマホアプリ対応）について</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action px-2 py-2 d-flex align-items-center gap-3">
+                            <span class="text-muted small">2026/10/01</span>
+                            <span class="badge bg-info text-dark">研修</span>
+                            <span class="text-truncate flex-grow-1">【募集】ITセキュリティ研修 開催のご案内</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 出退勤管理 -->
+            <div class="col-md-6">
+                <div class="card border border-1 shadow-sm p-4 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <h2 class="h6 fw-bold mb-4">出退勤管理</h2>
+                        
+                        <div class="bg-light border rounded py-4 px-3 text-center mb-4">
+                            <div id="clock-date" class="text-muted small fw-bold mb-2">----年--月--日(-)</div>
+                            <div id="clock-time" class="display-5 fw-bold text-dark clock-time">00:00:00</div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-primary w-100 fw-bold py-2">出勤</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-secondary w-100 fw-bold py-2">退勤</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ワークフロー -->
+            <div class="col-md-6">
+                <div class="card border border-1 shadow-sm p-4">
+                    <h2 class="h6 fw-bold mb-0">ワークフロー</h2>
+                    <div style="min-height: 100px;"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 時計更新用JS -->
+    <script>
+        function updateAttendanceClock() {
+            const now = new Date();
+
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            const date = now.getDate();
+            const dayList = ['日', '月', '火', '水', '木', '金', '土'];
+            const day = dayList[now.getDay()];
+
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            document.getElementById('clock-date').textContent = `${year}年${month}月${date}日(${day})`;
+            document.getElementById('clock-time').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        setInterval(updateAttendanceClock, 1000);
+        updateAttendanceClock();
+    </script>
+</body>
+</html>
