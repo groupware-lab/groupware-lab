@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>現在時刻表示</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #222;
+      color: #00ffcc;
+      font-family: monospace;
+    }
+    #clock {
+      font-size: 4rem;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="clock">00:00:00</div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const hours   = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      
+      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+    }
+
+    // 1秒（1000ミリ秒）ごとにupdateClockを実行
+    setInterval(updateClock, 1000);
+    
+    // 初回実行（画面読み込み時の表示遅れ防止）
+    updateClock();
+  </script>
+
+</body>
+</html>
