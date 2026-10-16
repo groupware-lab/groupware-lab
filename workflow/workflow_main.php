@@ -102,7 +102,7 @@ $status_labels = [
                   </tbody>
                   </table>
                 </div>
-                <a href="#" class="small">すべての申請履歴を見る⇒</a>
+                <a href="#" class="small">すべての申請状況の詳細を見る⇒</a>
               <?php endif; ?>
           </div>
         </div>
