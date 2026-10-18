@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../common/auth_check.php';
 require_once __DIR__ . '/../common/get_user_info.php';
 require_once __DIR__ . '/../common/db.php';
+require_once __DIR__ . '/../common/approver.php';
 
 //csrfトークンを生成
 if(empty($_SESSION['csrf_token'])) {
@@ -11,15 +12,33 @@ if(empty($_SESSION['csrf_token'])) {
 $errors = $_SESSION['ringi_errors'] ?? [];
 unset($_SESSION['ringi_errors']);
 
-$stmt = $connection->prepare(
-    "SELECT id, department, position, name FROM users
-    ORDER BY 
-        CASE WHEN department = :my_dept THEN 0 ELSE 1 END,
-        department,
-        position"
-);
+// 承認者候補:稟議を承認できる職位のみ、申請者本人は除外
+$positions = APPROVER_POSITIONS['ringi'];
 
-$stmt->execute(['my_dept' => $loginUser['department']]);
+$params = [
+    'my_dept' => $loginUser['department'],
+    'me' => $_SESSION['user_id'],
+];
+$inPh = [];
+$ordPh = [];
+foreach($positions as $i =>$p) {
+    $inPh[] = ":in{$i}";
+    $ordPh[] =":ord{$i}";
+    $params["in{$i}"] = $p;
+    $params["ord{$i}"] = $p;
+}
+
+$sql = "SELECT id, department, position, name FROM users
+        WHERE position IN (" . implode(',', $inPh) . ")
+        AND id <> :me
+        ORDER BY
+            CASE WHEN department = :my_dept THEN 0 ELSE 1 END,
+            department,
+            FIELD(position, " . implode(',', $ordPh) . "),
+            name";
+
+$stmt = $connection->prepare($sql);
+$stmt->execute($params);
 $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -110,7 +129,8 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="approver-row">
                             <span class="approver-label">承認者1：</span>
-                            <select name="approver_ids[]" class="approver-input approver-select">
+                            <select name="approver_ids[]" class="approver-input approver-select" requered>
+                                <option value="">承認者を選択してください</option>
                                 <?php foreach ($approverCandidates as $u):?>
                                     <option value="<?= htmlspecialchars($u['id'], ENT_QUOTES, "UTF-8")?>">
                                         <?=  htmlspecialchars($u['department'] . ' ' . $u['position'] . ' ' . $u['name'], ENT_QUOTES, 'UTF-8') ?>

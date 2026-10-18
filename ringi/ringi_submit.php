@@ -33,7 +33,7 @@
 
   //稟議内容のバリデーションチェック
   if($title === '') {
-    $errors[] = '件名を入力してください。';
+    $errors[] = 'プロジェクト名を入力してください。';
   } elseif (mb_strlen($title) > 100) {
     $errors[] = '件名は100文字以内で入力してください。';
   }
@@ -44,7 +44,7 @@
 
   //引数が0～9の数値か
   if($amountRow === '' || !ctype_digit($amountRow)) {
-    $errors[] = '費用金額は0以上の整数で入力してください。';
+    $errors[] = '費用見積は0以上の整数で入力してください。';
   }
 
   $amount = (int)$amountRow;
@@ -98,7 +98,7 @@ if (empty($errors)) {
 // 承認者が実在し、かつ承認できる職位(リーダー以上)かDBと照合して確認（セキュリティ対策）
 // 開発者ツールでvalue値を書き換えるとなりすまして送信できちゃうのを防ぐらしい
 if(empty($errors)) {
-  $approverPositions = ['リーダー', '課長', '部長', '副社長', '社長'];
+  $approverPositions = ['課長', '部長', '副社長', '社長'];
   $idPlaceholders = implode(',', array_fill(0, count($approverIds), '?'));
   $posPlaceholders = implode(',', array_fill(0, count($approverPositions), '?'));
   $stmt = $connection->prepare(
@@ -136,10 +136,10 @@ try {
   );
   $stmt->execute([
     ':applicant_id' => $applicantId,
-    ':title' => $title,
+    ':title'   => $title,
     ':content' => $content,
-    ':amount' => $amount,
-    ':status' => 'pending',
+    ':amount'  => $amount,
+    ':status'  => 'pending',
   ]); 
 
   $ringiId = (int)$connection->lastInsertId(); //今挿入した稟議のid
@@ -163,13 +163,11 @@ try {
   $connection->rollBack();
   error_log('[ringi_submit]' . $e->getMessage()); //詳細はサーバーのログだけに残す
 
-  var_dump($e->getMessage()); exit;  //あとで消す
-
   $_SESSION['ringi_errors'] = ['登録中にエラーが発生しました。時間をおいて再度お試しください。'];
   $_SESSION['ringi_old'] = [
-    'title' =>$title,
+    'title'   =>$title,
     'content' =>$content,
-    'amount' =>$amountRow,
+    'amount'  =>$amountRow,
     'approver_ids' =>$approverIds,
   ];
   header('Location: ringi.php');
