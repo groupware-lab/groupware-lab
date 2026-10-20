@@ -67,7 +67,7 @@ $histories = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="../common/common.css" rel="stylesheet">
   </head>
 
-  <body class="bg-light d-flex flex-column min-vh-100">
+  <body class="app-page d-flex flex-column min-vh-100">
     <?php require_once __DIR__ . '/../common/header.php'; ?>
     
   <main class="container-fluid px-4 flex-grow-1">
@@ -103,7 +103,7 @@ $histories = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?= date('Y/m/d', strtotime($h['created_at'])) ?></td>
                     <td>稟議書</td>
                     <td>
-                      <a href="#"><?= htmlspecialchars($h['project_name'], ENT_QUOTES, 'UTF-8') ?></a>
+                      <a href="../ringi/approval_detail.php?id=<?= (int)$h['id'] ?>"><?= htmlspecialchars($h['project_name'], ENT_QUOTES, 'UTF-8') ?></a>
                     </td>
                     <td class="text-end pe-4"><?= number_format((int)$h['estimated_cost']) ?>円</td>
                     <td>
@@ -121,7 +121,7 @@ $histories = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </table>
           </div>
 
-          <a href="#" class="small">すべての申請状況の詳細を見る⇒</a>
+          <a href="../ringi/ringi_history.php" class="small">すべての申請状況の詳細を見る⇒</a>
           <?php endif; ?>
       </div>
     </div>
@@ -157,7 +157,7 @@ $histories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <h3 class="h6 fw-bold mb-2">稟議書</h3>
         <?php if ($ringiPendingCount > 0): ?>
-          <a href="../ringi/approval_list.php" class="btn bg-light w-100 d-flex align-items-center justify-content-center gap-2 mb-3">
+          <a href="../ringi/approval_list.php" class="btn app-page w-100 d-flex align-items-center justify-content-center gap-2 mb-3">
             <img src="../assets/img/syounin.png" alt="ファイルの画像" style="max-height: 20px; width: auto;">
             <span>承認待ち <?= $ringiPendingCount ?>件</span>
           </a>

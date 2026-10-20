@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . '/../common/auth_check.php';      
 require_once __DIR__ . '/../common/get_user_info.php';
+require_once __DIR__ . '/../common/approver.php';
+
+$isApprover = canApprove($loginUser['position'] ?? null, 'ringi');
 ?>
 
 <!DOCTYPE html>
@@ -18,15 +21,7 @@ require_once __DIR__ . '/../common/get_user_info.php';
 
     </head>
 
-    <style>
-        /* 時計表示用のフォントとスタイル調整 */
-        .clock-time {
-            font-family: 'Courier New', Courier, monospace;
-            letter-spacing: 2px;
-        }
-    </style>
-
-<body class="bg-light d-flex flex-column min-vh-100">
+<body class="app-page d-flex flex-column min-vh-100">
     <?php require_once __DIR__ . '/../common/header.php'; ?>
 
     <main class="container-fluid px-4 flex-grow-1">
@@ -90,6 +85,15 @@ require_once __DIR__ . '/../common/get_user_info.php';
                 </div>
             </div>
 
+            <style>
+                /* 時計表示用のフォントとスタイル調整 */
+                .clock-time {
+                    font-family: 'Courier New', Courier, monospace;
+                    letter-spacing: 2px;
+                }
+            </style>
+
+
             <!-- ワークフロー -->
             <div class="col-md-6">
                 <div class="card border border-1 shadow-sm p-4 h-100 d-flex flex-column">
@@ -101,22 +105,26 @@ require_once __DIR__ . '/../common/get_user_info.php';
                     <div class="list-group list-group-flush border-top border-bottom mb-4">
                         <a href="../workflow/workflow_main.php" class="list-group-item list-group-item-action px-2 py-3 d-flex justify-content-between align-items-center">
                             <span>申請中の稟議</span>
-                            <span><span class="fs-4 fw-bold">○○</span> 件</span>
+                            <span class="fs-4">〇〇件</span>
                         </a>
 
+                        <?php if ($isApprover): ?>
                         <a href="../ringi/approval_list.php" class="list-group-item list-group-item-action px-2 py-3 d-flex justify-content-between align-items-center">
                             <span>承認待ちの稟議</span>
-                            <span><span class="fs-4 fw-bold text-danger">○○</span> 件</span>
+                            <span class="fs-4">〇〇件</span>
                         </a>
+                        <?php endif; ?>
                     </div>
 
                     <div class="row g-3 mt-auto">
-                        <div class="col-6">
+                        <div class="<?= $isApprover ? 'col-6' : 'col-12'?>">
                             <a href="../ringi/ringi.php" class="btn btn-primary w-100 fw-bold py-2">稟議を申請</a>
                         </div>
+                        <?php if ($isApprover): ?>
                         <div class="col-6">
                             <a href="../ringi/approval_list.php" class="btn btn-outline-primary w-100 fw-bold py-2">承認待ちを見る</a>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

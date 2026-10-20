@@ -59,7 +59,7 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="ringi.css">
 </head>
 
-<body class="bg-light d-flex flex-column min-vh-100">
+<body class="app-page d-flex flex-column min-vh-100">
     <?php require_once __DIR__ . '/../common/header.php'; ?>
 
     <form action="ringi_submit.php" method="POST">

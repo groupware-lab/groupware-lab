@@ -4,6 +4,10 @@
   require_once __DIR__ . '/../common/get_user_info.php';
   require_once __DIR__ . '/../common/ringi_status.php';
 
+  //承認完了後のメッセージ表記
+  $flash = $_SESSION['flash_message'] ?? '';
+  unset($_SESSION['flash_message']);
+
   //ログインしている人のID
   $loginUserId = (int)$_SESSION['user_id'];
 
@@ -20,7 +24,8 @@
   $ringiId = (int)$idRaw;
 
   //稟議の申請内容を取得する用
-  $sql = "SELECT ringi.id, 
+  $sql = "SELECT ringi.id,
+                 ringi.applicant_id, 
                  ringi.project_name, 
                  ringi.content,
                  ringi.estimated_cost, 
@@ -80,6 +85,11 @@
       }
     }
   }
+  //申請者でも承認者でもない人は見られない
+    if (!$isApplicant && !$isInRoute) {
+      header('Location: approval_list.php');
+      exit;
+    }
 
   //戻り先(申請者はワークフロー画面、承認者は承認待ち一覧)
   $backUrl   = $isApplicant ? '../workflow/workflow_main.php' : 'approval_list.php';
@@ -94,7 +104,7 @@
   //稟議全体のステータス表示
   $ringiStatus = ringiStatusLabel($ringi['status']);
 
-  //承認ルートの各行に、表示用のラベル・色を付け足す
+  //承認ルートの各行に、表示用のラベル・色を付け足す    コピペだからあとで内容は理解必要－要チェック
   $route = [];
   foreach ($approvers as $a) {
     if ($a['status'] === 'approved') {
@@ -122,17 +132,21 @@
     <link href="../common/common.css" rel="stylesheet">
   </head>
 
-  <body class="bg-light d-flex flex-column min-vh-100">
+  <body class="app-page d-flex flex-column min-vh-100">
     <?php require_once __DIR__ . '/../common/header.php'; ?>
 
     <main class="container-fluid px-4 flex-grow-1">
+      <?php if($flash !== ''): ?>
+        <div class="alert alert-info mt-3"><?= htmlspecialchars($flash, ENT_QUOTES, 'UTF-8') ?></div>
+      <?php endif; ?>
       <div class="row g-3 mt-1">
+
         <!-- 稟議の内容 -->
         <div class="col-lg-8">
           <div class="card border border-1 shadow-sm p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
-              <h2 class="h6 fw-bold mb-0">稟議書<?= sprintf('R-%04d', $ringi['id']) ?></h2>
-              <span class="badge<?=  $ringiStatus['class'] ?>">
+              <h2 class="h6 fw-bold mb-0">稟議書 <?= sprintf('R-%04d', $ringi['id']) ?></h2>
+              <span class="badge <?=  $ringiStatus['class'] ?>">
                 <?= htmlspecialchars($ringiStatus['label'], ENT_QUOTES, 'UTF-8')?>
               </span>
             </div>
@@ -175,36 +189,31 @@
               <?php foreach ($route as $r): ?>
               <li class="list-group-item <?= $r['row_class'] ?>">
                 <div class="d-flex justify-content-between">
-                  <span><?= (int)$r['step_order'] ?></span>  //ここから作業開始！！！！！！！！！！！！！！！！
-                  <span class="badge bg-warning text-dark">承認待ち</span>
+                  <span><?= (int)$r['step_order'] ?>.  
+                    <?= htmlspecialchars(trim($r['approver_department'] . ' ' . $r['approver_position'] . ' ' . $r['approver_name']), ENT_QUOTES, 'UTF-8')?>
+                    <?php if((int)$r['approver_id'] === $loginUserId): ?>
+                      <span class="small text-muted">(あなた)</span>
+                    <?php endif; ?>
+                  </span>
+                  <span class="badge <?= $r['badge']?>"><?= $r['label'] ?></span>
                 </div>
-              </li>
 
-              <li class="list-group-item">
-                <div class="d-flex justify-content-between">
-                  <span>2. 開発 部長 ○○</span>
-                  <span class="badge bg-light text-dark border">未到達</span>
-                </div>
-              </li>
+                <?php if(!empty($r['comment'])): ?>
+                  <div class="small mt-1">「<?= htmlspecialchars($r['comment'], ENT_QUOTES, 'UTF-8') ?>」</div>
+                <?php endif; ?>
 
-              <li class="list-group-item">
-                <div class="d-flex justify-content-between">
-                  <span>3. 副社長 ○○</span>
-                  <span class="badge bg-light text-dark border">未到達</span>
-                </div>
+                <?php if(!empty($r['approved_at'])):?>
+                  <div class="small text-muted"><?= date('Y/m/d H:i', strtotime($r['approved_at'])) ?></div>
+                <?php endif;?>
               </li>
-
-              <li class="list-group-item">
-                <div class="d-flex justify-content-between">
-                  <span>4. 社長 ○○</span>
-                  <span class="badge bg-light text-dark border">未到達</span>
-                </div>
-              </li>
+              <?php endforeach; ?>
             </ul>
-
+    
+            <?php if($canOperate): ?>
             <h2 class="h6 fw-bold mb-2">承認操作</h2>
             <form action="approval_action.php" method="POST">
-              <input type="hidden" name="ringi_id" value="1">
+              <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+              <input type="hidden" name="ringi_id" value="<?= (int)$ringi['id'] ?>">
               <label for="comment" class="form-label small">コメント(差し戻し・却下の場合は必須)</label>
               <textarea id="comment" name="comment" class="form-control mb-3" rows="3"></textarea>
 
@@ -214,6 +223,9 @@
                 <button type="submit" name="action" value="reject" class="btn btn-outline-danger">却下</button>
               </div>
             </form>
+            <?php elseif($isInRoute): ?>
+              <p class="small text-muted mb-0">現在、あなたが操作する段階ではありません。</p>
+            <?php endif; ?>
           </div>
         </div>
       </div>
