@@ -1,0 +1,110 @@
+<?php
+require_once __DIR__ . '/../common/auth_check.php';      
+require_once __DIR__ . '/../common/get_user_info.php';
+require_once __DIR__ . '/../common/approver.php';
+
+$isApprover = canApprove($loginUser['position'] ?? null, 'ringi');
+?>
+
+<!DOCTYPE html>
+    <html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>株式会社コンドウソリューション</title>
+
+        <!-- bootstrapのcssを読み込む用 -->
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- headerとログアウトボタンの共通部品のcssを読み込む用 -->
+        <link href="../common/common.css" rel="stylesheet">
+
+    </head>
+
+<body class="app-page d-flex flex-column min-vh-100">
+    <?php require_once __DIR__ . '/../common/header.php'; ?>
+
+        <main class="flex-grow-1 d-flex align-items-center justify-content-center py-5">
+        <div class="card shadow-sm" style="width: 100%; max-width: 400px;">
+            <div class="card-body text-center p-4">
+                <h1 class="h4 card-title mb-2 text-dark fw-bold">勤怠打刻</h1>
+                
+                <!-- リアルタイム時計 -->
+                <div class="display-6 fw-bold text-primary mb-4" id="live-clock">00:00:00</div>
+
+                <!-- 入力エリア -->
+                <div class="mb-4 text-start">
+                    <label for="employee_id" class="form-label text-secondary small fw-bold">社員番号</label>
+                    <input type="text" id="employee_id" class="form-control form-control-lg" placeholder="例: 12345" autocomplete="off">
+                </div>
+
+                <!-- 打刻ボタンエリア (Bootstrapのグリッドシステム) -->
+                <div class="row g-3">
+                    <div class="col-6">
+                        <button class="btn btn-success w-100 py-3 fw-bold fs-5" onclick="submitStamp('出勤')">出勤</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-danger w-100 py-3 fw-bold fs-5" onclick="submitStamp('退勤')">退勤</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-warning w-100 py-3 fw-bold fs-5 text-dark" onclick="submitStamp('休憩開始')">休憩開始</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-info w-100 py-3 fw-bold fs-5 text-white" onclick="submitStamp('休憩終了')">休憩終了</button>
+                    </div>
+                </div>
+
+                <!-- メッセージ表示エリア (最初は非表示) -->
+                <div id="message" class="alert mt-4 d-none" role="alert"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 共通フッターなどがあればここに記述（なければそのままでOK） -->
+    <footer class="bg-light text-center py-3 border-top mt-auto">
+        <div class="container text-muted small">
+            &copy; <?php echo date('Y'); ?> 株式会社コンドウソリューション
+        </div>
+    </footer>
+
+    <!-- BootstrapのJavaScript（必要に応じて有効化してください） -->
+    <!-- <script src="../assets/js/bootstrap.bundle.min.js"></script> -->
+
+    <script>
+        // 1. 画面の時計を毎秒更新する処理
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ja-JP', { hour12: false });
+            document.getElementById('live-clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 2. 打刻ボタンを押したときの処理
+        function submitStamp(stampType) {
+            const employeeId = document.getElementById('employee_id').value.trim();
+            const messageDiv = document.getElementById('message');
+
+            // バリデーション（未入力チェック）
+            if (!employeeId) {
+                showMessage('社員番号を入力してください。', 'danger');
+                return;
+            }
+
+            // 現在時刻の取得
+            const now = new Date();
+            const currentTime = now.toLocaleTimeString('ja-JP', { hour12: false });
+
+            // メッセージを表示
+            showMessage(`【${stampType}】完了しました。<br><small>社員番号: ${employeeId} (${currentTime})</small>`, 'success');
+        }
+
+        // メッセージ表示共通関数
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = text;
+            messageDiv.className = `alert alert-${type} mt-4`;
+        }
+    </script>
+</body>
+</html>
