@@ -1,4 +1,4 @@
-<!-- header,navは共通部品のためこちらに分離した -->
+<!-- header,navの共通部品-->
 <header class="app-header">
     <div class="app-header-inner">
         <span class="app-logo-badge">KS</span>

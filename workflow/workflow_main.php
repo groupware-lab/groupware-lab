@@ -137,7 +137,10 @@ $histories = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </a>
 
         <h3 class="h6 fw-bold mb-2">有給申請</h3>
-        <span class="btn bg-light w-100 mb-3 text-muted disabled">準備中</span>
+        <a href="../yuukyu/yuukyuu.php" class="btn bg-light w-100 d-flex align-item-center justify-content-center gap-2 mb-3">
+          <img src="../assets/img/sinsei.png" alt="ファイルの画像" style="max-height: 20px; width: auto;">
+          <span>申請</span>
+        </a>
 
         <h3 class="h6 fw-bold mb-2">備品購入申請</h3>
         <span class="btn bg-light w-100 text-muted disabled">準備中</span>

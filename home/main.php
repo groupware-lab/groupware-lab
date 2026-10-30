@@ -1,13 +1,26 @@
 <?php
-require_once __DIR__ . '/../common/auth_check.php';      
-require_once __DIR__ . '/../common/get_user_info.php';
-require_once __DIR__ . '/../common/approver.php';
+require_once __DIR__ . '/../common/auth_check.php';      //セッションチェック
+require_once __DIR__ . '/../common/get_user_info.php';   //loginユーザー表示
+require_once __DIR__ . '/../common/approver.php';        //承認ルートの共通部品
+require_once __DIR__ . '/../common/db.php';              //DB接続
+
+////申請中の稟議書の数をカウントして表示
+$ringiCounter = 0;
+
+$sql = "SELECT COUNT(*) FROM ringi
+        WHERE applicant_id = :applicant_id
+        AND status = 'pending'";
+
+$stmt = $connection->prepare($sql);
+$stmt->bindValue(':applicant_id', $_SESSION['user_id'], PDO::PARAM_INT);
+$stmt->execute();
+$ringiCounter = (int)$stmt->fetchColumn();
 
 $isApprover = canApprove($loginUser['position'] ?? null, 'ringi');
 ?>
 
 <!DOCTYPE html>
-    <html lang="ja">
+    <html lang="ja">    
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -105,13 +118,13 @@ $isApprover = canApprove($loginUser['position'] ?? null, 'ringi');
                     <div class="list-group list-group-flush border-top border-bottom mb-4">
                         <a href="../workflow/workflow_main.php" class="list-group-item list-group-item-action px-2 py-3 d-flex justify-content-between align-items-center">
                             <span>申請中の稟議</span>
-                            <span class="fs-4">〇〇件</span>
+                            <span class="fs-4"><?= htmlspecialchars($ringiCounter, ENT_QUOTES, 'UTF-8') ?>件</span>
                         </a>
 
                         <?php if ($isApprover): ?>
                         <a href="../ringi/approval_list.php" class="list-group-item list-group-item-action px-2 py-3 d-flex justify-content-between align-items-center">
                             <span>承認待ちの稟議</span>
-                            <span class="fs-4">〇〇件</span>
+                            <saan class="fs-4"><?= htmlspecialchars($ringiCounter, ENT_QUOTES, 'UTF-8') ?>件</span>
                         </a>
                         <?php endif; ?>
                     </div>

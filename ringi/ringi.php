@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/../common/auth_check.php';
-require_once __DIR__ . '/../common/get_user_info.php';
-require_once __DIR__ . '/../common/db.php';
-require_once __DIR__ . '/../common/approver.php';
+require_once __DIR__ . '/../common/auth_check.php';        //セッションチェック
+require_once __DIR__ . '/../common/get_user_info.php';     //loginユーザー表示
+require_once __DIR__ . '/../common/db.php';                //各種共通部品
+require_once __DIR__ . '/../common/approver.php';          //承認ルートの共通部品
 
 //csrfトークンを生成
 if(empty($_SESSION['csrf_token'])) {
@@ -60,7 +60,7 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body class="app-page d-flex flex-column min-vh-100">
-    <?php require_once __DIR__ . '/../common/header.php'; ?>
+    <?php require_once __DIR__ . '/../common/header.php'; ?>  
 
     <form action="ringi_submit.php" method="POST">
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
@@ -142,11 +142,11 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     </div>
                 </div>
-            </div>
+            
 
-            <div class="submit-row">
-                <button type="submit" class="submit-btn">申請する</button>
-            </div>
+                <div class="submit-row">
+                    <button type="submit" class="submit-btn">申請する</button>
+                </div>
         </div>
     </form>
 

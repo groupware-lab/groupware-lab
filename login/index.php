@@ -26,14 +26,14 @@
     <div class="login-page">
       <div class="login-card">
         <div class="login-brand">
-          <p class="login-brand-en">KONDO SOLUTIONS</p>
+          <p class="login-brand-en">KONDO SOLUTION</p>
           <h1 class="login-title">ログイン</h1>
         </div>
 
         <form action="login.php" method="post" novalidate>
           <div class="mb-3">
             <label for="employee_id" class="form-label">社員番号</label>
-            <input type="text" class="form-control login-input" autocomplete="off" name="employee_id" id="employee_id" placeholder="社員番号を入力" autocomplete="username">
+            <input type="text" class="form-control login-input" auto  omplete="off" name="employee_id" id="employee_id" placeholder="社員番号を入力" autocomplete="username">
           </div>
 
           <div class="mb-3">
