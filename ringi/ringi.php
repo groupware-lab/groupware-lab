@@ -2,16 +2,43 @@
 require_once __DIR__ . '/../common/auth_check.php';
 require_once __DIR__ . '/../common/get_user_info.php';
 require_once __DIR__ . '/../common/db.php';
+require_once __DIR__ . '/../common/approver.php';
 
-$stmt = $connection->prepare(
-    "SELECT id, department, position, name FROM users
-    ORDER BY 
-        CASE WHEN department = :my_dept THEN 0 ELSE 1 END,
-        department,
-        position"
-);
+//csrfトークンを生成
+if(empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
-$stmt->execute(['my_dept' => $loginUser['department']]);
+$errors = $_SESSION['ringi_errors'] ?? [];
+unset($_SESSION['ringi_errors']);
+
+// 承認者候補:稟議を承認できる職位のみ、申請者本人は除外
+$positions = APPROVER_POSITIONS['ringi'];
+
+$params = [
+    'my_dept' => $loginUser['department'],
+    'me' => $_SESSION['user_id'],
+];
+$inPh = [];
+$ordPh = [];
+foreach($positions as $i =>$p) {
+    $inPh[] = ":in{$i}";
+    $ordPh[] =":ord{$i}";
+    $params["in{$i}"] = $p;
+    $params["ord{$i}"] = $p;
+}
+
+$sql = "SELECT id, department, position, name FROM users
+        WHERE position IN (" . implode(',', $inPh) . ")
+        AND id <> :me
+        ORDER BY
+            CASE WHEN department = :my_dept THEN 0 ELSE 1 END,
+            department,
+            FIELD(position, " . implode(',', $ordPh) . "),
+            name";
+
+$stmt = $connection->prepare($sql);
+$stmt->execute($params);
 $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -32,12 +59,23 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="ringi.css">
 </head>
 
-<body class="bg-light d-flex flex-column min-vh-100">
+<body class="app-page d-flex flex-column min-vh-100">
     <?php require_once __DIR__ . '/../common/header.php'; ?>
 
-    <form action="ringi_app.php" method="POST">
+    <form action="ringi_submit.php" method="POST">
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
         <div class="form-container">
             <div class="title">稟議書</div>
+            <?php if (!empty($errors)): ?>
+            <div class="alert alert-danger" role="alert">
+                <ul class="mb-0">
+                    <?php foreach ($errors as $e): ?>
+                    <li><?= htmlspecialchars($e, ENT_QUOTES, 'UTF-8') ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <?php endif; ?>
+
             <table>
                 <tbody>
                     <tr>
@@ -91,7 +129,8 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="approver-row">
                             <span class="approver-label">承認者1：</span>
-                            <select name="approver_ids[]" class="approver-input approver-select">
+                            <select name="approver_ids[]" class="approver-input approver-select" requered>
+                                <option value="">承認者を選択してください</option>
                                 <?php foreach ($approverCandidates as $u):?>
                                     <option value="<?= htmlspecialchars($u['id'], ENT_QUOTES, "UTF-8")?>">
                                         <?=  htmlspecialchars($u['department'] . ' ' . $u['position'] . ' ' . $u['name'], ENT_QUOTES, 'UTF-8') ?>
@@ -117,6 +156,18 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
         const month = today.getMonth() + 1;
         const date = today.getDate();
         document.getElementById('today-date').textContent = year + '年' + month + '月' + date + '日';
+
+        //稟議内容を入力された中身に合わせてtextareaの高さを調整
+        const textarea = document.querySelector('textarea')
+
+        function autoResize() {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+
+        textarea.addEventListener('input', autoResize);
+        window.addEventListener('resize', autoResize);
+        autoResize();
 
         const approverList = document.getElementById('approver-list');
 

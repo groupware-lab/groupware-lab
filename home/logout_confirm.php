@@ -22,8 +22,8 @@ require_once __DIR__ . '/../common/auth_check.php';
       <p class="text-muted small mb-4">保存していない入力内容は破棄されます。</p>
       
       <form action="logout.php" method="post" class="d-flex justify-content-center gap-3">
-        <button type="submit" class="btn btn-success rounded-0 px-4">はい</button>
-        <a href="main.php" class="btn btn-outline-dark rounded-0 px-4">いいえ</a>
+        <button type="submit" class="btn btn-app-primary rounded-0 px-4">はい</button>
+        <a href="main.php" class="btn btn-app-outline rounded-0 px-4">いいえ</a>
       </form>
     </div>
   </body>

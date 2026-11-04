@@ -33,12 +33,12 @@
         <form action="login.php" method="post" novalidate>
           <div class="mb-3">
             <label for="employee_id" class="form-label">社員番号</label>
-            <input type="text" class="form-control login-input" name="employee_id" id="employee_id" placeholder="社員番号を入力" autocomplete="username">
+            <input type="text" class="form-control login-input" autocomplete="off" name="employee_id" id="employee_id" placeholder="社員番号を入力" autocomplete="username">
           </div>
 
           <div class="mb-3">
             <label for="password" class="form-label">パスワード</label>
-            <input type="password" class="form-control login-input" name="password" id="password" placeholder="パスワードを入力" autocomplete="current-password">
+            <input type="password" class="form-control login-input" autocomplete="off" name="password" id="password" placeholder="パスワードを入力" autocomplete="current-password">
           </div>
 
           <!-- 入力エラーを表示 -->
