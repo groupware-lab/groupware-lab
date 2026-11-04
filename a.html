@@ -1,4 +1,12 @@
-\<!DOCTYPE html>
+<?php
+require_once __DIR__ . '/../common/auth_check.php';      
+require_once __DIR__ . '/../common/get_user_info.php';
+require_once __DIR__ . '/../common/approver.php';
+
+$isApprover = canApprove($loginUser['position'] ?? null, 'ringi');
+?>
+
+<!DOCTYPE html>
     <html lang="ja">
     <head>
         <meta charset="UTF-8">
@@ -16,134 +24,87 @@
 <body class="app-page d-flex flex-column min-vh-100">
     <?php require_once __DIR__ . '/../common/header.php'; ?>
 
-    <main class="container-fluid px-4 flex-grow-1">
-        <div class="row g-3">
-            <div class="col-12">
-                <div class="card border border-1 shadow-sm p-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="h6 fw-bold mb-0">社内掲示板</h2>
-                        <a href="#" class="btn btn-sm btn-link text-decoration-none p-0">一覧を見る &raquo;</a>
+        <main class="flex-grow-1 d-flex align-items-center justify-content-center py-5">
+        <div class="card shadow-sm" style="width: 100%; max-width: 400px;">
+            <div class="card-body text-center p-4">
+                <h1 class="h4 card-title mb-2 text-dark fw-bold">勤怠打刻</h1>
+                
+                <!-- リアルタイム時計 -->
+                <div class="display-6 fw-bold text-primary mb-4" id="live-clock">00:00:00</div>
+
+                <!-- 入力エリア -->
+                <div class="mb-4 text-start">
+                    <label for="employee_id" class="form-label text-secondary small fw-bold">社員番号</label>
+                    <input type="text" id="employee_id" class="form-control form-control-lg" placeholder="例: 12345" autocomplete="off">
+                </div>
+
+                <!-- 打刻ボタンエリア (Bootstrapのグリッドシステム) -->
+                <div class="row g-3">
+                    <div class="col-6">
+                        <button class="btn btn-success w-100 py-3 fw-bold fs-5" onclick="submitStamp('出勤')">出勤</button>
                     </div>
-                    <!-- ここはデモ用の表示---のちほどphpでＤＢから取得してデータ表示する -->
-                    <div class="list-group list-group-flush border-top border-bottom">
-                        <a href="#" class="list-group-item list-group-item-action px-2 py-2 d-flex align-items-center gap-3">
-                            <span class="text-muted small">2026/10/15</span>
-                            <span class="badge bg-danger">重要</span>
-                            <span class="text-truncate flex-grow-1">【重要】社内システム一時停止のお知らせ（10月20日 18:00〜）</span>
-                        </a>
-
-                        <a href="#" class="list-group-item list-group-item-action px-2 py-2 d-flex align-items-center gap-3">
-                            <span class="text-muted small">2026/10/12</span>
-                            <span class="badge bg-primary">お知らせ</span>
-                            <span class="text-truncate flex-grow-1">秋の社内懇親会 開催のご案内</span>
-                        </a>
-
-                        <a href="#" class="list-group-item list-group-item-action px-2 py-2 d-flex align-items-center gap-3">
-                            <span class="text-muted small">2026/10/08</span>
-                            <span class="badge bg-secondary">総務</span>
-                            <span class="text-truncate flex-grow-1">出退勤打刻ルールの変更（スマホアプリ対応）について</span>
-                        </a>
-
-                        <a href="#" class="list-group-item list-group-item-action px-2 py-2 d-flex align-items-center gap-3">
-                            <span class="text-muted small">2026/10/01</span>
-                            <span class="badge bg-info text-dark">研修</span>
-                            <span class="text-truncate flex-grow-1">【募集】ITセキュリティ研修 開催のご案内</span>
-                        </a>
-                    <!-- ここはデモ用の表示---のちほどphpでＤＢから取得してデータ表示する -->
+                    <div class="col-6">
+                        <button class="btn btn-danger w-100 py-3 fw-bold fs-5" onclick="submitStamp('退勤')">退勤</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-warning w-100 py-3 fw-bold fs-5 text-dark" onclick="submitStamp('休憩開始')">休憩開始</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-info w-100 py-3 fw-bold fs-5 text-white" onclick="submitStamp('休憩終了')">休憩終了</button>
                     </div>
                 </div>
-            </div>
 
-            <!-- 出退勤管理 -->
-            <div class="col-md-6">
-                <div class="card border border-1 shadow-sm p-4 h-100 d-flex flex-column justify-content-between">
-                    <div>
-                        <h2 class="h6 fw-bold mb-4">出退勤管理</h2>
-                        
-                        <div class="bg-light border rounded py-4 px-3 text-center mb-4">
-                            <div id="clock-date" class="text-muted small fw-bold mb-2">----年--月--日(-)</div>
-                            <div id="clock-time" class="display-5 fw-bold text-dark clock-time">00:00:00</div>
-                        </div>
-                    </div>
-
-                    <div class="row g-3">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-primary w-100 fw-bold py-2">出勤</button>
-                        </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-secondary w-100 fw-bold py-2">退勤</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <style>
-                /* 時計表示用のフォントとスタイル調整 */
-                .clock-time {
-                    font-family: 'Courier New', Courier, monospace;
-                    letter-spacing: 2px;
-                }
-            </style>
-
-
-            <!-- ワークフロー -->
-            <div class="col-md-6">
-                <div class="card border border-1 shadow-sm p-4 h-100 d-flex flex-column">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="h6 fw-bold mb-0">ワークフロー</h2>
-                        <a href="../workflow/workflow_main.php" class="btn btn-sm btn-link text-decoration-none p-0">ワークフローへ &raquo;</a>
-                    </div>
-                    <!-- 件数は仮表示---のちほどphpでＤＢから取得する -->
-                    <div class="list-group list-group-flush border-top border-bottom mb-4">
-                        <a href="../workflow/workflow_main.php" class="list-group-item list-group-item-action px-2 py-3 d-flex justify-content-between align-items-center">
-                            <span>申請中の稟議</span>
-                            <span class="fs-4">〇〇件</span>
-                        </a>
-
-                        <?php if ($isApprover): ?>
-                        <a href="../ringi/approval_list.php" class="list-group-item list-group-item-action px-2 py-3 d-flex justify-content-between align-items-center">
-                            <span>承認待ちの稟議</span>
-                            <span class="fs-4">〇〇件</span>
-                        </a>
-                        <?php endif; ?>
-                    </div>
-
-                    <div class="row g-3 mt-auto">
-                        <div class="<?= $isApprover ? 'col-6' : 'col-12'?>">
-                            <a href="../ringi/ringi.php" class="btn btn-primary w-100 fw-bold py-2">稟議を申請</a>
-                        </div>
-                        <?php if ($isApprover): ?>
-                        <div class="col-6">
-                            <a href="../ringi/approval_list.php" class="btn btn-outline-primary w-100 fw-bold py-2">承認待ちを見る</a>
-                        </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
+                <!-- メッセージ表示エリア (最初は非表示) -->
+                <div id="message" class="alert mt-4 d-none" role="alert"></div>
             </div>
         </div>
     </main>
 
-    <!-- 時計更新用JS -->
+    <!-- 共通フッターなどがあればここに記述（なければそのままでOK） -->
+    <footer class="bg-light text-center py-3 border-top mt-auto">
+        <div class="container text-muted small">
+            &copy; <?php echo date('Y'); ?> 株式会社コンドウソリューション
+        </div>
+    </footer>
+
+    <!-- BootstrapのJavaScript（必要に応じて有効化してください） -->
+    <!-- <script src="../assets/js/bootstrap.bundle.min.js"></script> -->
+
     <script>
-        function updateAttendanceClock() {
+        // 1. 画面の時計を毎秒更新する処理
+        function updateClock() {
             const now = new Date();
+            const timeString = now.toLocaleTimeString('ja-JP', { hour12: false });
+            document.getElementById('live-clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
 
-            const year = now.getFullYear();
-            const month = now.getMonth() + 1;
-            const date = now.getDate();
-            const dayList = ['日', '月', '火', '水', '木', '金', '土'];
-            const day = dayList[now.getDay()];
+        // 2. 打刻ボタンを押したときの処理
+        function submitStamp(stampType) {
+            const employeeId = document.getElementById('employee_id').value.trim();
+            const messageDiv = document.getElementById('message');
 
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
+            // バリデーション（未入力チェック）
+            if (!employeeId) {
+                showMessage('社員番号を入力してください。', 'danger');
+                return;
+            }
 
-            document.getElementById('clock-date').textContent = `${year}年${month}月${date}日(${day})`;
-            document.getElementById('clock-time').textContent = `${hours}:${minutes}:${seconds}`;
+            // 現在時刻の取得
+            const now = new Date();
+            const currentTime = now.toLocaleTimeString('ja-JP', { hour12: false });
+
+            // メッセージを表示
+            showMessage(`【${stampType}】完了しました。<br><small>社員番号: ${employeeId} (${currentTime})</small>`, 'success');
         }
 
-        setInterval(updateAttendanceClock, 1000);
-        updateAttendanceClock();
+        // メッセージ表示共通関数
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = text;
+            messageDiv.className = `alert alert-${type} mt-4`;
+        }
     </script>
 </body>
 </html>

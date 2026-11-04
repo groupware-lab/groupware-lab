@@ -1,17 +1,17 @@
-<?php //ログイン機能のためのphp
+<?php
+//ログイン機能のためのphp
 session_start();
 require_once __DIR__ . '/../common/db.php';
 
-//フロントエンドから送られてきた値を受け入れるための箱
+//ユーザーログイン画面(index.php)から送られてきた値を受け入れるための箱
 $employee_id = $_POST['employee_id'] ?? '';
 $password = $_POST['password'] ?? '';
 
-// (空チェック)　
+// 入力値が空でないかチェック　
 if ($employee_id === '' || $password === '')
    {
       header('Location: index.php?error=empty');
       exit;
-     //エラーメッセージ(未入力です)表示させる
    }
 
 // SQL実行
