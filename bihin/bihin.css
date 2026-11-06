@@ -1,0 +1,173 @@
+@charset "UTF-8";
+
+/* ============================================================
+   備品購入申請用CSS
+   ※ 上から「承認者ボタン以外」は ringi.css と同じ内容です。
+   ※ 一番下の「備品購入で追加した部分」だけが ringi.css との違いです。
+   ============================================================ */
+
+body {                                                    
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; 
+    box-sizing: border-box;
+    min-height: 100vh;      /* height: 100vh → min-height:*/ 
+    display: flex;
+    flex-direction: column;
+}
+
+/* 申請書の白い紙の部分（縦幅を画面の下までいっぱいに広げる） */
+.form-container {
+    max-width: 1400px;                 
+    background-color: #fff;
+    padding: 20px 30px;
+    margin: 12px auto;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: flex;             
+    flex-direction: column;
+}
+
+/* タイトル「備品購入申請書」 */
+.title {
+    text-align: center; 
+    font-weight: bold;
+    font-size: 24px;
+    letter-spacing: 15px;
+    margin-bottom: 15px;
+    color: var(--navy);
+}
+
+/* テーブル本来の仕組みを残しつつ、縦幅をいっぱいに広げる設定 */
+table {
+    width: 100%;                        /* 画面の横幅いっぱいに広げる */
+    border-collapse: collapse;          /* セルの間の隙間をなくす */
+    table-layout: fixed;                /* 横幅の％指定をきっちり守らせる設定 */
+
+}
+
+/* 格子の線とセル（マス）の設定 */
+th, td {
+    border: 1px solid var(--border);    /* セルの周りの線を黒にする */
+    padding: 8px;                       /* セルの中の余白を少し広げる */
+    vertical-align: middle;             /* 中の文字を上下中央にする */
+    box-sizing: border-box;             /* セルの余白を含めて横幅を計算する */
+    border-color: black;
+}
+
+/* 青い見出し部分 */
+th {
+    background-color: var(--blue);
+    color: #fff;
+    font-weight: 600;
+}
+
+input[type="text"], select, textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background-color: transparent; /* 背景を透明にしてセルの色に合わせる */
+}
+
+/* テキストエリア専用のスタイル（余計な隙間とサイズ変更ツマミを消す） */
+textarea {              
+    resize: none;        /* 余計な隙間とサイズ変更ツマミを消す */
+    display: block;     
+    min-height: 140px;   /* 最低でもこの高さは確保する */
+    overflow: hidden;
+}
+
+/* 購入理由の行（ここが画面の残りの高さをすべて吸収して広がります） */
+.content-row {          
+    height: 100%;       
+}
+
+/* 一番下の承認者選択セクション */
+.approver-section {
+    margin-top: 15px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.approver-label {
+    white-space: nowrap;  /*文字折り返さない*/
+    flex-shrink: 0;       /*flexコンテナに押されても縮まないように*/
+}
+
+/* 承認者入力欄の線 */
+select.approver-input {
+    border-bottom: 1px solid var(--blue-dark);
+    height: auto;
+}
+
+select.approver-select {
+    width: 220px;
+}
+
+.approver-box {
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 12px 16px;
+    background-color: #fafafa;
+    overflow-x: auto;           /* 増えすぎたら横スクロールできるように */
+}
+
+.approver-block {
+    display: flex;
+    flex-wrap: wrap;            /*各承認者枠を画面横にふえすぎたら折り返して表示*/
+    gap: 12px 28px;              /* 各承認者枠の行間隔*/
+}
+
+.approver-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0;           /* 縦の余白は不要なので削除 */
+    flex-shrink: 0;             /* 横に増えても潰れないように */
+}
+
+.submit-row {
+    position: sticky;           /*スクロール中でも画面下にボタンが残る*/
+    bottom: 0;
+    text-align: center;
+    margin-top: 24px;
+}
+
+.submit-btn {
+    display: inline-block;
+    width: auto;
+    min-width: 160px;
+    padding: 10px 32px;
+    background-color: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: var(--blue-dark);
+}
+
+/* ============================================================
+   備品購入で追加した部分（ringi.css にはない）
+   単価・数量・希望納期が「1列ぶんの小さいセル」に入るので、
+   はみ出さないようにセル内に収める
+   ============================================================ */
+td input[type="number"],
+td input[type="date"] {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* 「円」の文字が右に付くセル（単価）は、その分だけ入力欄を短くする */
+td.with-unit input[type="number"] {
+    width: calc(100% - 2.5em);
+}
