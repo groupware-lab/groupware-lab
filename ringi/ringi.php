@@ -19,8 +19,10 @@ $params = [
     'my_dept' => $loginUser['department'],
     'me' => $_SESSION['user_id'],
 ];
+
 $inPh = [];
 $ordPh = [];
+
 foreach($positions as $i =>$p) {
     $inPh[] = ":in{$i}";
     $ordPh[] =":ord{$i}";

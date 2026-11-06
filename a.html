@@ -77,6 +77,7 @@ $isApprover = canApprove($loginUser['position'] ?? null, 'ringi');
             const timeString = now.toLocaleTimeString('ja-JP', { hour12: false });
             document.getElementById('live-clock').textContent = timeString;
         }
+        
         setInterval(updateClock, 1000);
         updateClock();
 

@@ -86,33 +86,28 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <form action="yuukyuu_submit.php" method="POST">
       <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
-      <div class="container">      
+      <div class="form-container">      
         <div class="title">有給休暇申請</div>
             
-        <!-- /*php申請エラーメッセ*/ -->
-        <div class="alert alert-danger" role="alert">
-          <ul class="mb-0">
-            <li></li>
-          </ul>
-        </div>
-            
+        <?php if(!empty($errors)): ?>
+          <div class="alert alert-danger" role="alert">
+            <ul class="mb-0">
+              <?php foreach($errors as $error): ?>
+                <li><?=  htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></li>
+              <?php endforeach; ?>
+            </ul>
+          </div>
+        <?php endif; ?>
+
+        <?php if($doneMessage !== null) : ?>
+          <div class="alert alert-success" role="alert"><?= htmlspecialchars($doneMessage, ENT_QUOTES, 'UTF-8') ?></div>
+        <?php endif; ?>
+        
         <table>
           <tbody>
             <tr>
               <th>申請日</th>
               <td colspan="5"><?= htmlspecialchars($todayText, ENT_QUOTES, 'UTF-8') ?></td>
-                        
-              <th>休暇種別</th>
-                <td colspan="">
-                   <select name="leave_type">
-                     <option value="">種別を選択してください</option>
-                        <?php foreach($leaveTypes as $type): ?>
-                          <option value="<?= htmlspecialchars($type, ENT_QUOTES, 'UTF-8')?>">
-                            <?= htmlspecialchars($type, ENT_QUOTES, 'UTF-8')?>
-                          </option>
-                        <?php endforeach; ?>
-                    </select>
-                </td>
             </tr>
 
             <tr>
@@ -126,23 +121,38 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             <tr>
               <th>開始日</th>
+
               <td>
-                <input type="date" name="start_date">
+                <input type="date" name="start_date" value="<?= htmlspecialchars($form['start_date'], ENT_QUOTES, 'UTF-8') ?>" required>
               </td>
+
               <th>終了日</th>
                 <td>
-                  <input type="date" name="end_date">
+                  <input type="date" name="end_date" value="<?= htmlspecialchars($form['end_date'], ENT_QUOTES, 'UTF-8') ?>" required>
                 </td>
               <th>取得日数</th>
                 <td>
-                  <input type="number" step="0.5" min="0.5" name="days">
+                  <input type="number" step="0.5" min="0.5" name="days" value="<?= htmlspecialchars($form['days'], ENT_QUOTES, 'UTF-8') ?>" required>
                 </td>
             </tr>
-                    
+            
+            <tr>
+              <th>休暇種別</th>
+                <td colspan="5">
+                   <select name="leave_type" required>
+                     <option value="">種別を選択してください</option>
+                        <?php foreach($leaveTypes as $type): ?>
+                          <option value="<?= htmlspecialchars($type, ENT_QUOTES, 'UTF-8')?>" <?= $type === $form['leave_type'] ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($type, ENT_QUOTES, 'UTF-8')?>
+                          </option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+            </tr>
             <tr>
               <th>申請理由（任意）</th>
-                <td>
-                  <textarea name="reason" placeholder="ここに詳細を記入"></textarea>
+                <td colspan="5">
+                  <textarea name="reason" placeholder="ここに詳細を記入"><?= htmlspecialchars($form['reason'], ENT_QUOTES, 'UTF-8')?></textarea>
                 </td>
             </tr>
           </tbody>
@@ -153,7 +163,7 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="approver-block" id="approver-list">
               <div class="approver-row">
                 <span class="approver-label">承認者1：</span>
-                <select name="approver_ids[]" class="approver-input approver-select" requiered>
+                <select name="approver_ids[]" class="approver-input approver-select" required>
                   <option value="">承認者を選択してください</option>
                   <?php foreach($approverCandidates as $u):?>
                     <option value="<?= htmlspecialchars($u['id'], ENT_QUOTES, 'UTF-8') ?>">
@@ -162,7 +172,7 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
                   <?php endforeach; ?>
                 </select>
                 
-                <button type="button" class="add-approver-btn">＋</button>  
+                <button type="button" class="add-approver-btn">＋</button>
               </div>
             </div>
           </div>
@@ -176,8 +186,7 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="../common/approver.js"></script>
   </body>
 </html>
-
- <!-- ============================================================
+<!-- ============================================================
 // ここまでがバックエンド（PHPだけ）です。
 // フロントを作るときは、このファイルの末尾にPHPの閉じタグを書いて、その続きにHTMLを書き足してください。
 // HTMLに出すときは、必ず htmlspecialchars($値, ENT_QUOTES, 'UTF-8') で包みます（ringi.php と同じ書き方）。
