@@ -1,3 +1,40 @@
+<?php
+require_once __DIR__ . '/../common/auth_check.php';        //セッションチェック
+require_once __DIR__ . '/../common/get_user_info.php';     //loginユーザー表示
+require_once __DIR__ . '/../common/db.php';                //各種共通部品
+require_once __DIR__ . '/../common/approver.php';          //承認ルートの共通部品
+
+//csrfトークンを生成
+if(empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+$errors = $_SESSION['ringi_errors'] ?? [];
+unset($_SESSION['ringi_errors']);
+
+// 承認者候補:稟議を承認できる職位のみ、申請者本人は除外
+$positions = APPROVER_POSITIONS['ringi'];
+
+$params = [
+    'my_dept' => $loginUser['department'],
+    'me' => $_SESSION['user_id'],
+];
+
+$inPh = [];
+$ordPh = [];
+
+foreach($positions as $i =>$p) {
+    $inPh[] = ":in{$i}";
+    $ordPh[] =":ord{$i}";
+    $params["in{$i}"] = $p;
+    $params["ord{$i}"] = $p;
+}
+
+$stmt = $connection->prepare($sql);
+$stmt->execute($params);
+$approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>

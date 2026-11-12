@@ -49,7 +49,7 @@ $isApprover = canApprove($loginUser['position'] ?? null, 'ringi');
 
                             <!-- ★ ms-auto で右端に押し出す ★ -->
                             <div class="d-flex align-items-center gap-2 ms-auto">
-                                <a class="btn btn-primary btn-sm">
+                                <a href="keiziban_sinsei.php" class="btn btn-primary btn-sm">
                                 +新規作成
                                 </a>
                                     <label for="boardCategory" class="form-label small mb-0 text-nowrap">絞り込み：</label>
