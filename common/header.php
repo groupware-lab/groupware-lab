@@ -26,7 +26,7 @@
         <ul class="d-flex flex-wrap gap-2 list-unstyled mb-0 ps-0">
             <li><a href="../home/main.php" class="btn btn-outline-secondary btn-sm">デスクトップ</a></li>
             <li><a href="#" class="btn btn-outline-secondary btn-sm">出退勤管理</a></li>
-            <li><a href="#" class="btn btn-outline-secondary btn-sm">社内掲示板</a></li>
+            <li><a href="../keiziban/keiziban_main.php" class="btn btn-outline-secondary btn-sm">社内掲示板</a></li>
             <li><a href="../workflow/workflow_main.php" class="btn btn-outline-secondary btn-sm">ワークフロー</a></li>
         </ul>
     </div>
