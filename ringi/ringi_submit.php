@@ -1,7 +1,7 @@
 <?php
   require_once __DIR__ . '/../common/auth_check.php';
 
-  //POST通信以外のアクセス不可（URL直打ち対策）
+  // POST通信以外のアクセス不可(URL直打ち・リンク経由のGETは、一覧画面へ戻す)
   if($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ringi.php');
     exit;

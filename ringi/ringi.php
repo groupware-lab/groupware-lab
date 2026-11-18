@@ -4,7 +4,8 @@ require_once __DIR__ . '/../common/get_user_info.php';     //loginユーザー�
 require_once __DIR__ . '/../common/db.php';                //各種共通部品
 require_once __DIR__ . '/../common/approver.php';          //承認ルートの共通部品
 
-//csrfトークンを生成
+//1.セキュリティ　CSRF(クロスサイト・リクエスト・フォージェリ)対策
+//csrfトークンを生成　
 if(empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -12,9 +13,11 @@ if(empty($_SESSION['csrf_token'])) {
 $errors = $_SESSION['ringi_errors'] ?? [];
 unset($_SESSION['ringi_errors']);
 
-// 承認者候補:稟議を承認できる職位のみ、申請者本人は除外
+//稟議の承認者の職位のリスト（approver.phpから）を取得
+//稟議を承認できる職位（課長以上）のみ、申請者本人は除外
 $positions = APPROVER_POSITIONS['ringi'];
 
+//ログインしてるユーザー自身を排除
 $params = [
     'my_dept' => $loginUser['department'],
     'me' => $_SESSION['user_id'],
@@ -131,7 +134,7 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="approver-row">
                             <span class="approver-label">承認者1：</span>
-                            <select name="approver_ids[]" class="approver-input approver-select" requered>
+                            <select name="approver_ids[]" class="approver-input approver-select" required>
                                 <option value="">承認者を選択してください</option>
                                 <?php foreach ($approverCandidates as $u):?>
                                     <option value="<?= htmlspecialchars($u['id'], ENT_QUOTES, "UTF-8")?>">
@@ -139,12 +142,13 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     </option>
                                 <?php endforeach; ?>
                             </select>
+
                             <button type="button" class="add-approver-btn">＋</button>
                         </div>
 
                     </div>
                 </div>
-            
+            </div>
 
                 <div class="submit-row">
                     <button type="submit" class="submit-btn">申請する</button>

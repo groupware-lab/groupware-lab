@@ -114,7 +114,7 @@ $isApprover = canApprove($loginUser['position'] ?? null, 'ringi');
                         <h2 class="h6 fw-bold mb-0">ワークフロー</h2>
                         <a href="../workflow/workflow_main.php" class="btn btn-sm btn-link text-decoration-none p-0">ワークフローへ &raquo;</a>
                     </div>
-                    <!-- 件数は仮表示---のちほどphpでＤＢから取得する -->
+                    
                     <div class="list-group list-group-flush border-top border-bottom mb-4">
                         <a href="../workflow/workflow_main.php" class="list-group-item list-group-item-action px-2 py-3 d-flex justify-content-between align-items-center">
                             <span>申請中の稟議</span>

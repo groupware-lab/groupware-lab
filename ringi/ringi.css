@@ -5,7 +5,7 @@ body {
     padding: 0;
     background-color: #f5f5f5; 
     box-sizing: border-box;
-    min-height: 100vh;      /* height: 100vh → min-height:*/ 
+    min-height: 100vh;      
     display: flex;
     flex-direction: column;
 }
@@ -37,45 +37,51 @@ table {
     width: 100%;                        /* 画面の横幅いっぱいに広げる */
     border-collapse: collapse;          /* セルの間の隙間をなくす */
     table-layout: fixed;                /* 横幅の％指定をきっちり守らせる設定 */
-
 }
 
 /* 格子の線とセル（マス）の設定 */
 th, td {
-    border: 1px solid var(--border);    /* セルの周りの線を黒にする */
+    border: 1px solid #333;    /* セルの周りの線を黒にする */
     padding: 8px;                       /* セルの中の余白を少し広げる */
-    vertical-align: middle;             /* 中の文字を上下中央にする */
-    box-sizing: border-box;             /* セルの余白を含めて横幅を計算する */
-    border-color: black;
+                 /* 中の文字を上下中央にする */
 }
 
-/* グレーの見出し部分 */
+/* 見出し部分 */
 th {
     background-color: var(--blue);
     color: #fff;
-    font-weight: 600;
+    font-weight: bold;
 }
 
-input[type="text"], select, textarea {
+input[type="text"],
+select,
+textarea {
     width: 100%;
-    box-sizing: border-box;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    background-color: transparent; /* 背景を透明にしてセルの色に合わせる */
+    border-radius: 4px;
+    border: 1px solid #333;
+    padding: 6px 10px;
+}
+
+input[type = "number"] {
+    border-radius: 4px;
+    border: 1px solid #333;
+    padding: 6px 10px;  
+}
+
+/*フォーカスしたときに色を青色にする*/
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--blue);
+  outline: none;
 }
 
 /* テキストエリア専用のスタイル（余計な隙間とサイズ変更ツマミを消す） */
 textarea {              
-    resize: none;        /* 余計な隙間とサイズ変更ツマミを消す */
     display: block;     
     min-height: 140px;   /* 最低でもこの高さは確保する */
     overflow: hidden;
-}
-
-/* 稟議内容の行（ここが画面の残りの高さをすべて吸収して広がります） */
-.content-row {          
-    height: 100%;       
 }
 
 /* 一番下の承認者選択セクション */

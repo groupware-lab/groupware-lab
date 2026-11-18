@@ -4,7 +4,8 @@ require_once __DIR__ . '/../common/get_user_info.php';   // $loginUser（部署�
 require_once __DIR__ . '/../common/db.php';
 require_once __DIR__ . '/yuukyuu_common.php';
 
-//csrfトークンを生成（フォームに埋め込み、送信時に yuukyuu_submit.php で照合する）
+//1.セキュリティ　CSRF(クロスサイト・リクエスト・フォージェリ)対策
+//csrfトークンを生成　
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -163,7 +164,7 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="approver-block" id="approver-list">
               <div class="approver-row">
                 <span class="approver-label">承認者1：</span>
-                <select name="approver_ids[]" class="approver-input approver-select" required>
+                <select name="approver_ids[]" class="   " required>
                   <option value="">承認者を選択してください</option>
                   <?php foreach($approverCandidates as $u):?>
                     <option value="<?= htmlspecialchars($u['id'], ENT_QUOTES, 'UTF-8') ?>">
@@ -186,12 +187,8 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="../common/approver.js"></script>
   </body>
 </html>
-<!-- ============================================================
-// ここまでがバックエンド（PHPだけ）です。
-// フロントを作るときは、このファイルの末尾にPHPの閉じタグを書いて、その続きにHTMLを書き足してください。
-// HTMLに出すときは、必ず htmlspecialchars($値, ENT_QUOTES, 'UTF-8') で包みます（ringi.php と同じ書き方）。
-//
-// 【使える変数】
+
+<!-- // 【使える変数】
 //   $loginUser['department'] / ['position'] / ['name']   部署名・職位・申請者（ログイン中の人。自動表示）
 //   $todayText                申請日
 //   $leaveTypes               休暇の種類（4つ）。プルダウンの選択肢として foreach で出す
@@ -213,8 +210,4 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //   date     name="end_date"       休暇終了日
 //   number   name="days"           取得日数（0.5日単位。半休は0.5）
 //   textarea name="reason"         申請理由（任意）
-//   select   name="approver_ids[]" 承認者（行ごとに1つ。「＋」「－」で行を増減させる。選んだ順が承認順）
-//
-// 【フロント側で用意するもの】
-//   承認者の行を増減させるJavaScript（「＋」で行を追加、「－」で削除、「承認者1」「承認者2」…の番号の振り直し）
-// ============================================================ -->
+//   select   name="approver_ids[]" 承認者（行ごとに1つ。「＋」「－」で行を増減させる。選んだ順が承認順） -->

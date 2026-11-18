@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../common/auth_check.php';
 require_once __DIR__ . '/../common/db.php';
 
-//POST以外のアクセスは不可(URL直打ち対策)
+//POST以外のアクセスを禁止(URL直打ち対策)
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   header('Location: approval_list.php');
   exit;
@@ -21,28 +21,35 @@ if (
 //ログインしている人のID
 $loginUserId = (int)$_SESSION['user_id'];
 
-//入力値の受け取り
+//入力値の受け取り 　稟議ID・承認判断（承認か却下か差し戻し）・コメント
 $ringiIdRaw = $_POST['ringi_id'] ?? '';
 $action     = $_POST['action'] ?? '';
 $comment    = trim($_POST['comment'] ?? '');
 
 //稟議IDが数字か確認
 if (!is_string($ringiIdRaw) || !ctype_digit($ringiIdRaw)) {
-  header('Location: approval_list.php');
+  header('Location: approval_list.php');                                                                                                                                                        
   exit;
 }
 $ringiId = (int)$ringiIdRaw;
 
-//今回は「承認」だけ実装。差し戻し・却下は準備中として詳細画面に戻す
-if ($action !== 'approve') {
-  $_SESSION['flash_message'] = '差し戻し・却下は現在準備中です。';
+//一時的に差し戻しボタンを無効にしとく 実装したらこれは削除
+if($action === 'return') {
+  $_SESSION['flash_message'] = '差し戻しは現在準備中です。';
   header('Location: approval_detail.php?id=' . $ringiId);
   exit;
 }
 
-//コメントの文字数チェック(承認はコメント任意)
-if (mb_strlen($comment) > 500) {
-  $_SESSION['flash_message'] = 'コメントは500文字以内で入力してください。';
+//バリデーションチェック：承認コメントの文字数チェック
+if (mb_strlen($comment) > 255) {
+  $_SESSION['flash_message'] = 'コメントは255文字以内で入力してください。';
+  header('Location: approval_detail.php?id=' . $ringiId);
+  exit;
+}
+
+//バリデーションチェック：却下のときにコメントを必須にする（空ならエラー表示）
+if($action === 'reject' && $comment === '') {
+  $_SESSION['flash_message'] = '却下の場合はコメント必須です。入力してください。';
   header('Location: approval_detail.php?id=' . $ringiId);
   exit;
 }
@@ -50,7 +57,7 @@ if (mb_strlen($comment) > 500) {
 try {
   $connection->beginTransaction();
 
-  //① 稟議本体を取得(FOR UPDATE:処理が終わるまで他の人が同じ行を更新できないようにする)
+  //① 稟議本体を取得(FOR UPDATE:処理が終わるまで他の人が同じ行を更新できないようにする) 
   $stmt = $connection->prepare(
     "SELECT id, status, current_step
        FROM ringi
@@ -88,16 +95,23 @@ try {
     exit;
   }
 
-  //③ 自分の行を「承認済み」に更新
+  //自分（承認者）の行のステータスを更新
+  if($action === 'reject') {
+    $newStatus = 'rejected';
+  } else {
+    $newStatus = 'approved';
+  }
+
   $stmt = $connection->prepare(
     "UPDATE ringi_approvers
-        SET status      = 'approved',
+        SET status      = :status,
             comment     = :comment,
             approved_at = NOW()
       WHERE ringi_id    = :ringi_id
         AND approver_id = :me
         AND step_order  = :step"
   );
+  $stmt->bindValue(':status', $newStatus, PDO::PARAM_STR);
   $stmt->bindValue(':comment', $comment === '' ? null : $comment, $comment === '' ? PDO::PARAM_NULL : PDO::PARAM_STR);
   $stmt->bindValue(':ringi_id', $ringiId, PDO::PARAM_INT);
   $stmt->bindValue(':me', $loginUserId, PDO::PARAM_INT);
@@ -113,17 +127,16 @@ try {
   $lastStep = (int)$stmt->fetchColumn();
 
   //⑤ 稟議本体を更新
-  if ((int)$ringi['current_step'] >= $lastStep) {
+  if($action === 'reject') {
+    $stmt = $connection->prepare("UPDATE ringi SET status = 'rejected' WHERE id =:ringi_id");
+    $message = '申請を却下しました。';
+  } elseif ((int)$ringi['current_step'] >= $lastStep) {
     //最後の承認者 → 稟議全体を承認済みにする
-    $stmt = $connection->prepare(
-      "UPDATE ringi SET status = 'approved' WHERE id = :ringi_id"
-    );
+    $stmt = $connection->prepare("UPDATE ringi SET status = 'approved' WHERE id = :ringi_id");
     $message = '承認しました。すべての承認が完了しました。';
   } else {
     //まだ次の承認者がいる → 次の段階へ回す
-    $stmt = $connection->prepare(
-      "UPDATE ringi SET current_step = current_step + 1 WHERE id = :ringi_id"
-    );
+    $stmt = $connection->prepare("UPDATE ringi SET current_step = current_step + 1 WHERE id = :ringi_id");
     $message = '承認しました。次の承認者に送信しました。';
   }
   $stmt->bindValue(':ringi_id', $ringiId, PDO::PARAM_INT);
@@ -135,6 +148,7 @@ try {
   if ($connection->inTransaction()) {
     $connection->rollBack();
   }
+
   error_log('[approval_action] ' . $e->getMessage()); //詳細はサーバーのログだけに残す
   $_SESSION['flash_message'] = '承認処理中にエラーが発生しました。時間をおいて再度お試しください。';
   header('Location: approval_detail.php?id=' . $ringiId);

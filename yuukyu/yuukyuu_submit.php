@@ -1,5 +1,5 @@
-<?php   //有給休暇申請 送信処理（記入画面のフォームの送信先。入力チェック → DBに保存）
-require_once __DIR__ . '/../common/auth_check.php';
+<?php   
+require_once __DIR__ . '/../common/auth_check.php';      //セッションチェック
 require_once __DIR__ . '/yuukyuu_common.php';
 
 // POST通信以外のアクセス不可（URL直打ち対策）

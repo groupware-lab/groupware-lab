@@ -12,27 +12,6 @@ if(empty($_SESSION['csrf_token'])) {
 $errors = $_SESSION['ringi_errors'] ?? [];
 unset($_SESSION['ringi_errors']);
 
-// 承認者候補:稟議を承認できる職位のみ、申請者本人は除外
-$positions = APPROVER_POSITIONS['ringi'];
-
-$params = [
-    'my_dept' => $loginUser['department'],
-    'me' => $_SESSION['user_id'],
-];
-
-$inPh = [];
-$ordPh = [];
-
-foreach($positions as $i =>$p) {
-    $inPh[] = ":in{$i}";
-    $ordPh[] =":ord{$i}";
-    $params["in{$i}"] = $p;
-    $params["ord{$i}"] = $p;
-}
-
-$stmt = $connection->prepare($sql);
-$stmt->execute($params);
-$approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
