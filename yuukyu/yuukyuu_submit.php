@@ -1,6 +1,6 @@
 <?php   
 require_once __DIR__ . '/../common/auth_check.php';      //セッションチェック
-require_once __DIR__ . '/yuukyuu_common.php';
+require_once __DIR__ . '/yuukyuu_common.php';            //休暇の種類の管理
 
 // POST通信以外のアクセス不可（URL直打ち対策）
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -190,5 +190,5 @@ try {
 
 // 保存できたら、使い終わったCSRFトークンを破棄して（二重送信を防ぐ）、完了メッセージつきで記入画面へ
 unset($_SESSION['csrf_token']);
-header('Location: yuukyuu.php?done=1');   // 申請後の遷移先を変えたい場合は、ここを変更する
+header('Location: ../workflow/workflow_main.php');
 exit;
