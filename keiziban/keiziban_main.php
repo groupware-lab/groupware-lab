@@ -16,7 +16,7 @@ $stmt->bindValue(':applicant_id', $_SESSION['user_id'], PDO::PARAM_INT);
 $stmt->execute();
 $ringiCounter = (int)$stmt->fetchColumn();
 
-$isApprover = canApprove($loginUser['position'] ?? null, 'ringi');
+$isApprover = canApprove($loginUser['position'] ?? null, 'sinsei');
 ?>
 
 <!DOCTYPE html>
