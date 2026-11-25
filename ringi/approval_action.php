@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../common/auth_check.php';
-require_once __DIR__ . '/../common/db.php';
+require_once __DIR__ . '/../common/auth_check.php';  //セッションチェック
+require_once __DIR__ . '/../common/db.php';          //DB接続
 
 //POST以外のアクセスを禁止(URL直打ち対策)
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -26,7 +26,7 @@ $ringiIdRaw = $_POST['ringi_id'] ?? '';
 $action     = $_POST['action'] ?? '';
 $comment    = trim($_POST['comment'] ?? '');
 
-//稟議IDが数字か確認
+////稟議IDが数字だけの文字列か判定（文字列・0～9でできているか）
 if (!is_string($ringiIdRaw) || !ctype_digit($ringiIdRaw)) {
   header('Location: approval_list.php');                                                                                                                                                        
   exit;
@@ -68,7 +68,7 @@ try {
   $stmt->execute();
   $ringi = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  //② ログイン者が「今の承認者」で、まだ処理していないか確認(本当の守り)
+  //② ログイン者が今の承認者で、まだ処理していないか
   $isMyTurn = false;
   if ($ringi !== false && $ringi['status'] === 'pending') {
     $stmt = $connection->prepare(
@@ -112,7 +112,9 @@ try {
         AND step_order  = :step"
   );
   $stmt->bindValue(':status', $newStatus, PDO::PARAM_STR);
-  $stmt->bindValue(':comment', $comment === '' ? null : $comment, $comment === '' ? PDO::PARAM_NULL : PDO::PARAM_STR);
+  $stmt->bindValue(':comment',
+    $comment === '' ? null : $comment,
+    $comment === '' ? PDO::PARAM_NULL : PDO::PARAM_STR);
   $stmt->bindValue(':ringi_id', $ringiId, PDO::PARAM_INT);
   $stmt->bindValue(':me', $loginUserId, PDO::PARAM_INT);
   $stmt->bindValue(':step', (int)$ringi['current_step'], PDO::PARAM_INT);

@@ -9,6 +9,7 @@ const APPROVER_POSITIONS = [
   'bihin' => ['課長', '部長', '副社長', '社長']
 ];
 
+//職位が一覧の中にあるか」を調べて、true か false を返す。
 function canApprove(?string $position, string $type): bool {
   return in_array($position, APPROVER_POSITIONS[$type] ?? [], true);
 }

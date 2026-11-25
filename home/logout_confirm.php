@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../common/auth_check.php';
+require_once __DIR__ . '/../common/auth_check.php';   //セッションチェック
 ?>
 
 <!DOCTYPE html>

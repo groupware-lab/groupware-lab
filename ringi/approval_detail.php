@@ -1,8 +1,8 @@
 <?php
-  require_once __DIR__ . '/../common/auth_check.php';
-  require_once __DIR__ . '/../common/db.php';
-  require_once __DIR__ . '/../common/get_user_info.php';
-  require_once __DIR__ . '/../common/ringi_status.php';
+  require_once __DIR__ . '/../common/auth_check.php';     //セッションチェック
+  require_once __DIR__ . '/../common/db.php';             //DB接続
+  require_once __DIR__ . '/../common/get_user_info.php';  //loginユーザー表示
+  require_once __DIR__ . '/../common/ringi_status.php';   //各承認ルートの設定
 
   //承認完了後のメッセージ表記
   $flash = $_SESSION['flash_message'] ?? '';

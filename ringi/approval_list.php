@@ -15,6 +15,12 @@
 
   $approverId = (int)$_SESSION['user_id'];
   
+  //申請履歴表示の実装
+$type = $_GET['type'] ?? 'ringi';
+if(!in_array($type, ['ringi', 'yuukyuu'], true)) {
+  $type = 'ringi';
+} 
+
   //稟議内容、承認テーブル、ユーザテーブルを結合して申請中の稟議を昇順に取得
   $sql ="SELECT ringi.id,
                 ringi.project_name,
@@ -79,17 +85,17 @@
 
             <tbody>
               <?php foreach($pendingList as $row): ?>
-              <tr>
-                <td><?= sprintf('R-%04d', $row['id']) ?></td>
+              <tr class="position-relative">
+                <td>
+                  <a href="approval_detail.php?id=<?= (int)$row['id'] ?>" class="stretched-link text-dark text-decoration-none">
+                    <?= sprintf('R-%04d', $row['id']) ?>
+                  </a>
+                </td>
                 <td><?= date('Y/m/d', strtotime($row['created_at'])) ?></td>
                 <td><?= htmlspecialchars($row['applicant_name'], ENT_QUOTES, 'UTF-8') ?>
                   <div class="small text-muted"><?= htmlspecialchars($row['applicant_department'], ENT_QUOTES, 'UTF-8') ?></div>
                 </td>
-                <td>
-                  <a href="approval_detail.php?id=<?= (int)$row['id'] ?>">
-                    <?= htmlspecialchars($row['project_name'], ENT_QUOTES, 'UTF-8') ?>   
-                  </a>
-                </td>
+                <td><?= htmlspecialchars($row['project_name'], ENT_QUOTES, 'UTF-8') ?></td>
                 <td class="text-end"><?= number_format((int)$row['estimated_cost'])?>円</td>
                 <td><?= (int)$row['current_step'] ?>/<?= (int)$row['total_steps'] ?></td>
               </tr>
