@@ -7,6 +7,16 @@ const RINGI_STATUS_LABELS = [
   'rejected' => ['label' => '却下',     'class' => 'bg-danger', 'row_class' => 'list-group-item-danger']
 ];
 
+//稟議の区分を管理
+const RINGI_CATEGORY = [
+  'software'      => 'ソフトウェア導入',
+  'outsourcing'   => '外注費',
+  'equipment'     => '備品購入',
+  'business_trip' => '出張',
+  'training'      => '研修参加',
+  'general'       => 'その他'
+];
+
 //各承認者の承認状態からどのラベルを表示するか判定して返す
 //関数名（型、引数1, 型,引数2, 型,引数3）　返却値
 function approvalRouteLabel(array $a, int $currentStep, string $status): array {

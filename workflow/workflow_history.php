@@ -13,7 +13,7 @@ if(!in_array($type, ['ringi', 'yuukyuu'], true)) {
   $type = 'ringi';
 }  
 
-//申請履歴を表示　　稟議書か有給申請か備品申請か分岐
+//申請履歴を表示　　稟議書か有給申請か分岐
 if($type === 'ringi') {
   //id,　プロジェクト名,　費用,　申請状況,　申請日を取得
   $sql = "SELECT ringi.id, ringi.project_name, ringi.estimated_cost, ringi.status, ringi.created_at,
