@@ -3,6 +3,7 @@ require_once __DIR__ . '/../common/auth_check.php';        //セッションチ�
 require_once __DIR__ . '/../common/get_user_info.php';     //loginユーザー表示
 require_once __DIR__ . '/../common/db.php';                //各種共通部品
 require_once __DIR__ . '/../common/approver.php';          //承認ルートの共通部品
+require_once __DIR__ . '/../common/ringi_status.php';      //稟議の申請区分の表示
 
 //1.セキュリティ　CSRF(クロスサイト・リクエスト・フォージェリ)対策
 //csrfトークンを生成　
@@ -17,7 +18,6 @@ unset($_SESSION['ringi_errors']);
 //稟議を承認できる職位（課長以上）のみ、申請者本人は除外
 $positions = APPROVER_POSITIONS['ringi'];
 
-//ログインしてるユーザー自身を排除
 $params = [
     'my_dept' => $loginUser['department'],
     'me' => $_SESSION['user_id'],
@@ -155,58 +155,6 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
         </div>
     </form>
-
-    <script>
-        const today = new Date(); /* 今日の日付を取得 */
-        const year = today.getFullYear();
-        const month = today.getMonth() + 1;
-        const date = today.getDate();
-        document.getElementById('today-date').textContent = year + '年' + month + '月' + date + '日';
-
-        //稟議内容を入力された中身に合わせてtextareaの高さを調整
-        const textarea = document.querySelector('textarea')
-
-        function autoResize() {
-            textarea.style.height = 'auto';
-            textarea.style.height = textarea.scrollHeight + 'px';
-        }
-
-        textarea.addEventListener('input', autoResize);
-        window.addEventListener('resize', autoResize);
-        autoResize();
-
-        const approverList = document.getElementById('approver-list');
-
-        // 承認者の行を上から「承認者1、承認者2…」の順にラベルを振り直す
-        function renumberApprovers() {
-            document.querySelectorAll('.approver-row').forEach((row, index) => {
-                row.querySelector('.approver-label').textContent = '承認者' + (index + 1) + '：';
-            });
-        }
-
-        approverList.addEventListener('click', function(e) {
-            if (e.target.classList.contains('add-approver-btn')) {
-                const firstRow = document.querySelector('.approver-row');
-                const newRow = firstRow.cloneNode(true);
-
-                // クローン元の選択状態を引き継がないようリセット
-                newRow.querySelector('select').selectedIndex = 0;
-
-                const btn = newRow.querySelector('button');
-                btn.textContent = '－';
-                btn.classList.remove('add-approver-btn');
-                btn.classList.add('remove-approver-btn');
-
-                approverList.appendChild(newRow);
-                renumberApprovers();
-                return;
-            }
-
-            if (e.target.classList.contains('remove-approver-btn')) {
-                e.target.closest('.approver-row').remove();
-                renumberApprovers();
-            }
-        });
-    </script>
+    <script src="../common/approver.js"></script>
 </body>
 </html>

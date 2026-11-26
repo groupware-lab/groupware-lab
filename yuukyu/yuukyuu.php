@@ -187,27 +187,3 @@ $approverCandidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="../common/approver.js"></script>
   </body>
 </html>
-
-<!-- // 【使える変数】
-//   $loginUser['department'] / ['position'] / ['name']   部署名・職位・申請者（ログイン中の人。自動表示）
-//   $todayText                申請日
-//   $leaveTypes               休暇の種類（4つ）。プルダウンの選択肢として foreach で出す
-//   $form['leave_type'] / ['start_date'] / ['end_date'] / ['days'] / ['reason']
-//                             各入力欄の初期値（エラーで戻ってきたときに、前回の入力を復元する用）
-//   $approverCandidates       承認者の候補。1人ごとに id / department / position / name が入った配列
-//                             プルダウンに「部署 職位 氏名」の形で foreach で出す（value は id）
-//   $selectedApprovers        承認者の選択欄の行ぶんの配列。前回選んだidが入っている（初回は空文字1つ）
-//                             foreach で行を作り、候補のidと同じものを selected にして復元する
-//   $errors                   エラー文の配列（空なら出さない）
-//   $doneMessage              申請完了のメッセージ（nullなら出さない）
-//   $csrfToken                CSRFトークン
-//
-// 【フォーム】
-//   送信先: yuukyuu_submit.php   方式: POST
-//   hidden   name="csrf_token"     値: $csrfToken
-//   select   name="leave_type"     選択肢: $leaveTypes
-//   date     name="start_date"     休暇開始日
-//   date     name="end_date"       休暇終了日
-//   number   name="days"           取得日数（0.5日単位。半休は0.5）
-//   textarea name="reason"         申請理由（任意）
-//   select   name="approver_ids[]" 承認者（行ごとに1つ。「＋」「－」で行を増減させる。選んだ順が承認順） -->

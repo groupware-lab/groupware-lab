@@ -1,2 +1,3 @@
 # GitHubにDBの接続情報が漏れないように、ここに乗せたくないファイル名を記載
 config.php
+CLAUDE.md

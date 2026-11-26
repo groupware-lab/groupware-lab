@@ -35,6 +35,7 @@ if($type === 'ringi') {
           ORDER BY ringi.created_at DESC
           LIMIT 5";
 } elseif($type === 'yuukyuu') {
+
 //id,有給開始日,　終了日,　取得日数,　申請状況,　申請日を取得
   $sql = "SELECT yuukyuu.id, leave_type, start_date, end_date, days, yuukyuu.status, yuukyuu.created_at,
           users.name AS current_approver
@@ -200,59 +201,65 @@ $histories = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <div class="col-md-6">
-      <div class="card border border-1 shadow-sm p-3 text-center h-100">
+      <div class="card border border-1 shadow-sm p-3 text-center h-100 justify-content-evenly" style="min-height: 300px;">
         <h2 class="h6 fw-bold mb-3">新規ワークフロー申請</h2>
 
-        <h3 class="h6 fw-bold mb-2">稟議書</h3>
-        <a href="../ringi/ringi.php" class="btn bg-light w-100 d-flex align-items-center justify-content-center gap-2 mb-3">
-          <img src="../assets/img/sinsei.png" alt="ファイルの画像" style="max-height: 20px; width: auto;">
-          <span>申請</span>
-        </a>
+        <div>
+          <h3 class="h6 fw-bold mb-2">稟議書</h3>
+          <a href="../ringi/ringi.php" class="btn bg-light w-100 d-flex align-items-center justify-content-center gap-2 mb-3">
+            <img src="../assets/img/sinsei.png" alt="ファイルの画像" style="max-height: 20px; width: auto;">
+            <span>申請</span>
+          </a>
+        </div>
 
-        <h3 class="h6 fw-bold mb-2">有給申請</h3>
-        <a href="../yuukyu/yuukyuu.php" class="btn bg-light w-100 d-flex align-item-center justify-content-center gap-2 mb-3">
-          <img src="../assets/img/sinsei.png" alt="ファイルの画像" style="max-height: 20px; width: auto;">
-          <span>申請</span>
-        </a>
+        <div>
+          <h3 class="h6 fw-bold mb-2">有給申請</h3>
+          <a href="../yuukyu/yuukyuu.php" class="btn bg-light w-100 d-flex align-items-center justify-content-center gap-2 mb-3">
+            <img src="../assets/img/sinsei.png" alt="ファイルの画像" style="max-height: 20px; width: auto;">
+            <span>申請</span>
+          </a>
+        </div>
 
-        <h3 class="h6 fw-bold mb-2">備品購入申請</h3>
-        <span class="btn bg-light w-100 text-muted disabled">準備中</span>
       </div>
     </div>
 
     <!-- 承認待ち(承認者のみ) -->
     <?php if ($isApprover): ?>
     <div class="col-md-6">
-      <div class="card border border-1 shadow-sm p-3 text-center h-100">
-        <h2 class="h6 fw-bold mb-3">
-          承認待ち
-          <?php if ($ringiPendingCount > 0): ?>
-            <span class="badge bg-danger ms-1"><?= $ringiPendingCount ?></span>
+      <div class="card border border-1 shadow-sm p-3 text-center h-100 justify-content-evenly" style="min-height: 300px;">
+
+        <div>
+          <h2 class="h6 fw-bold mb-3">承認待ち
+            <?php if ($ringiPendingCount > 0): ?>
+              <span class="badge bg-danger ms-1"><?= $ringiPendingCount ?></span>
+            <?php endif; ?>
+          </h2>
+        </div>
+
+        <div>
+          <h3 class="h6 fw-bold mb-2">稟議書</h3>
+            <?php if ($ringiPendingCount > 0): ?>
+              <a href="../ringi/approval_list.php" class="btn app-page w-100 d-flex align-items-center justify-content-center gap-2 mb-3">
+                <img src="../assets/img/syounin.png" alt="ファイルの画像" style="max-height: 20px; width: auto;">
+                <span>承認待ち <?= $ringiPendingCount ?>件</span>
+              </a>
+              
+            <?php else: ?>
+              <span class="btn bg-light w-100 mb-3 text-muted disabled">承認待ちはありません</span>
+            <?php endif; ?>
+        </div>
+
+        <div>
+          <h3 class="h6 fw-bold mb-2">有給申請</h3>
+          <?php if($yuukyuuPendingCount > 0): ?>
+            <a href="../yuukyu/yuukyuu_list.php" class="btn app-page w-100 d-flex align-items-center justify-content-center gap-2 mb-3">
+              <img src="../assets/img/syounin.png" alt="ファイルの画像" style="max-height: 20px; width: auto;">
+              <span>承認待ち <?= $yuukyuuPendingCount ?>件</span>
+            </a>
+          <?php else: ?>
+            <span class="btn bg-light w-100 text-muted disabled">承認待ちはありません</span>
           <?php endif; ?>
-        </h2>
-
-        <h3 class="h6 fw-bold mb-2">稟議書</h3>
-        <?php if ($ringiPendingCount > 0): ?>
-          <a href="../ringi/approval_list.php" class="btn app-page w-100 d-flex align-items-center justify-content-center gap-2 mb-3">
-            <img src="../assets/img/syounin.png" alt="ファイルの画像" style="max-height: 20px; width: auto;">
-            <span>承認待ち <?= $ringiPendingCount ?>件</span>
-          </a>
-        <?php else: ?>
-          <span class="btn bg-light w-100 mb-3 text-muted disabled">承認待ちはありません</span>
-        <?php endif; ?>
-
-        <h3 class="h6 fw-bold mb-2">有給申請</h3>
-        
-        <?php if($yuukyuuPendingCount > 0): ?>
-          <a href="../yuukyu/yuukyuu_list.php" class="btn app-page w-100 d-flex align-items-center justify-content-center gap-2 mb-3">
-            <img src="../assets/img/syounin.png" alt="ファイルの画像" style="max-height: 20px; width: auto;">
-            <span>承認待ち <?= $yuukyuuPendingCount ?>件</span>
-          </a>
-        <?php else: ?>
-          <span class="btn bg-light w-100 mb-3 text-muted disbled">承認待ちはありません</span>
-        <?php endif; ?>
-        <h3 class="h6 fw-bold mb-2">備品購入申請</h3>
-        <span class="btn bg-light w-100 text-muted disabled">準備中</span>
+          </div>
       </div>
     </div>
     <?php endif; ?>
