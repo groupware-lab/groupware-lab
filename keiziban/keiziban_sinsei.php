@@ -11,7 +11,6 @@ if(empty($_SESSION['csrf_token'])) {
 
 $errors = $_SESSION['ringi_errors'] ?? [];
 unset($_SESSION['ringi_errors']);
-
 ?>
 
 <!DOCTYPE html>
@@ -20,45 +19,20 @@ unset($_SESSION['ringi_errors']);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>登録・編集</title>
-  <link rel="stylesheet" href="keiziban_sinsei.css">
-  <link rel="stylesheet" href="common.css">
+  
+  <!-- bootstrapのcssを読み込む用 -->
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- headerとログアウトボタンの共通部品のcssを読み込む用 -->
+  <link href="../common/common.css" rel="stylesheet">
+
+  <!-- 掲示板用のCSSの読み込み -->
+  <link href="keiziban_sinsei.css" rel="stylesheet">
 </head>
-<body>
 
-    <!-- header,navの共通部品-->
-<header class="app-header">
-    <div class="app-header-inner">
-        <span class="app-logo-badge">KS</span>
-        <span class="app-header-title">株式会社コンドウソリューション</span>
-    </div>
-
-    <nav class="app-nav-menu d-flex align-items-center gap-4">
-        <span class="small text-white">
-            こんにちは！<?= htmlspecialchars($employee_name, ENT_QUOTES, 'UTF-8') ?>  さん  
-        </span>
-
-        <span class="app-user-badge">
-            <img src="../assets/img/user_icon.png" alt="社員アイコン" width="30" height="30">
-        </span>
-
-        <a href="../home/logout_confirm.php" class="text-white text-decoration-none d-flex align-items-center logout-link" title="ログアウト">
-            <img src="../assets/img/logout_icon.png" alt="ログアウト" width="30" height="35" class="me-1 logout-icon">
-            <span class="small">ログアウト</span>
-        </a>
-    </nav>
-</header>
-
-<div class="bg-white border-bottom py-2 px-4 mb-4">
-    <div class="container-fluid p-0">
-        <ul class="d-flex flex-wrap gap-2 list-unstyled mb-0 ps-0">
-            <li><a href="../home/main.php" class="btn btn-outline-secondary btn-sm">デスクトップ</a></li>
-            <li><a href="#" class="btn btn-outline-secondary btn-sm">出退勤管理</a></li>
-            <li><a href="../keiziban/keiziban_main.php" class="btn btn-outline-secondary btn-sm">社内掲示板</a></li>
-            <li><a href="../workflow/workflow_main.php" class="btn btn-outline-secondary btn-sm">ワークフロー</a></li>
-        </ul>
-    </div>
-</div>
-
+<body class="app-page d-flex flex-column min-vh-100">
+  <?php require_once __DIR__ . '/../common/header.php'; ?>
+  
   <div class="dialog-wrapper">
     <div class="dialog-header">
       <h1>登録・編集</h1>
@@ -112,18 +86,15 @@ unset($_SESSION['ringi_errors']);
       <!-- 内容 -->
       <fieldset class="content-box">
         <legend>内容 <span class="required">*</span></legend>
-        <textarea class="content-textarea">年末年始休暇のお知らせです。
-年末年始休暇のお知らせです。
-年末年始休暇のお知らせです。</textarea>
+        <textarea class="content-textarea">年末年始休暇のお知らせです。</textarea>
       </fieldset>
 
         <div class="footer-buttons">
           <button type="submit" class="btn-action btn-submit">登録</button>
-          <button type="button" class="btn-action btn-close">閉じる</button>
+          <button type="button" class="btn-action btn-cancel">閉じる</button>
         </div>
       </div>
     </form>
   </div>
-
 </body>
 </html>
