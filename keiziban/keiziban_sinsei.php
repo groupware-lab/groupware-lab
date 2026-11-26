@@ -27,8 +27,6 @@ unset($_SESSION['ringi_errors']);
     <!-- bootstrapのcssを読み込む用 -->
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- 稟議用のCSSの読み込み -->
-    <link rel="stylesheet" href="ringi.css">
 </head>
 
 <body class="app-page d-flex flex-column min-vh-100">
