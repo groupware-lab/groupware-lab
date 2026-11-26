@@ -17,140 +17,113 @@ unset($_SESSION['ringi_errors']);
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>社内掲示板 新規作成</title>
-
-    <!-- 背景色のデザインの共通部分を読み込み -->
-    <link href="../common/common.css" rel="stylesheet">
-    
-    <!-- bootstrapのcssを読み込む用 -->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登録・編集</title>
+  <link rel="stylesheet" href="keiziban_sinsei.css">
+  <link rel="stylesheet" href="common.css">
 </head>
+<body>
 
-<body class="app-page d-flex flex-column min-vh-100">
-    <?php require_once __DIR__ . '/../common/header.php'; ?>  
+    <!-- header,navの共通部品-->
+<header class="app-header">
+    <div class="app-header-inner">
+        <span class="app-logo-badge">KS</span>
+        <span class="app-header-title">株式会社コンドウソリューション</span>
+    </div>
 
-    <form action="ringi_submit.php" method="POST">
-        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
-        <div class="form-container">
-            <div class="title">社内掲示板</div>
-            <?php if (!empty($errors)): ?>
-            <div class="alert alert-danger" role="alert">
-                <ul class="mb-0">
-                    <?php foreach ($errors as $e): ?>
-                    <li><?= htmlspecialchars($e, ENT_QUOTES, 'UTF-8') ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-            <?php endif; ?>
+    <nav class="app-nav-menu d-flex align-items-center gap-4">
+        <span class="small text-white">
+            こんにちは！<?= htmlspecialchars($employee_name, ENT_QUOTES, 'UTF-8') ?>  さん  
+        </span>
 
-            <table>
-                <tbody>
-                    <tr>
-                        <th>掲示日</th>
-                        <td colspan="5" id="today-date" style="font-weight: bold;"></td>
-                    </tr>
+        <span class="app-user-badge">
+            <img src="../assets/img/user_icon.png" alt="社員アイコン" width="30" height="30">
+        </span>
 
-                    <tr>
-                        <th>タイトル</th>
-                        <td colspan="5">
-                            <input type="text" name="title" placeholder="タイトルを入力">
-                        </td>
-                    </tr>
+        <a href="../home/logout_confirm.php" class="text-white text-decoration-none d-flex align-items-center logout-link" title="ログアウト">
+            <img src="../assets/img/logout_icon.png" alt="ログアウト" width="30" height="35" class="me-1 logout-icon">
+            <span class="small">ログアウト</span>
+        </a>
+    </nav>
+</header>
 
-                    <tr>
-                        <th>部署選択</th>
-                        <td colspan="5">
-                            <select name="department" class="form-select">
-                                <option value="">部署を選択してください</option>
-                                <option value="dev">開発</option>
-                                <option value="sales">営業</option>
-                                <option value="hr">人事</option>
-                                <option value="finance">財務</option>
-                            </select>
-                        </td>
-                    </tr>
+<div class="bg-white border-bottom py-2 px-4 mb-4">
+    <div class="container-fluid p-0">
+        <ul class="d-flex flex-wrap gap-2 list-unstyled mb-0 ps-0">
+            <li><a href="../home/main.php" class="btn btn-outline-secondary btn-sm">デスクトップ</a></li>
+            <li><a href="#" class="btn btn-outline-secondary btn-sm">出退勤管理</a></li>
+            <li><a href="../keiziban/keiziban_main.php" class="btn btn-outline-secondary btn-sm">社内掲示板</a></li>
+            <li><a href="../workflow/workflow_main.php" class="btn btn-outline-secondary btn-sm">ワークフロー</a></li>
+        </ul>
+    </div>
+</div>
 
-                    <tr>
-                        <th>部署名</th>
-                        <td>
-                            <?= htmlspecialchars($loginUser['department'] ?? 'ー', ENT_QUOTES, 'UTF-8') ?>
-                        </td>
-                        <th>職位</th>
-                        <td>
-                            <?= htmlspecialchars($loginUser['position'], ENT_QUOTES, 'UTF-8') ?>
-                        </td>
-                        <th>掲示者</th>
-                        <td>
-                            <?=  htmlspecialchars($loginUser['name'], ENT_QUOTES, 'UTF-8') ?>
-                        </td>
-                    </tr>
+  <div class="dialog-wrapper">
+    <div class="dialog-header">
+      <h1>登録・編集</h1>
+    </div>
 
-                    <tr>
-                        <th colspan="6" class="text-center">掲示内容</th>
-                    </tr>
-                    <tr class="content-row">
-                        <td colspan="6">
-                            <textarea name="content" placeholder="ここに詳細を記入してください"></textarea>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <form class="dialog-body">
+      <!-- 掲載期間 -->
+      <div class="form-row">
+        <label class="form-label">掲載期間 <span class="required">*</span></label>
+        <div class="form-field period-wrapper">
+          <input type="text" class="input-ctrl input-date" value="12/17/2024">
+        </div>
+      </div>
+
+      <!-- タイトル -->
+      <div class="form-row">
+        <label class="form-label" for="title">タイトル <span class="required">*</span></label>
+        <div class="form-field title-wrapper">
+          <input type="text" id="title" class="input-ctrl input-title" value="年末年始休暇のお知らせ">
+          <label class="custom-checkbox">
+            <input type="checkbox" checked>
+            <span>重要</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 部署選択 -->
+      <div class="form-row">
+        <label class="form-label" for="dept">部署選択</label>
+        <div class="form-field">
+          <select id="dept" class="input-ctrl select-dept">
+            <option value="">部署を選択してください</option>
+            <option value="dev">開発部</option>
+            <option value="sales">営業部</option>
+            <option value="hr">人事部</option>
+            <option value="finance">財務部</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 掲示者 -->
+      <div class="form-row">
+        <span class="form-label">掲示者</span>
+        <div class="form-field poster-wrapper">
+          <span>部署名 </span>
+          <span>職位 </span>
+          <span>氏名 </span>
+        </div>
+      </div>
+
+      <!-- 内容 -->
+      <fieldset class="content-box">
+        <legend>内容 <span class="required">*</span></legend>
+        <textarea class="content-textarea">年末年始休暇のお知らせです。
+年末年始休暇のお知らせです。
+年末年始休暇のお知らせです。</textarea>
+      </fieldset>
+
+        <div class="footer-buttons">
+          <button type="submit" class="btn-action btn-submit">登録</button>
+          <button type="button" class="btn-action btn-close">閉じる</button>
+        </div>
+      </div>
     </form>
+  </div>
 
-    <script>
-        const today = new Date(); /* 今日の日付を取得 */
-        const year = today.getFullYear();
-        const month = today.getMonth() + 1;
-        const date = today.getDate();
-        document.getElementById('today-date').textContent = year + '年' + month + '月' + date + '日';
-
-        //稟議内容を入力された中身に合わせてtextareaの高さを調整
-        const textarea = document.querySelector('textarea')
-
-        function autoResize() {
-            textarea.style.height = 'auto';
-            textarea.style.height = textarea.scrollHeight + 'px';
-        }
-
-        textarea.addEventListener('input', autoResize);
-        window.addEventListener('resize', autoResize);
-        autoResize();
-
-        const approverList = document.getElementById('approver-list');
-
-        // 承認者の行を上から「承認者1、承認者2…」の順にラベルを振り直す
-        function renumberApprovers() {
-            document.querySelectorAll('.approver-row').forEach((row, index) => {
-                row.querySelector('.approver-label').textContent = '承認者' + (index + 1) + '：';
-            });
-        }
-
-        approverList.addEventListener('click', function(e) {
-            if (e.target.classList.contains('add-approver-btn')) {
-                const firstRow = document.querySelector('.approver-row');
-                const newRow = firstRow.cloneNode(true);
-
-                // クローン元の選択状態を引き継がないようリセット
-                newRow.querySelector('select').selectedIndex = 0;
-
-                const btn = newRow.querySelector('button');
-                btn.textContent = '－';
-                btn.classList.remove('add-approver-btn');
-                btn.classList.add('remove-approver-btn');
-
-                approverList.appendChild(newRow);
-                renumberApprovers();
-                return;
-            }
-
-            if (e.target.classList.contains('remove-approver-btn')) {
-                e.target.closest('.approver-row').remove();
-                renumberApprovers();
-            }
-        });
-    </script>
 </body>
 </html>
