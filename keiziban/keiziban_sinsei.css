@@ -22,7 +22,7 @@ body {
 
 /* ヘッダーバー */
 .dialog-header {
-  background-color: #e7e4e4;
+  background-color: #1d3f8f;
   padding: 11px 18px;
 }
 
@@ -52,11 +52,6 @@ body {
   color: #555555;
 }
 
-.required {
-  color: #e53935;
-  margin-left: 2px;
-}
-
 .form-field {
   display: flex;
   align-items: center;
@@ -80,11 +75,6 @@ body {
   border-color: #485b6e;
 }
 
-/* 1. 表示順 */
-.input-order {
-  width: 120px;
-}
-
 /* 2. 掲載期間 */
 .period-wrapper {
   gap: 6px;
@@ -102,12 +92,6 @@ body {
 .range-separator {
   margin: 0 2px;
   color: #555555;
-}
-
-.notice-text {
-  color: #e53935;
-  font-size: 12.5px;
-  margin-left: 6px;
 }
 
 /* 3. タイトル */
